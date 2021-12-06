@@ -29,7 +29,10 @@ return (
             const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
             const foundNeighborhood = neighborhoods.find(neighborhood => neighborhood.id === truckLocation.neighborhoodId)
             if (foundTruck) {
-                return <div>{foundTruck.name} with be in {foundNeighborhood.name}</div>
+                return <div key={truckLocation.id}>
+                    <img src={foundTruck.profileImgSrc} alt={`${foundTruck.name} logo`} width="150" hight="150"/>
+                    <div>{foundTruck.name} will be in {foundNeighborhood.name}</div>
+                    </div>
             }
         })
     }
