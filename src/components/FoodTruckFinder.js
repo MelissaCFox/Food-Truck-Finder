@@ -4,8 +4,7 @@ import Login from "./auth/Login"
 import { Register } from "./auth/Register"
 import ApplicationViews from "./ApplicationViews"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
-import "bootstrap/dist/css/bootstrap.min.css"
-import "./Kennel.css"
+import { NavBar } from "./nav/NavBar"
 
 
 export const FoodTruckFinder = () => {

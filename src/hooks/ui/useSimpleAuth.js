@@ -3,8 +3,8 @@ import Settings from "../../repositories/Settings"
 
 const useSimpleAuth = () => {
 
-    const isAuthenticated = () => localStorage.getItem("kennel_token") !== null
-        || sessionStorage.getItem("kennel_token") !== null
+    const isAuthenticated = () => localStorage.getItem("truck__token") !== null
+        || sessionStorage.getItem("truck__token") !== null
 
     const register = (user) => {
         return fetch(`${Settings.remoteURL}/users`, {
@@ -19,7 +19,7 @@ const useSimpleAuth = () => {
             if ("id" in response) {
                 const baseUserObject = JSON.stringify(response)
                 let encoded = Buffer.from(baseUserObject).toString("base64")
-                localStorage.setItem("kennel_token", encoded)
+                localStorage.setItem("truck__token", encoded)
             }
         })
     }
@@ -36,7 +36,7 @@ const useSimpleAuth = () => {
             if (matchingUsers.length > 0) {
                 const baseUserObject = JSON.stringify(matchingUsers[0])
                 let encoded = Buffer.from(baseUserObject).toString("base64")
-                localStorage.setItem("kennel_token", encoded)
+                localStorage.setItem("truck__token", encoded)
                 return true
             }
             return false
@@ -45,12 +45,12 @@ const useSimpleAuth = () => {
 
     const logout = () => {
         console.log("*** Toggling auth state and removing credentials ***")
-        localStorage.removeItem("kennel_token")
-        sessionStorage.removeItem("kennel_token")
+        localStorage.removeItem("truck__token")
+        sessionStorage.removeItem("truck__token")
     }
 
     const getCurrentUser = () => {
-        const encoded = localStorage.getItem("kennel_token")
+        const encoded = localStorage.getItem("truck__token")
         const unencoded = Buffer.from(encoded, "base64").toString("utf8")
         const parsed = JSON.parse(unencoded)
         const bare = Object.assign(Object.create(null), parsed)
