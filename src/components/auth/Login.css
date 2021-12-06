@@ -1,0 +1,18 @@
+.form--login {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form--login > fieldset > input[type="email"],
+.form--login > fieldset > input[type="password"] {
+    width: 25em;
+}
+
+input[name="remember"] {
+    margin: 1em 0.5em 0 0;
+}
+
+.link--register {
+    margin-top: 2rem;
+}
