@@ -30,7 +30,9 @@ export const NavBar = () => {
     return (
         <div className="container">
             <nav className="navbar navbar-expand-sm navbar-light bg-light fixed-top onTop">
-                
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
                 <div id="navbarNavDropdown" className="navbar-collapse collapse">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
@@ -50,7 +52,7 @@ export const NavBar = () => {
                     <li className="nav-item dropdown">
                             {
                                 isAuthenticated()
-                                    ? <Link className="nav-link" to="/profile">Welcome {getCurrentUser().name}</Link>
+                                    ? <Link className="nav-link" to="/profile">Welcome, {getCurrentUser().name} !</Link>
                                     : <Link className="nav-link" to="/login">Login</Link>
                             }
                         </li>
@@ -60,7 +62,7 @@ export const NavBar = () => {
                                 isAuthenticated()
                                     ? <Link onClick={() => {
                                         logout()
-                                    }} className="nav-link" to="/login">Logout {getCurrentUser().name}</Link>
+                                    }} className="nav-link" to="/login">Logout</Link>
                                     : <Link className="nav-link" to="/login">Login</Link>
                             }
                         </li>
