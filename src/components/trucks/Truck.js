@@ -27,7 +27,7 @@ export const Truck = () => {
     const currentTruckLocation = truck?.truckLocations?.find(location => location.dayId === currentDayId)
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
 
-    return (
+        return (
         <>
             <div className="truck__header">
                 <div className="truck__details">
@@ -52,19 +52,32 @@ export const Truck = () => {
                 </div>
             </div>
 
-            <div className="truck__schedule schedule">
+            <div className="truck__schedule">
+                Current Schedule
+                <div className="schedule">
                 {
                     truckLocations.map(location => {
-                        return <div className="card schedule-card">
+                        return <div className="card schedule-card" key={location.id}>
                             <div>{location?.day.day}</div>
                             <div className="card-body">{location?.neighborhood.name}</div>
                         </div>
 
                     })
                 }
+                </div>
             </div>
             <div className="truck__reviews">
-
+                Customer Reviews
+                <div className="review-list">
+                {
+                    truck?.userTruckReviews?.map(review => {
+                        return <div className="card review-card" key={review.id}>
+                            <div>{review.date}</div>
+                            <div>{review.review}</div>
+                            </div>
+                    })
+                }
+                </div>
             </div>
 
         </>

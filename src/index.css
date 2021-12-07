@@ -122,3 +122,10 @@ button {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
+.review-list {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
