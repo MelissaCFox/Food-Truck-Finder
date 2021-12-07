@@ -8,7 +8,7 @@ export default {
     },
 
 
-    async getNeighborhoodWithTruckLocations(neighborhoodId) {
+    async get(neighborhoodId) {
         return await fetchIt(`${Settings.remoteURL}/neighborhoods/${neighborhoodId}?_embed=truckLocations`)
     }
 }

@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
+import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 
 
 export const Truck = () => {
@@ -38,7 +39,7 @@ export const Truck = () => {
                         <img className="truck-logo" src={truck.profileImgSrc} alt={`${truck.name} logo`} />
                     </div>
                     <div className="truck__info">
-                        <div className="truck__info--type"></div>
+                        <div className="truck__info--type">{truck.foodType?.type}</div>
                         <div className="truck__info--description">{truck.description}</div>
                         <div className="truck__info--links">
                             <a className="link" target="_blank" href={truck.websiteURL} ><img className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
@@ -59,7 +60,8 @@ export const Truck = () => {
                     truckLocations.map(location => {
                         return <div className="card schedule-card" key={location.id}>
                             <div>{location?.day.day}</div>
-                            <div className="card-body">{location?.neighborhood.name}</div>
+                            
+                            <NeighborhoodCard neighborhoodId={location?.neighborhood?.id}/>
                         </div>
 
                     })

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
-import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckRepository from "../../repositories/TruckRepository"
+import { TruckCard } from "./TruckCard"
 
 
 export const TruckList = (props) => {
@@ -30,9 +30,7 @@ export const TruckList = (props) => {
                                 const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
                                 if (foundTruck) {
                                     return <li className="card truck" key={truckLocation.id}>
-                                        <div className="card-body">
-                                            <button onClick={()=> {history.push(`/trucks/${truckLocation.truckId}`)}}><img className="truck-logo" src={foundTruck?.profileImgSrc} alt={`${foundTruck?.name} logo`} /></button>
-                                        </div>
+                                        <TruckCard truckId={foundTruck.id}/>
                                     </li>
                                 }
                             })
