@@ -4,6 +4,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import { ReviewForm } from "./ReviewForm"
+import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 
 
 export const Truck = () => {
@@ -13,7 +14,7 @@ export const Truck = () => {
     const [truckLocations, setTruckLocations] = useState([])
 
     useEffect(() => {
-        TruckRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
+        TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
     }, [])
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export const Truck = () => {
                         <div className="truck__info--description">{truck.description}</div>
                         <div className="truck__info--links">
                             <a className="link" target="_blank" href={truck.websiteURL} ><img className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
-                            <a className="link" target="_blank" href={truck.instagramURL}><img className="link__logo" src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png" /></a>
+                            <a className="link" target="_blank" href={truck.instagramURL}><img className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
                         </div>
                     </div>
                 </div>

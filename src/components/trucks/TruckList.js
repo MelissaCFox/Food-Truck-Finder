@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import { TruckCard } from "./TruckCard"
 
@@ -15,7 +16,7 @@ export const TruckList = (props) => {
 
     useEffect(() => {
         const currentDayId = props.date?.getDay() + 1
-        TruckRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
+        TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
     }, [])
 
     const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === props.neighborhood?.id)
