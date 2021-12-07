@@ -10,21 +10,25 @@ export const Neighborhood = () => {
 
     const { neighborhoodId } = useParams()
     const [neighborhood, setNeighborhood] = useState({})
-    const [truckLocations, setTruckLocations] = useState([])
     const [todaysTrucks, setTodaysTrucks] = useState([])
+    const [sundayLocations, setSundayLocations] = useState([])
+    const [mondayLocations, setMondayLocations] = useState([])
+    const [tuesdayLocations, setTuesdayLocations] = useState([])
+    const [wednesdayLocations, setWednesdayLocations] = useState([])
+    const [thursdayLocations, setThursdayLocations] = useState([])
+    const [fridayLocations, setFridayLocations] = useState([])
+    const [saturdayLocations, setSaturdayLocations] = useState([])
 
     useEffect(() => {
         NeighborhoodRepository.get(neighborhoodId).then(setNeighborhood)
     }, [])
 
     useEffect(() => {
-        TruckLocationRepository.getTruckLocationsByNeighborhood(neighborhoodId).then(setTruckLocations)
+        const currentDayId = new Date().getDay() + 1
+        TruckLocationRepository.getTruckLocationsByNeighborhoodAndDay(neighborhoodId, currentDayId).then(setTodaysTrucks)
     }, [])
 
-    useEffect(() => {
-        const currentDayId = new Date().getDay() + 1
-        TruckLocationRepository.getTodaysTruckLocationsByNeighborhood(neighborhoodId, currentDayId).then(setTodaysTrucks)
-    }, [])
+
 
     return (
         <>
@@ -37,10 +41,19 @@ export const Neighborhood = () => {
                         todaysTrucks.map(truckLocation => {
                             return <div className="" key={truckLocation.id}>
                                 <TruckCard truckId={truckLocation.truckId} />
-                                </div>
+                            </div>
                         })
                     }
 
+                </div>
+                <div className="neighborhood__schedule">
+                    Truck in the Area This Week
+                    <div className="schedule">
+                        {
+                            
+
+                        }
+                    </div>
                 </div>
 
             </div>
