@@ -64,3 +64,44 @@ dialog {
       opacity: 1;
   }
 }
+
+.date {
+  display: flex;
+}
+
+.date-picker {
+  width: 11rem;
+}
+
+.date-string {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+
+}
+
+.trucks {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 10%;
+}
+
+.truck-logo {
+  width: 100px;
+  height: 100px;
+}
+
+.card-body {
+  height: 130px;
+  width: 130px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  margin: 0.5rem 1rem 1rem 1rem ;
+}

@@ -4,42 +4,45 @@ import TruckRepository from "../../repositories/TruckRepository"
 
 
 export const TruckList = (props) => {
-const [truckLocations, updateTruckLocations] = useState([])
-const [trucks, setTrucks] = useState([])
-const [neighborhoods, setNeighborhoods] = useState([])
+    const [truckLocations, updateTruckLocations] = useState([])
+    const [trucks, setTrucks] = useState([])
 
-useEffect(() => {
-    NeighborhoodRepository.getAll().then(setNeighborhoods)
-},[])
+    useEffect(() => {
+        TruckRepository.getAll().then(setTrucks)
+    }, [])
 
-useEffect(() => {
-    TruckRepository.getAll().then(setTrucks)
-},[])
+    useEffect(() => {
+        const currentDayId = props.date?.getDay() + 1
+        TruckRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
+    }, [])
 
-useEffect(() => {
-    const currentDayId = new Date().getDay() + 1
-    TruckRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
-},[])
+    const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === props.neighborhood?.id)
 
-const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === props.neighborhood?.id)
-
-return (
-    <>
-
-    {
-        filteredLocations.map(truckLocation => {
-            const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
-            const foundNeighborhood = neighborhoods.find(neighborhood => neighborhood.id === truckLocation.neighborhoodId)
-            if (foundTruck) {
-                return <div key={truckLocation.id}>
-                    <img src={foundTruck?.profileImgSrc} alt={`${foundTruck?.name} logo`} width="150" hight="150"/>
-                    <div>{foundTruck?.name} will be in {foundNeighborhood?.name}</div>
-                    </div>
-            }
-        })
-    }
-
-    </>
-)
+    return (
+        <>
+            <ul className="trucks">
+                {
+                    props.neighborhood
+                        ? filteredLocations.length > 0
+                            ? filteredLocations.map(truckLocation => {
+                                const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
+                                if (foundTruck) {
+                                    return <li className="card truck" key={truckLocation.id}>
+                                        <div className="card-body">
+                                            <img className="truck-logo" src={foundTruck?.profileImgSrc} alt={`${foundTruck?.name} logo`} />
+                                        </div>
+                                    </li>
+                                }
+                            })
+                            : <li className="card no-truck" key={props.neighborhood.id}>
+                                <div className="card-body">
+                                    No Trucks Today
+                                </div>
+                            </li>
+                        : ""
+                }
+            </ul>
+        </>
+    )
 
 }
