@@ -9,10 +9,7 @@ export default {
     
     async getAll() {
         return await fetchIt(`${Settings.remoteURL}/users?`)
-    },
+    }
 
-    async add(truck) {
-        return await fetchIt(`${Settings.remoteURL}/users`, "POST", JSON.stringify(truck))
-    },
 
 }

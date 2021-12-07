@@ -3,6 +3,7 @@ import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
+import { ReviewForm } from "./ReviewForm"
 
 
 export const Truck = () => {
@@ -28,7 +29,7 @@ export const Truck = () => {
     const currentTruckLocation = truck?.truckLocations?.find(location => location.dayId === currentDayId)
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
 
-        return (
+    return (
         <>
             <div className="truck__header">
                 <div className="truck__details">
@@ -56,29 +57,32 @@ export const Truck = () => {
             <div className="truck__schedule">
                 Current Schedule
                 <div className="schedule">
-                {
-                    truckLocations.map(location => {
-                        return <div className="card schedule-card" key={location.id}>
-                            <div>{location?.day.day}</div>
-                            
-                            <NeighborhoodCard neighborhoodId={location?.neighborhood?.id}/>
-                        </div>
+                    {
+                        truckLocations.map(location => {
+                            return <div className="card schedule-card" key={location.id}>
+                                <div>{location?.day.day}</div>
 
-                    })
-                }
+                                <NeighborhoodCard neighborhoodId={location?.neighborhood?.id} />
+                            </div>
+
+                        })
+                    }
                 </div>
             </div>
+            Customer Reviews
             <div className="truck__reviews">
-                Customer Reviews
                 <div className="review-list">
-                {
-                    truck?.userTruckReviews?.map(review => {
-                        return <div className="card review-card" key={review.id}>
-                            <div>{review.date}</div>
-                            <div>{review.review}</div>
+                    {
+                        truck?.userTruckReviews?.map(review => {
+                            return <div className="card review-card" key={review.id}>
+                                <div>{review.date}</div>
+                                <div>{review.review}</div>
                             </div>
-                    })
-                }
+                        })
+                    }
+                </div>
+                <div>
+                   <ReviewForm truckId={truckId}/>
                 </div>
             </div>
 
