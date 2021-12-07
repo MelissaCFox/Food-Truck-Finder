@@ -8,14 +8,18 @@ export const Truck = () => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
+    const [truckLocations, setTruckLocations] = useState([])
+
+    useEffect(() => {
+        TruckRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
+    }, [])
 
     useEffect(() => {
         NeighborhoodRepository.getAll().then(setNeighborhoods)
-    },[])
+    }, [])
 
     useEffect(() => {
-        TruckRepository.get(parseInt(truckId))
-            .then(setTruck)
+        TruckRepository.get(truckId).then(setTruck)
 
     }, [truckId])
 
@@ -37,8 +41,8 @@ export const Truck = () => {
                         <div className="truck__info--type"></div>
                         <div className="truck__info--description">{truck.description}</div>
                         <div className="truck__info--links">
-                            <a target="_blank" href={truck.instagramURL}><img src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png" /></a>
-                            <button className="link insta"></button>
+                            <a className="link" target="_blank" href={truck.websiteURL} ><img className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
+                            <a className="link" target="_blank" href={truck.instagramURL}><img className="link__logo" src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c521.png" /></a>
                         </div>
                     </div>
                 </div>
@@ -48,8 +52,16 @@ export const Truck = () => {
                 </div>
             </div>
 
-            <div className="truck__schedule">
+            <div className="truck__schedule schedule">
+                {
+                    truckLocations.map(location => {
+                        return <div className="card schedule-card">
+                            <div>{location?.day.day}</div>
+                            <div className="card-body">{location?.neighborhood.name}</div>
+                        </div>
 
+                    })
+                }
             </div>
             <div className="truck__reviews">
 

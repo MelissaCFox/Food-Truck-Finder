@@ -110,3 +110,15 @@ button {
   border: none;
   background-color: none;
 }
+
+.link__logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.schedule {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
