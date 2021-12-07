@@ -36,7 +36,7 @@ export const NavBar = () => {
                 <div id="navbarNavDropdown" className="navbar-collapse collapse">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <Link className="nav-link" to="/">Food Truck Finder</Link>
+                            <Link className="nav-link" to="/trucks">Food Truck Finder</Link>
                         </li>
                         
                         <li className="nav-item">
