@@ -8,7 +8,7 @@ export default {
     },
 
     async getTruckLocationsByTruck(truckId) {
-        return await fetchIt(`${Settings.remoteURL}/truckLocations?truckId=${truckId}&_expand=truck&_expand=day&_expand=neighborhood`)
+        return await fetchIt(`${Settings.remoteURL}/truckLocations?truckId=${truckId}&_expand=truck&_expand=day&_expand=neighborhood&_sort=dayId`)
     },
 
     async getTruckLocationsByNeighborhood(neighborhoodId) {

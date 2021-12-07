@@ -141,3 +141,17 @@ button {
   flex-direction: column;
   flex-wrap: wrap;
 }
+
+.weekday {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.truck-card {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
