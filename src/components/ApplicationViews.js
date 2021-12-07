@@ -1,13 +1,22 @@
 import React from "react"
 import { Route } from "react-router-dom"
 import { NeighborhoodTruckList } from "./trucks/NeighborhoodTrucks"
-import { TruckList } from "./trucks/TruckList"
+import { Truck } from "./trucks/Truck"
 
 export default () => {
     return (
         <>
+
+        <Route exact path = "/trucks">
             <NeighborhoodTruckList />
-            <TruckList />
+        </Route>
+
+        <Route path="/trucks/:truckId(\d+)">
+            <Truck />
+
+        </Route>
+            
+            
         </>
     )
 }

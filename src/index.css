@@ -105,3 +105,8 @@ dialog {
 .card {
   margin: 0.5rem 1rem 1rem 1rem ;
 }
+
+button {
+  border: none;
+  background-color: none;
+}

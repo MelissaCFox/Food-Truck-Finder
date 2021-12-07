@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 
@@ -6,6 +7,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 export const TruckList = (props) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -29,7 +31,7 @@ export const TruckList = (props) => {
                                 if (foundTruck) {
                                     return <li className="card truck" key={truckLocation.id}>
                                         <div className="card-body">
-                                            <img className="truck-logo" src={foundTruck?.profileImgSrc} alt={`${foundTruck?.name} logo`} />
+                                            <button onClick={()=> {history.push(`/trucks/${truckLocation.truckId}`)}}><img className="truck-logo" src={foundTruck?.profileImgSrc} alt={`${foundTruck?.name} logo`} /></button>
                                         </div>
                                     </li>
                                 }
