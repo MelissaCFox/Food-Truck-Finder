@@ -4,6 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import UserRepository from "../../repositories/UserRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import { Truck } from "../trucks/Truck"
+import { TruckForm } from "./TruckForm"
 
 export const Owner = (props) => {
     const [user, setUser] = useState({})
@@ -41,16 +42,10 @@ export const Owner = (props) => {
                             Register New Truck
                         </ModalHeader>
                         <ModalBody>
-                            Form Fields Here
+                            <TruckForm userId={props.userId}/>
                         </ModalBody>
                         <ModalFooter>
-                            <Button
-                                color="primary"
-                                onClick={toggle}
-                            >
-                                Register Truck
-                            </Button>
-                            {' '}
+
                             <Button onClick={toggle}>
                                 Cancel
                             </Button>
