@@ -85,13 +85,13 @@ export const Truck = (props) => {
                     {
                         truckLocations.map(location => {
                             return <div className="card schedule-card" key={location.id}>
-                                <div>{location?.day.day}</div>
+                                <div>{location.day.day}</div>
                                 {
                                     truckId
-                                        ? <NeighborhoodCard neighborhoodId={location?.neighborhood?.id} />
+                                        ? <NeighborhoodCard neighborhoodId={location.neighborhood?.id} />
                                         : (<>
                                             <div>{location.neighborhood.name}</div>
-                                            <NeighborhoodCard neighborhoodId={location?.neighborhood?.id} />
+                                            <NeighborhoodCard key={location.neighborhood.id} neighborhoodId={location.neighborhood?.id} />
                                             <div className="form-group">
                                                 <select
                                                     defaultValue=""
