@@ -20,7 +20,7 @@ export const User = (props) => {
     return (
         <>
             <ul className="favorites">
-                <h3>My Favorite Trucks</h3>
+                <h3>My Favorite Food Trucks</h3>
                 {
                     user.userTruckFavorites?.map(favorite => {
                         const foundTruck = allTrucks?.find(truck => truck.id === favorite.truckId)

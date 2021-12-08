@@ -1,16 +1,19 @@
 import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Card, CardBody, Collapse, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import UserRepository from "../../repositories/UserRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import { Truck } from "../trucks/Truck"
 import { TruckForm } from "./TruckForm"
+import { Favorites } from "./Favorites"
 
 export const Owner = (props) => {
     const [user, setUser] = useState({})
     const [trucks, setTrucks] = useState([])
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
+    const [collapse, setCollapse] = useState(false)
+    const toggle2 = () => setCollapse(!collapse)
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -24,7 +27,7 @@ export const Owner = (props) => {
         <>
             <div className="header">
 
-                <div>
+                <div className="buttons">
                     <Button
                         color="success"
                         outline
@@ -34,7 +37,7 @@ export const Owner = (props) => {
                     </Button>
                     <Modal
                         isOpen={modal}
-                        fullscreen="xl"
+                        fullscreen="lg"
                         size="lg"
                         toggle={toggle}
                     >
@@ -42,7 +45,7 @@ export const Owner = (props) => {
                             Register New Truck
                         </ModalHeader>
                         <ModalBody>
-                            <TruckForm userId={props.userId}/>
+                            <TruckForm userId={props.userId} toggle={toggle} />
                         </ModalBody>
                         <ModalFooter>
 
@@ -51,10 +54,15 @@ export const Owner = (props) => {
                             </Button>
                         </ModalFooter>
                     </Modal>
+
+                    <Button color="success" outline onClick={toggle2}>Favorites</Button>
+                    <div>
+                        <Collapse isOpen={collapse}>
+                            <Favorites userId={props.userId}/>
+                        </Collapse>
+                    </div>
                 </div>
 
-
-                <Button color="success" outline onClick={() => { }}>Favorites</Button>
             </div>
 
             <div className="owner-trucks">

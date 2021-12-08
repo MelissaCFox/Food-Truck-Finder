@@ -1,14 +1,54 @@
 import { useState, useEffect } from "react"
 import { Button } from "reactstrap"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
+import TruckRepository from "../../repositories/TruckRepository"
+import UserRepository from "../../repositories/UserRepository"
 
 
 export const TruckForm = (props) => {
     const [foodTypes, setFoodTypes] = useState([])
+    const [name, setName] = useState("")
+    const [foodTypeId, setFoodTypeId] = useState(0)
+    const [description, setDescription] = useState("")
+    const [websiteURL, setWebsiteURL] = useState("")
+    const [instagramURL, setInstagramURL] = useState("")
+    const [profileImgSrc, setProfileImgSrc] = useState("")
+    const [hours, setHours] = useState("")
+    const [dollars, setDollars] = useState(0)
 
     useEffect(() => {
         FoodTypeRepository.getAll().then(setFoodTypes)
     }, [])
+
+    const registerTruck = (event) => {
+        event.preventDefault()
+
+        const truck = {
+            name: name,
+            foodTypeId: parseInt(foodTypeId),
+            description: description,
+            websiteURL: websiteURL,
+            instagramURL: instagramURL,
+            profileImgSrc: profileImgSrc,
+            hours: hours,
+            dollars: parseInt(dollars),
+            userRating: null
+        }
+        if (name && foodTypeId && description && websiteURL && instagramURL && profileImgSrc && hours && dollars) {
+
+            TruckRepository.add(truck).then(res => {
+                const truckOwner = {
+                    userId: props.userId,
+                    truckId: res.id
+                }
+                UserRepository.addTruckOwner(truckOwner)
+            })
+    
+            props.toggle()
+        } else {
+            window.alert("Please fill in all fields")
+        }
+    }
 
     return (
         <>
@@ -24,7 +64,7 @@ export const TruckForm = (props) => {
                         required
                         autoFocus
                         className="form-control"
-                        onChange={() => { }}
+                        onChange={e => setName(e.target.value)}
                         id="truckName"
                         placeholder="Truck Name"
                     />
@@ -37,7 +77,7 @@ export const TruckForm = (props) => {
                         required
                         autoFocus
                         className="form-control"
-                        onChange={() => { }}
+                        onChange={e => setDescription(e.target.value)}
                         id="description"
                         placeholder="Description"
                     />
@@ -47,9 +87,10 @@ export const TruckForm = (props) => {
                     <label htmlFor="foodType">Food Type</label>
                     <select
                         defaultValue=""
+                        required
                         name="foodType"
                         id="foodTypeId"
-                        onChange={() => { }}
+                        onChange={e => setFoodTypeId(e.target.value)}
                         className="form-control"
                     >
                         <option value="">Select a Food Type</option>
@@ -68,7 +109,7 @@ export const TruckForm = (props) => {
                         required
                         autoFocus
                         className="form-control"
-                        onChange={() => { }}
+                        onChange={e => setWebsiteURL(e.target.value)}
                         id="websiteURL"
                         placeholder="Website URL"
                     />
@@ -81,7 +122,7 @@ export const TruckForm = (props) => {
                         required
                         autoFocus
                         className="form-control"
-                        onChange={() => { }}
+                        onChange={e => setInstagramURL(e.target.value)}
                         id="instaURL"
                         placeholder="Instagram URL"
                     />
@@ -94,7 +135,7 @@ export const TruckForm = (props) => {
                         required
                         autoFocus
                         className="form-control"
-                        onChange={() => { }}
+                        onChange={e => setProfileImgSrc(e.target.value)}
                         id="profileImg"
                         placeholder="Profile Image URL"
                     />
@@ -107,15 +148,33 @@ export const TruckForm = (props) => {
                         required
                         autoFocus
                         className="form-control"
-                        onChange={() => { }}
+                        onChange={e => setHours(e.target.value)}
                         id="hours"
                         placeholder="10am-4pm"
                     />
                 </div>
 
+                <div className="form-group">
+                    <label htmlFor="cost">Cost: </label>
+                    <select
+                        defaultValue=""
+                        required
+                        name="cost"
+                        id="cost"
+                        onChange={e => setDollars(e.target.value)}
+                        className="form-control"
+                    >
+                        <option value="">$-$$$</option>
+                        <option value={1}>$</option>
+                        <option value={2}>$$</option>
+                        <option value={3}>$$$</option>
+
+                    </select>
+                </div>
+
                 <Button type="register"
-                    color="success"
-                    onClick={() => { }}
+                    color="blue"
+                    onClick={registerTruck}
                     className="btn btn-primary"> Register Truck </Button>
             </form>
 
