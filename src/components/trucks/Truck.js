@@ -44,10 +44,10 @@ export const Truck = (props) => {
         const existingTruckLocation = truckLocations.find(location => location.truckId === truckId && location.dayId === dayId)
         if (existingTruckLocation && neighborhoodId) {
             TruckLocationRepository.update(existingTruckLocation.id, newTruckLocation)
-        } else if(neighborhoodId) {
-            TruckLocationRepository.add(newTruckLocation).then(() => {TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)})
+        } else if (neighborhoodId) {
+            TruckLocationRepository.add(newTruckLocation).then(() => { TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations) })
         }
-        TruckRepository.get(props.truckId).then(() => {TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)})
+        TruckRepository.get(props.truckId).then(() => { TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations) })
     }
 
     const currentDayId = new Date().getDay() + 1
@@ -94,6 +94,7 @@ export const Truck = (props) => {
                                             <NeighborhoodCard key={location.neighborhood.id} neighborhoodId={location.neighborhood?.id} />
                                             <div className="form-group">
                                                 <select
+                                                    key={location.neighborhood.id}
                                                     defaultValue=""
                                                     name="location"
                                                     id="locationId"
