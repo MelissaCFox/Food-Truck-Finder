@@ -20,9 +20,7 @@ export const Profile = () => {
         user.owner
         ? <Owner userId={getCurrentUser().id} />
         : <User userId={getCurrentUser().id} />
-
         
-             
     )
     
 }

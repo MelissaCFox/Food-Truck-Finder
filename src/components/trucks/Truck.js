@@ -8,7 +8,7 @@ import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
 
-export const Truck = () => {
+export const Truck = (props) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -16,7 +16,10 @@ export const Truck = () => {
     const { getCurrentUser } = useSimpleAuth()
 
     useEffect(() => {
-        TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
+        truckId
+        ? TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
+        : TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)
+
     }, [])
 
     useEffect(() => {
@@ -24,7 +27,9 @@ export const Truck = () => {
     }, [])
 
     useEffect(() => {
-        TruckRepository.get(truckId).then(setTruck)
+        truckId
+        ? TruckRepository.get(truckId).then(setTruck)
+        : TruckRepository.get(props.truckId).then(setTruck)
 
     }, [truckId])
 

@@ -10,11 +10,11 @@ export const User = (props) => {
     const [allTrucks, setAllTrucks] = useState([])
 
     useEffect(() => {
-        TruckRepository.getAll().then(setAllTrucks)
+            TruckRepository.getAll().then(setAllTrucks)
     }, [])
 
     useEffect(() => {
-        UserRepository.get(props.userId).then(setUser)
+            UserRepository.get(props.userId).then(setUser)
     }, [])
 
     return (
@@ -22,7 +22,7 @@ export const User = (props) => {
             <ul className="favorites">
                 <h3>My Favorite Trucks</h3>
                 {
-                    user?.userTruckFavorites?.map(favorite => {
+                    user.userTruckFavorites?.map(favorite => {
                         const foundTruck = allTrucks?.find(truck => truck.id === favorite.truckId)
                         if (foundTruck) {
                             return <li className="card truck" key={favorite.id}>
@@ -38,7 +38,7 @@ export const User = (props) => {
             <ul className="reviews">
                 <h3>My Reviews</h3>
                 {
-                    user?.userTruckReviews?.map(review => {
+                    user.userTruckReviews?.map(review => {
                         const foundTruck = allTrucks.find(truck => truck.id === review.truckId)
                         return <li className="card review-card" key={review.id}>
                             <div>{foundTruck.name}</div>
