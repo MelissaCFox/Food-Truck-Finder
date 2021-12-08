@@ -11,7 +11,7 @@ export const ReviewForm = (props) => {
 
     const submitReview = () => {
         const reviewObj = {
-            userId: getCurrentUser.id,
+            userId: getCurrentUser().id,
             truckId: parseInt(props.truckId),
             review: review,
             date: date

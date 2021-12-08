@@ -1,12 +1,24 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import { Neighborhood } from "./neighborhoods/Neighborhood"
+import { Profile } from "./profile/Profile"
 import { NeighborhoodTruckList } from "./trucks/NeighborhoodTrucks"
 import { Truck } from "./trucks/Truck"
 
 export default () => {
+    const {getCurrentUser} = useSimpleAuth()
+    
     return (
         <>
+
+        <Route exact path="/" render={() => {
+            if (getCurrentUser().owner) {
+                return <Profile />
+            } else {
+                return <NeighborhoodTruckList />
+            }
+        }} />
 
         <Route exact path = "/trucks">
             <NeighborhoodTruckList />
@@ -18,6 +30,10 @@ export default () => {
 
         <Route path="/neighborhoods/:neighborhoodId(\d+)">
             <Neighborhood />
+        </Route>
+
+        <Route path="/profile">
+            <Profile />
         </Route>
             
             

@@ -5,6 +5,7 @@ import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import { ReviewForm } from "./ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
+import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 
 
 export const Truck = () => {
@@ -12,6 +13,7 @@ export const Truck = () => {
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
     const [truckLocations, setTruckLocations] = useState([])
+    const { getCurrentUser } = useSimpleAuth()
 
     useEffect(() => {
         TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
@@ -83,7 +85,12 @@ export const Truck = () => {
                     }
                 </div>
                 <div>
-                   <ReviewForm truckId={truckId}/>
+                    {
+                        getCurrentUser().owner
+                            ? ""
+                            : <ReviewForm truckId={truckId} />
+                    }
+
                 </div>
             </div>
 
