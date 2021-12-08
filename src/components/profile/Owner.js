@@ -58,7 +58,7 @@ export const Owner = (props) => {
                     <Button color="success" outline onClick={toggle2}>Favorites</Button>
                     <div>
                         <Collapse isOpen={collapse}>
-                            <Favorites userId={props.userId}/>
+                            <Favorites userId={props.userId} />
                         </Collapse>
                     </div>
                 </div>
@@ -73,7 +73,14 @@ export const Owner = (props) => {
                             const foundTruck = trucks.find(truck => truck.id === truckOwner.truckId)
                             if (foundTruck) {
                                 return <li className="card" key={truckOwner.id}>
-                                    <Truck truckId={foundTruck.id} />
+                                    <Truck key={foundTruck.id} truckId={foundTruck.id} />
+
+                                    <Button type="retire"
+                                        color="danger"
+                                        value={foundTruck.id}
+                                        onClick={e => TruckRepository.delete(e.target.value).then(TruckRepository.getAll().then(setTrucks))}
+                                        className="btn btn-primary"> Retire Truck </Button>
+
                                 </li>
                             }
                         })

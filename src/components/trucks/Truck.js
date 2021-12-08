@@ -7,6 +7,7 @@ import { ReviewForm } from "./ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import useResourceResolver from "../../hooks/resource/useResourceResolver"
+import { Button } from "reactstrap"
 
 
 export const Truck = (props) => {
@@ -15,7 +16,6 @@ export const Truck = (props) => {
     const [neighborhoods, setNeighborhoods] = useState([])
     const [truckLocations, setTruckLocations] = useState([])
     const { getCurrentUser } = useSimpleAuth()
-    const { resolveResource, resource: currentAnimal } = useResourceResolver()
 
     useEffect(() => {
         truckId
