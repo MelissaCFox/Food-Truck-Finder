@@ -6,6 +6,7 @@ import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import { ReviewForm } from "./ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
+import useResourceResolver from "../../hooks/resource/useResourceResolver"
 
 
 export const Truck = (props) => {
@@ -14,11 +15,12 @@ export const Truck = (props) => {
     const [neighborhoods, setNeighborhoods] = useState([])
     const [truckLocations, setTruckLocations] = useState([])
     const { getCurrentUser } = useSimpleAuth()
+    const { resolveResource, resource: currentAnimal } = useResourceResolver()
 
     useEffect(() => {
         truckId
-        ? TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
-        : TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)
+            ? TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
+            : TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)
 
     }, [])
 
@@ -28,10 +30,25 @@ export const Truck = (props) => {
 
     useEffect(() => {
         truckId
-        ? TruckRepository.get(truckId).then(setTruck)
-        : TruckRepository.get(props.truckId).then(setTruck)
+            ? TruckRepository.get(truckId).then(setTruck)
+            : TruckRepository.get(props.truckId).then(setTruck)
 
     }, [truckId])
+
+    const createNewLocationId = (truckId, neighborhoodId, dayId) => {
+        const newTruckLocation = {
+            truckId: truckId,
+            neighborhoodId: parseInt(neighborhoodId),
+            dayId: dayId
+        }
+        const existingTruckLocation = truckLocations.find(location => location.truckId === truckId && location.dayId === dayId)
+        if (existingTruckLocation && neighborhoodId) {
+            TruckLocationRepository.update(existingTruckLocation.id, newTruckLocation)
+        } else if(neighborhoodId) {
+            TruckLocationRepository.add(newTruckLocation)
+        }
+        TruckRepository.get(props.truckId)
+    }
 
     const currentDayId = new Date().getDay() + 1
     const currentTruckLocation = truck?.truckLocations?.find(location => location.dayId === currentDayId)
@@ -69,8 +86,32 @@ export const Truck = (props) => {
                         truckLocations.map(location => {
                             return <div className="card schedule-card" key={location.id}>
                                 <div>{location?.day.day}</div>
+                                {
+                                    truckId
+                                        ? <NeighborhoodCard neighborhoodId={location?.neighborhood?.id} />
+                                        : (<>
+                                            <div>{location.neighborhood.name}</div>
+                                            <NeighborhoodCard neighborhoodId={location?.neighborhood?.id} />
+                                            <div className="form-group">
+                                                <select
+                                                    defaultValue=""
+                                                    name="location"
+                                                    id="locationId"
+                                                    onChange={e => createNewLocationId(location.truck.id, e.target.value, location.day.id)}
+                                                    className="form-control"
+                                                >
+                                                    <option value="">--Change Location--</option>
+                                                    {
+                                                        neighborhoods.map(neighborhood => {
+                                                            return <option key={neighborhood.id} id={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>
+                                                        })
+                                                    }
+                                                </select>
+                                            </div>
+                                        </>
+                                        )
 
-                                <NeighborhoodCard neighborhoodId={location?.neighborhood?.id} />
+                                }
                             </div>
 
                         })

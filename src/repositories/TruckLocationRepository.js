@@ -17,5 +17,13 @@ export default {
 
     async getTruckLocationsByNeighborhoodAndDay(neighborhoodId, dayId) {
         return await fetchIt(`${Settings.remoteURL}/truckLocations?neighborhoodId=${neighborhoodId}&dayId=${dayId}&_expand=truck&_expand=day&_expand=neighborhood`)
+    },
+
+    async add(truckLocation) {
+        return await fetchIt(`${Settings.remoteURL}/truckLocations`, "POST", JSON.stringify(truckLocation))
+    },
+
+    async update(truckLocationId, newTruckLocationObj) {
+        return await fetchIt(`${Settings.remoteURL}/truckLocations/${truckLocationId}`, "PUT", JSON.stringify(newTruckLocationObj))
     }
 }

@@ -4,6 +4,7 @@ import { Button } from "reactstrap"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 import { TruckCard } from "../trucks/TruckCard"
+import { Favorites } from "./Favorites"
 
 export const User = (props) => {
     const [user, setUser] = useState({})
@@ -21,18 +22,7 @@ export const User = (props) => {
         <>
             <ul className="favorites">
                 <h3>My Favorite Food Trucks</h3>
-                {
-                    user.userTruckFavorites?.map(favorite => {
-                        const foundTruck = allTrucks?.find(truck => truck.id === favorite.truckId)
-                        if (foundTruck) {
-                            return <li className="card truck" key={favorite.id}>
-                                <TruckCard truckId={foundTruck.id} />
-                            </li>
-                        } else {
-                            return <li className="card truck">No Favorites Yet</li>
-                        }
-                    })
-                }
+                <Favorites userId={props.userId} />
             </ul>
 
             <ul className="reviews">

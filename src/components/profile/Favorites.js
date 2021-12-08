@@ -29,7 +29,7 @@ export const Favorites = (props) => {
                     </li>
                 }
             })
-            : <li className="card truck">No Favorites Yet</li>
+            : <li className="card truck"><div className="card-body">No Favorites Yet</div></li>
         }
     </ul>
 
