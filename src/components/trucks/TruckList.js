@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import { TruckCard } from "./TruckCard"
@@ -8,7 +7,6 @@ import { TruckCard } from "./TruckCard"
 export const TruckList = (props) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
-    const history = useHistory()
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
