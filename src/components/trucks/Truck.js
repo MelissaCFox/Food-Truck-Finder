@@ -45,9 +45,9 @@ export const Truck = (props) => {
         if (existingTruckLocation && neighborhoodId) {
             TruckLocationRepository.update(existingTruckLocation.id, newTruckLocation)
         } else if(neighborhoodId) {
-            TruckLocationRepository.add(newTruckLocation)
+            TruckLocationRepository.add(newTruckLocation).then(() => {TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)})
         }
-        TruckRepository.get(props.truckId)
+        TruckRepository.get(props.truckId).then(() => {TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)})
     }
 
     const currentDayId = new Date().getDay() + 1
