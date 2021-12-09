@@ -6,8 +6,6 @@ import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import { ReviewForm } from "../reviews/ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
-import { Button } from "reactstrap"
-import ReviewRepository from "../../repositories/ReviewRepository"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
 
