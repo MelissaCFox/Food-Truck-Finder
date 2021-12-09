@@ -165,3 +165,7 @@ button {
   width: 100px;
   height: 100px
 }
+
+.favorite {
+  background-color: goldenrod;
+}

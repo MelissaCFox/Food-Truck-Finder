@@ -19,6 +19,16 @@ export const Truck = (props) => {
     const [truckLocations, setTruckLocations] = useState([])
     const { getCurrentUser } = useSimpleAuth()
     const [favorites, setFavorites] = useState([])
+    const [existingLike, setExistingLike] = useState(false)
+
+    useEffect(() => {
+        const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
+        if (foundLike) {
+            setExistingLike(true)
+        } else {
+            setExistingLike(false)
+        }
+    }, [truck])
 
     useEffect(() => {
         UserTruckFavoriteRepository.getAll().then(setFavorites)
@@ -61,25 +71,25 @@ export const Truck = (props) => {
     const currentDayId = new Date().getDay() + 1
     const currentTruckLocation = truck?.truckLocations?.find(location => location.dayId === currentDayId)
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
-    const foundLike = favorites.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
+    const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
 
     const toggleFavorite = (favoriteTruckId) => {
+
         const newLike = {
             userId: getCurrentUser().id,
             truckId: favoriteTruckId
         }
+        if (truckId) {
+            const like = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
+            existingLike
+                ? UserTruckFavoriteRepository.delete(like.id).then(() => {
+                    setExistingLike(false)
+                })
+                : UserTruckFavoriteRepository.add(newLike).then(() => {
+                    setExistingLike(true)
+                })
+        }
 
-        foundLike
-            ? UserTruckFavoriteRepository.delete(foundLike.id).then(() => {
-                truckId
-                    ? TruckRepository.get(truckId).then(setTruck)
-                    : props.refresh()
-            })
-            : UserTruckFavoriteRepository.add(newLike).then(() => {
-                truckId
-                    ? TruckRepository.get(truckId).then(setTruck)
-                    : props.refresh()
-            })
     }
 
     return (
@@ -94,10 +104,11 @@ export const Truck = (props) => {
                     </div>
                     <div className="truck__favorite">
                         {
-                            foundLike
-                                ? <button className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
-                                : <button className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
-
+                            truckId
+                            ? existingLike
+                                ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
+                                : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
+                            : ""
                         }
                     </div>
                     <div className="truck__info">
