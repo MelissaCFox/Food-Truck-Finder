@@ -92,6 +92,7 @@ export const Truck = (props) => {
             } else {
                 UserTruckFavoriteRepository.add(newLike).then(() => {
                     setExistingLike(true)
+                    UserTruckFavoriteRepository.getAll().then(setFavorites)
 
                 })
 
