@@ -80,22 +80,17 @@ export const Truck = (props) => {
             truckId: favoriteTruckId
         }
         if (truckId) {
-            
             if (existingLike) {
-                
                 const like = favorites.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
                 UserTruckFavoriteRepository.delete(like.id).then(() => {
                     setExistingLike(false)
-
                 })
 
             } else {
                 UserTruckFavoriteRepository.add(newLike).then(() => {
                     setExistingLike(true)
                     UserTruckFavoriteRepository.getAll().then(setFavorites)
-
                 })
-
             }
         }
     }
@@ -169,7 +164,6 @@ export const Truck = (props) => {
                                             </div>
                                         </>
                                         )
-
                                 }
                             </div>
 
@@ -218,7 +212,5 @@ export const Truck = (props) => {
 
         </>
     )
-
-
 
 }

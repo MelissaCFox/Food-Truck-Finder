@@ -61,7 +61,7 @@ export const Neighborhood = () => {
                     }
 
                 </div>
-                    Trucks in the Area This Week
+                Trucks in the Area This Week
                 <div className="neighborhood__schedule schedule">
                     <div className="weekday card">
                         <div className="day__name">Sunday</div>
