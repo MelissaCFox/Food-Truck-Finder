@@ -84,8 +84,8 @@ export const Owner = (props) => {
                                         className="btn btn-primary"> Retire Truck </Button>
                                     <Modal
                                         isOpen={confirm}
-                                        fullscreen="lg"
-                                        size="lg"
+                                        fullscreen="sm"
+                                        size="sm"
                                         toggle={toggle}
                                     >
                                         <ModalHeader toggle={toggle3}>

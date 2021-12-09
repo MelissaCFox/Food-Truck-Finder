@@ -75,8 +75,11 @@ export const Truck = (props) => {
                     </div>
                 </div>
                 <div className="truck__currentLocation">
-                    Find Us Today In {currentNeighborhood?.name}
-
+                    {
+                        currentNeighborhood
+                            ? <div>Find Us Today in {currentNeighborhood.name}!</div>
+                            : <div>We Are Off Today!</div>
+                    }
                 </div>
             </div>
 
@@ -124,24 +127,30 @@ export const Truck = (props) => {
             <div className="truck__reviews">
                 <div className="review-list">
                     {
-                        truck?.userTruckReviews?.map(review => {
-                            return <div className="card review-card" key={review.id}>
-                                <div>{review.date}</div>
-                                <div>{review.review}</div>
-                                {
-                                    review.userId === getCurrentUser().id
-                                        ? (<div className="review-options">
-                                            <Button onClick={() => {}}>Edit Review</Button>
-                                            <Button onClick={() => {ReviewRepository.delete(review.id).then(()=>{
-                                                truckId
-                                                ? TruckRepository.get(truckId).then(setTruck)
-                                                : TruckRepository.get(props.truckId).then(setTruck)})}
+                        truck.userTruckReviews.length > 0
+                            ? truck?.userTruckReviews?.map(review => {
+                                return <div className="card review-card" key={review.id}>
+                                    <div>{review.date}</div>
+                                    <div>{review.review}</div>
+                                    {
+                                        review.userId === getCurrentUser().id
+                                            ? (<div className="review-options">
+                                                <Button onClick={() => { }}>Edit Review</Button>
+                                                <Button onClick={() => {
+                                                    ReviewRepository.delete(review.id).then(() => {
+                                                        truckId
+                                                            ? TruckRepository.get(truckId).then(setTruck)
+                                                            : TruckRepository.get(props.truckId).then(setTruck)
+                                                    })
+                                                }
                                                 }>Delete Review</Button>
-                                        </div>)
-                                        : ""
-                                }
-                            </div>
-                        })
+                                            </div>)
+                                            : ""
+                                    }
+                                </div>
+                            })
+                            : <div>No Reviews Yet</div>
+
                     }
                 </div>
                 <div>
