@@ -1,19 +1,12 @@
 import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
-import { Button } from "reactstrap"
-import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
-import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
+import { Review } from "../reviews/Review"
 import { Favorites } from "./Favorites"
 
 export const User = (props) => {
     const [user, setUser] = useState({})
-    const [allTrucks, setAllTrucks] = useState([])
-    const { getCurrentUser } = useSimpleAuth()
 
-    useEffect(() => {
-        TruckRepository.getAll().then(setAllTrucks)
-    }, [])
 
     useEffect(() => {
         UserRepository.get(props.userId).then(setUser)
@@ -30,20 +23,7 @@ export const User = (props) => {
                 <h3>My Reviews</h3>
                 {
                     user.userTruckReviews?.map(review => {
-                        const foundTruck = allTrucks.find(truck => truck.id === review.truckId)
-                        return <li className="card review-card" key={review.id}>
-                            <div>{foundTruck.name}</div>
-                            <div>{review.date}</div>
-                            <div>{review.review}</div>
-                            {
-                                review.userId === getCurrentUser().id
-                                    ? (<div className="review-options">
-                                        <Button>Edit Review</Button>
-                                        <Button>Delete Review</Button>
-                                    </div>)
-                                    : ""
-                            }
-                        </li>
+                        return <Review key={review.id} review={review} user={user} setUser={setUser}/>
                     })
                 }
             </ul>

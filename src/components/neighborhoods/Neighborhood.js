@@ -43,7 +43,7 @@ export const Neighborhood = () => {
     return (
         <>
             <div className="neighborhood__header">
-                <div className="neighborhood__image"><img class="neighborhood-logo" src={neighborhood.profileImgSrc} /></div>
+                <div className="neighborhood__image"><img className="neighborhood-logo" src={neighborhood.profileImgSrc} /></div>
                 <div className="neighborhood__name">{neighborhood.name}</div>
                 <div className="neighborhood__description">{neighborhood.description}</div>
                 <div className="neighborhood__currentTrucks">
