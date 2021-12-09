@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
-import { Button, Card, CardBody, Collapse, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Collapse, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import UserRepository from "../../repositories/UserRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import { Truck } from "../trucks/Truck"
@@ -14,6 +14,8 @@ export const Owner = (props) => {
     const toggle = () => setModal(!modal)
     const [collapse, setCollapse] = useState(false)
     const toggle2 = () => setCollapse(!collapse)
+    const [confirm, setConfirm] = useState(false)
+    const toggle3 = () => setConfirm(!confirm)
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -78,8 +80,27 @@ export const Owner = (props) => {
                                     <Button type="retire"
                                         color="danger"
                                         value={foundTruck.id}
-                                        onClick={e => TruckRepository.delete(e.target.value).then(TruckRepository.getAll().then(setTrucks))}
+                                        onClick={toggle3}
                                         className="btn btn-primary"> Retire Truck </Button>
+                                    <Modal
+                                        isOpen={confirm}
+                                        fullscreen="lg"
+                                        size="lg"
+                                        toggle={toggle}
+                                    >
+                                        <ModalHeader toggle={toggle3}>
+                                            Are You Sure You Want to Retire {foundTruck.name}?
+                                        </ModalHeader>
+                                        <ModalBody>
+                                        <Button onClick={() => {TruckRepository.delete(foundTruck.id).then(toggle3).then(TruckRepository.getAll().then(setTrucks))}}>
+                                                Yes
+                                            </Button>
+                                            <Button onClick={toggle3}>
+                                                Cancel
+                                            </Button>
+                                        </ModalBody>
+ 
+                                    </Modal>
 
                                 </li>
                             }

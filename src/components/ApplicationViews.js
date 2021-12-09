@@ -6,7 +6,7 @@ import { Profile } from "./profile/Profile"
 import { NeighborhoodTruckList } from "./trucks/NeighborhoodTrucks"
 import { Truck } from "./trucks/Truck"
 
-export default () => {
+export const ApplicationViews = () => {
     const {getCurrentUser} = useSimpleAuth()
     
     return (

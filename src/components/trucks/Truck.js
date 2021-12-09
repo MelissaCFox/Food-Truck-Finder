@@ -3,11 +3,12 @@ import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
-import { ReviewForm } from "./ReviewForm"
+import { ReviewForm } from "../reviews/ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
-import useResourceResolver from "../../hooks/resource/useResourceResolver"
 import { Button } from "reactstrap"
+import ReviewRepository from "../../repositories/ReviewRepository"
+
 
 
 export const Truck = (props) => {
@@ -127,6 +128,18 @@ export const Truck = (props) => {
                             return <div className="card review-card" key={review.id}>
                                 <div>{review.date}</div>
                                 <div>{review.review}</div>
+                                {
+                                    review.userId === getCurrentUser().id
+                                        ? (<div className="review-options">
+                                            <Button onClick={() => {}}>Edit Review</Button>
+                                            <Button onClick={() => {ReviewRepository.delete(review.id).then(()=>{
+                                                truckId
+                                                ? TruckRepository.get(truckId).then(setTruck)
+                                                : TruckRepository.get(props.truckId).then(setTruck)})}
+                                                }>Delete Review</Button>
+                                        </div>)
+                                        : ""
+                                }
                             </div>
                         })
                     }

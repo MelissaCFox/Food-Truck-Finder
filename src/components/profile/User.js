@@ -1,21 +1,22 @@
 import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
 import { Button } from "reactstrap"
+import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
-import { TruckCard } from "../trucks/TruckCard"
 import { Favorites } from "./Favorites"
 
 export const User = (props) => {
     const [user, setUser] = useState({})
     const [allTrucks, setAllTrucks] = useState([])
+    const { getCurrentUser } = useSimpleAuth()
 
     useEffect(() => {
-            TruckRepository.getAll().then(setAllTrucks)
+        TruckRepository.getAll().then(setAllTrucks)
     }, [])
 
     useEffect(() => {
-            UserRepository.get(props.userId).then(setUser)
+        UserRepository.get(props.userId).then(setUser)
     }, [])
 
     return (
@@ -34,6 +35,14 @@ export const User = (props) => {
                             <div>{foundTruck.name}</div>
                             <div>{review.date}</div>
                             <div>{review.review}</div>
+                            {
+                                review.userId === getCurrentUser().id
+                                    ? (<div className="review-options">
+                                        <Button>Edit Review</Button>
+                                        <Button>Delete Review</Button>
+                                    </div>)
+                                    : ""
+                            }
                         </li>
                     })
                 }

@@ -15,4 +15,8 @@ export default {
         return await fetchIt(`${Settings.remoteURL}/userTruckReviews`, "POST", JSON.stringify(reviewObj))
     },
 
+    async delete(reviewId) {
+        return await fetchIt(`${Settings.remoteURL}/userTruckReviews/${reviewId}`, "DELETE")
+    }
+
 }
