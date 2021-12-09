@@ -80,16 +80,23 @@ export const Truck = (props) => {
             truckId: favoriteTruckId
         }
         if (truckId) {
-            const like = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
-            existingLike
-                ? UserTruckFavoriteRepository.delete(like.id).then(() => {
+            
+            if (existingLike) {
+                
+                const like = favorites.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
+                UserTruckFavoriteRepository.delete(like.id).then(() => {
                     setExistingLike(false)
-                })
-                : UserTruckFavoriteRepository.add(newLike).then(() => {
-                    setExistingLike(true)
-                })
-        }
 
+                })
+
+            } else {
+                UserTruckFavoriteRepository.add(newLike).then(() => {
+                    setExistingLike(true)
+
+                })
+
+            }
+        }
     }
 
     return (
@@ -105,10 +112,10 @@ export const Truck = (props) => {
                     <div className="truck__favorite">
                         {
                             truckId
-                            ? existingLike
-                                ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
-                                : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
-                            : ""
+                                ? existingLike
+                                    ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
+                                    : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
+                                : ""
                         }
                     </div>
                     <div className="truck__info">
@@ -181,7 +188,7 @@ export const Truck = (props) => {
                                     {
                                         review.userId === getCurrentUser().id
                                             ? (<div className="review-options">
-                                                <Button onClick={() => { }}>Edit Review</Button>
+                                                <Button onClick={() => { }}>Edit/Delete</Button>
                                                 <Button onClick={() => {
                                                     ReviewRepository.delete(review.id).then(() => {
                                                         truckId
@@ -196,7 +203,6 @@ export const Truck = (props) => {
                                 </div>
                             })
                             : <div>No Reviews Yet</div>
-
                     }
                 </div>
                 <div>
