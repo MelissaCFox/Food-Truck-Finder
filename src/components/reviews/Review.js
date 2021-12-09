@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { Button } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
-import UserRepository from "../../repositories/UserRepository"
 
 
-export const Review = ({ review, user, setUser }) => {
+export const Review = ({ review, user, setUserReviews, setTruck }) => {
     const { getCurrentUser } = useSimpleAuth()
+    const { truckId } = useParams()
 
 
     return (
         <div className="card review-card" key={review.id}>
+            {
+                truckId
+                    ? <div>{review.truck?.name}</div>
+                    : <div>{review.truck?.name}</div>
+            }
 
-            <div>{review.truck?.name}</div>
             <div>{review.date}</div>
             <div>{review.review}</div>
             {
@@ -23,7 +26,9 @@ export const Review = ({ review, user, setUser }) => {
                         <Button onClick={() => { }}>Edit</Button>
                         <Button color="danger" onClick={() => {
                             ReviewRepository.delete(review.id).then(() => {
-                                UserRepository.get(user.id).then(setUser)
+                                truckId
+                                    ? TruckRepository.get(truckId).then(setTruck)
+                                    : ReviewRepository.getAllForUser(user.id).then(setUserReviews)
                             })
                         }
                         }>Delete Review</Button>
