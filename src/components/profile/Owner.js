@@ -21,8 +21,12 @@ export const Owner = (props) => {
         TruckRepository.getAll().then(setTrucks)
     }, [])
 
-    useEffect(() => {
+    const refreshUser = () => {
         UserRepository.get(props.userId).then(setUser)
+    }
+
+    useEffect(() => {
+        refreshUser()
     }, [])
 
     return (
@@ -75,7 +79,7 @@ export const Owner = (props) => {
                             const foundTruck = trucks.find(truck => truck.id === truckOwner.truckId)
                             if (foundTruck) {
                                 return <li className="card" key={truckOwner.id}>
-                                    <Truck key={foundTruck.id} truckId={foundTruck.id} />
+                                    <Truck key={foundTruck.id} truckId={foundTruck.id} refresh={refreshUser} />
 
                                     <Button type="retire"
                                         color="danger"
