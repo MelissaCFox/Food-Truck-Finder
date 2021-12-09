@@ -25,7 +25,7 @@ export const Favorites = (props) => {
                 const foundTruck = allTrucks?.find(truck => truck.id === favorite.truckId)
                 if (foundTruck) {
                     return <li className="card truck" key={foundTruck.id}>
-                        <TruckCard truckId={foundTruck.id} />
+                        <TruckCard key={foundTruck.id} truckId={foundTruck.id} />
                     </li>
                 }
             })

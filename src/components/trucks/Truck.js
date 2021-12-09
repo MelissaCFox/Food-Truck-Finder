@@ -8,6 +8,7 @@ import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import { Button } from "reactstrap"
 import ReviewRepository from "../../repositories/ReviewRepository"
+import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 
 
 
@@ -17,6 +18,11 @@ export const Truck = (props) => {
     const [neighborhoods, setNeighborhoods] = useState([])
     const [truckLocations, setTruckLocations] = useState([])
     const { getCurrentUser } = useSimpleAuth()
+    const [favorites, setFavorites] = useState([])
+
+    useEffect(() => {
+        UserTruckFavoriteRepository.getAll().then(setFavorites)
+    },[])
 
     useEffect(() => {
         truckId
@@ -51,9 +57,22 @@ export const Truck = (props) => {
         TruckRepository.get(props.truckId).then(() => { TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations) })
     }
 
+    
     const currentDayId = new Date().getDay() + 1
     const currentTruckLocation = truck?.truckLocations?.find(location => location.dayId === currentDayId)
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
+    const foundLike = favorites.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
+    
+    const toggleFavorite = (truckId) => {
+        const newLike = {
+            userId: getCurrentUser().id,
+            truckId: truckId
+        }
+        
+        foundLike
+        ? UserTruckFavoriteRepository.delete(foundLike.id)
+        : UserTruckFavoriteRepository.add(newLike)
+    }
 
     return (
         <>
@@ -64,6 +83,14 @@ export const Truck = (props) => {
                     </div>
                     <div className="truck__image">
                         <img className="truck-logo" src={truck.profileImgSrc} alt={`${truck.name} logo`} />
+                    </div>
+                    <div className="truck__favorite">
+                        {
+                            foundLike
+                            ? <button className="star-icon" onClick={() => {toggleFavorite(truck.id)}}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
+                            : <button className="star-icon" onClick={() => {toggleFavorite(truck.id)}}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
+
+                        }
                     </div>
                     <div className="truck__info">
                         <div className="truck__info--type">{truck.foodType?.type}</div>
@@ -127,7 +154,7 @@ export const Truck = (props) => {
             <div className="truck__reviews">
                 <div className="review-list">
                     {
-                        truck.userTruckReviews.length > 0
+                        truck?.userTruckReviews?.length > 0
                             ? truck?.userTruckReviews?.map(review => {
                                 return <div className="card review-card" key={review.id}>
                                     <div>{review.date}</div>

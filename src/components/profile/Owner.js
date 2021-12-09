@@ -59,7 +59,7 @@ export const Owner = (props) => {
 
                     <Button color="success" outline onClick={toggle2}>Favorites</Button>
                     <div>
-                        <Collapse isOpen={collapse}>
+                        <Collapse animation="false" isOpen={collapse}>
                             <Favorites userId={props.userId} />
                         </Collapse>
                     </div>
@@ -84,6 +84,7 @@ export const Owner = (props) => {
                                         className="btn btn-primary"> Retire Truck </Button>
                                     <Modal
                                         isOpen={confirm}
+                                        centered
                                         fullscreen="sm"
                                         size="sm"
                                         toggle={toggle}

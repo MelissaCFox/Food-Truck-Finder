@@ -160,3 +160,8 @@ button {
   flex-direction: column;
   flex-wrap: wrap;
 }
+
+.star-icon {
+  width: 100px;
+  height: 100px
+}
