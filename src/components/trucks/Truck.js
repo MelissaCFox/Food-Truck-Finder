@@ -56,7 +56,7 @@ export const Truck = (props) => {
 
     }, [truckId])
 
-    const createNewLocationId = (truckId, neighborhoodId, dayId) => {
+    const createNewLocation = (truckId, neighborhoodId, dayId) => {
         const newTruckLocation = {
             truckId: truckId,
             neighborhoodId: parseInt(neighborhoodId),
@@ -148,7 +148,7 @@ export const Truck = (props) => {
                             dayId={day.id} 
                             truckId={truck.id} 
                             truckPage={truckId} 
-                            createNewLocationId={createNewLocationId}
+                            createNewLocation={createNewLocation}
                             truckLocations={truckLocations}
                             setTruckLocations={setTruckLocations}
                             neighborhoods={neighborhoods} 

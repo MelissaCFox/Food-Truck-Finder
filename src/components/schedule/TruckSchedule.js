@@ -4,7 +4,7 @@ import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 
 
-export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, neighborhoods }) => {
+export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods }) => {
 
     const [truckNeighborhoods, setTruckNeighborhoods] = useState([])
     const [truckNeighborhood, setTruckNeighborhood] = useState({})
@@ -43,7 +43,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, 
                                             defaultValue=""
                                             name="location"
                                             id="locationId"
-                                            onChange={e => createNewLocationId(truckId, e.target.value, dayId)}
+                                            onChange={e => createNewLocation(truckId, e.target.value, dayId)}
                                             className="form-control"
                                         >
                                             <option value="">--Change Location--</option>
@@ -65,7 +65,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, 
                                         name="location"
                                         id="locationId"
                                         onChange={e => {
-                                            createNewLocationId(truckId, e.target.value, dayId)
+                                            createNewLocation(truckId, e.target.value, dayId)
                                         
                                         }}
                                         className="form-control"
