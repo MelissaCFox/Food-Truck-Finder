@@ -29,5 +29,9 @@ export default {
 
     async update(truckLocationId, newTruckLocationObj) {
         return await fetchIt(`${Settings.remoteURL}/truckLocations/${truckLocationId}`, "PUT", JSON.stringify(newTruckLocationObj))
+    },
+
+    async getAllDays() {
+        return await fetchIt(`${Settings.remoteURL}/days`)
     }
 }

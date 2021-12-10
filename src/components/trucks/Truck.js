@@ -8,6 +8,7 @@ import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
+import { Schedule } from "../schedule/Schedule"
 
 
 
@@ -19,6 +20,11 @@ export const Truck = (props) => {
     const { getCurrentUser } = useSimpleAuth()
     const [favorites, setFavorites] = useState([])
     const [existingLike, setExistingLike] = useState(false)
+    const [days, setDays] = useState([])
+
+    useEffect(() => {
+        TruckLocationRepository.getAllDays().then(setDays)
+    },[])
 
     useEffect(() => {
         const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
@@ -134,40 +140,17 @@ export const Truck = (props) => {
             <div className="truck__schedule">
                 Current Schedule
                 <div className="schedule">
-                    {
-                        truckLocations.map(location => {
-                            return <div className="card schedule-card" key={location.id}>
-                                <div>{location.day.day}</div>
-                                {
-                                    truckId
-                                        ? <NeighborhoodCard neighborhoodId={location.neighborhood?.id} />
-                                        : (<>
-                                            <div>{location.neighborhood.name}</div>
-                                            <NeighborhoodCard key={location.neighborhood.id} neighborhoodId={location.neighborhood?.id} />
-                                            <div className="form-group">
-                                                <select
-                                                    key={location.neighborhood.id}
-                                                    defaultValue=""
-                                                    name="location"
-                                                    id="locationId"
-                                                    onChange={e => createNewLocationId(location.truck.id, e.target.value, location.day.id)}
-                                                    className="form-control"
-                                                >
-                                                    <option value="">--Change Location--</option>
-                                                    {
-                                                        neighborhoods.map(neighborhood => {
-                                                            return <option key={neighborhood.id} id={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>
-                                                        })
-                                                    }
-                                                </select>
-                                            </div>
-                                        </>
-                                        )
-                                }
-                            </div>
 
+                    {
+                        days.map(day => {
+                            return <div className="card schedule-card" key={day.id}>
+                            <div className="day__name">{day.day}</div>
+                            <Schedule key={`schedule--${day.id}`} dayId={day.id} truckId={truck.id} truckPage={truckId} />
+                            </div>
                         })
                     }
+
+                    
                 </div>
             </div>
             Customer Reviews
