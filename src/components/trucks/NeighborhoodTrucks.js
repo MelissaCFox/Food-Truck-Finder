@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { Input } from "reactstrap"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
@@ -7,6 +8,7 @@ import { TruckList } from "./TruckList"
 export const NeighborhoodTruckList = () => {
 const [neighborhoods, setNeighborhoods] = useState([])
 const [dateString, setDateString] = useState("")
+const history = useHistory()
 
 let date = new Date()
 
@@ -39,7 +41,7 @@ return (
     {
         neighborhoods.map(neighborhood => {
             return <li className="card neighborhood" key={neighborhood.id}>
-                <div>{neighborhood.name}</div>
+                <button onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>{neighborhood.name}</button>
                 <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={date}/>
 
             </li>

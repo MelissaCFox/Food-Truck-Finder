@@ -2,13 +2,12 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
-import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import { ReviewForm } from "../reviews/ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
-import { Schedule } from "../schedule/Schedule"
+import { TruckSchedule } from "../schedule/TruckSchedule"
 
 
 
@@ -143,9 +142,9 @@ export const Truck = (props) => {
 
                     {
                         days.map(day => {
-                            return <div className="card schedule-card" key={day.id}>
+                            return <div key={day.id} className="card schedule-card">
                             <div className="day__name">{day.day}</div>
-                            <Schedule key={`schedule--${day.id}`} dayId={day.id} truckId={truck.id} truckPage={truckId} />
+                            <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`} dayId={day.id} truckId={truck.id} truckPage={truckId} createNewLocationId={createNewLocationId} />
                             </div>
                         })
                     }

@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useEffect } from "react/cjs/react.development"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
-import { Schedule } from "../schedule/Schedule"
+import { NeighborhoodSchedule } from "../schedule/NeighborhoodSchedule"
+import { Schedule } from "../schedule/TruckSchedule"
 import { TruckCard } from "../trucks/TruckCard"
 
 
@@ -57,7 +58,7 @@ export const Neighborhood = () => {
                             return <div key={day.id} className="weekday card">
                                 <div className="day__name">{day.day}</div>
                                 <div className="truck-card">
-                                    <Schedule key={`schedule--${day.id}`} neighborhoodId={neighborhoodId} dayId={day.id} />
+                                    <NeighborhoodSchedule key={`schedule--${day.id}`} neighborhoodId={neighborhoodId} dayId={day.id} />
                                 </div>
                             </div>
                         })
