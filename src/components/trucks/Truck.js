@@ -149,6 +149,8 @@ export const Truck = (props) => {
                             truckId={truck.id} 
                             truckPage={truckId} 
                             createNewLocationId={createNewLocationId}
+                            truckLocations={truckLocations}
+                            setTruckLocations={setTruckLocations}
                             neighborhoods={neighborhoods} 
                             />
                             </div>

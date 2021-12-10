@@ -11,7 +11,7 @@ export const NeighborhoodCard = ({neighborhoodId}) => {
         if (neighborhoodId) {
             NeighborhoodRepository.get(neighborhoodId).then(setNeighborhood)
         }
-    },[])
+    },[neighborhoodId])
 
 
     return (

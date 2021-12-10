@@ -5,19 +5,19 @@ import TruckRepository from "../../repositories/TruckRepository"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 
 
-export const TruckCard = (props) => {
+export const TruckCard = ({truckId}) => {
     const history = useHistory()
     const [truck, setTruck] = useState({})
     const [favorites, setFavorites] = useState([])
     const {getCurrentUser} = useSimpleAuth()
 
     useEffect(() => {
-        TruckRepository.get(props.truckId).then(setTruck)
-    },[])
+        TruckRepository.get(truckId).then(setTruck)
+    },[truckId])
 
     useEffect(() => {
         UserTruckFavoriteRepository.getAll().then(setFavorites)
-    },[])
+    },[truckId])
 
     const favorite = favorites.find(fav => fav.userId === getCurrentUser().id && fav.truckId === truck?.id )
 

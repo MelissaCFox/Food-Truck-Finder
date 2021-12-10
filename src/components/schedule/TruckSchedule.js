@@ -1,11 +1,10 @@
 import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
-import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 
 
-export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, neighborhoods }) => {
+export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, neighborhoods}) => {
 
     const [truckNeighborhoods, setTruckNeighborhoods] = useState([])
     const [truckNeighborhood, setTruckNeighborhood] = useState({})
@@ -14,7 +13,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, 
         if (truckId) {
             TruckLocationRepository.getTruckLocationsByTruckAndDay(truckId, dayId).then(setTruckNeighborhoods)
         }
-    }, [])
+    }, [truckId, dayId])
 
     useEffect(() => {
         if (truckNeighborhoods && neighborhoods) {
@@ -22,7 +21,6 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, 
             setTruckNeighborhood(foundNeighborhood)
         }
     }, [truckNeighborhoods, neighborhoods])
-
 
 
     return (
@@ -33,7 +31,6 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocationId, 
                         ? truckNeighborhood
                             ? <NeighborhoodCard key={truckNeighborhood.id} neighborhoodId={truckNeighborhood.id} />
                             : <div className="card card-body">Off Today</div>
-
 
                         : truckNeighborhood
                             ? (
