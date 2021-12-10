@@ -144,7 +144,13 @@ export const Truck = (props) => {
                         days.map(day => {
                             return <div key={day.id} className="card schedule-card">
                             <div className="day__name">{day.day}</div>
-                            <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`} dayId={day.id} truckId={truck.id} truckPage={truckId} createNewLocationId={createNewLocationId} />
+                            <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`} 
+                            dayId={day.id} 
+                            truckId={truck.id} 
+                            truckPage={truckId} 
+                            createNewLocationId={createNewLocationId}
+                            neighborhoods={neighborhoods} 
+                            />
                             </div>
                         })
                     }

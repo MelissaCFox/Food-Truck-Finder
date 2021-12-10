@@ -8,7 +8,9 @@ export const NeighborhoodCard = ({neighborhoodId}) => {
     const [neighborhood, setNeighborhood] = useState({})
 
     useEffect(() => {
-        NeighborhoodRepository.get(neighborhoodId).then(setNeighborhood)
+        if (neighborhoodId) {
+            NeighborhoodRepository.get(neighborhoodId).then(setNeighborhood)
+        }
     },[])
 
 
