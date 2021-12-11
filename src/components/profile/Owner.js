@@ -7,7 +7,7 @@ import { Truck } from "../trucks/Truck"
 import { TruckForm } from "./TruckForm"
 import { Favorites } from "./Favorites"
 
-export const Owner = ({userId}) => {
+export const Owner = ({ userId }) => {
     const [user, setUser] = useState({})
     const [trucks, setTrucks] = useState([])
     const [modal, setModal] = useState(false)
@@ -16,12 +16,13 @@ export const Owner = ({userId}) => {
     const toggle2 = () => setCollapse(!collapse)
     const [confirm, setConfirm] = useState(false)
     const toggle3 = () => setConfirm(!confirm)
+    const [truckToRetire, setTruckToRetire] = useState({})
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
-    }, [userId])
+    }, [user])
 
-   
+
     useEffect(() => {
         UserRepository.get(userId).then(setUser)
     }, [userId])
@@ -48,7 +49,7 @@ export const Owner = ({userId}) => {
                             Register New Truck
                         </ModalHeader>
                         <ModalBody>
-                            <TruckForm userId={userId} toggle={toggle} />
+                            <TruckForm userId={userId} toggle={toggle} setTrucks={setTrucks} setUser={setUser} />
                         </ModalBody>
                         <ModalFooter>
 
@@ -73,42 +74,51 @@ export const Owner = ({userId}) => {
                 <div className="truck-list">
                     {
                         user.truckOwners?.map(truckOwner => {
-                            const foundTruck = trucks.find(truck => truck.id === truckOwner.truckId)
-                            
-                                return <li className="card" key={truckOwner.id}>
-                                    <Truck key={foundTruck.id} truckID={foundTruck.id} />
+                            let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
 
-                                    <Button type="retire"
-                                        color="danger"
-                                        value={foundTruck.id}
-                                        onClick={toggle3}
-                                        className="btn btn-primary"> Retire Truck </Button>
-                                    <Modal
-                                        isOpen={confirm}
-                                        centered
-                                        fullscreen="sm"
-                                        size="sm"
-                                        toggle={toggle}
-                                    >
-                                        <ModalHeader toggle={toggle3}>
-                                            Are You Sure You Want to Retire {foundTruck.name}?
-                                        </ModalHeader>
-                                        <ModalBody>
-                                        <Button onClick={() => {TruckRepository.delete(foundTruck.id).then(toggle3).then(TruckRepository.getAll().then(setTrucks))}}>
-                                                Yes
-                                            </Button>
-                                            <Button onClick={toggle3}>
-                                                Cancel
-                                            </Button>
-                                        </ModalBody>
- 
-                                    </Modal>
+                            return <li className="card" key={truckOwner.id}>
+                                <Truck key={foundTruck?.id} truckID={foundTruck?.id} />
 
-                                </li>
-                            
+                                <Button type="retire"
+                                    color="danger"
+                                    value={foundTruck?.id}
+                                    onClick={() => {
+                                        setTruckToRetire(foundTruck)
+                                        toggle3()
+                                    }}
+                                    className="btn btn-primary"> Retire Truck </Button>
+
+
+                            </li>
+
                         })
 
                     }
+                    <Modal
+                        isOpen={confirm}
+                        centered
+                        fullscreen="sm"
+                        size="sm"
+                        toggle={toggle}
+                    >
+                        <ModalHeader toggle={toggle3}>
+                            Are You Sure You Want to Retire {truckToRetire.name}?
+                        </ModalHeader>
+                        <ModalBody>
+                            <Button onClick={() => {
+                                TruckRepository.delete(truckToRetire.id).then(() => {
+                                    UserRepository.get(userId).then(setUser)
+                                        .then(toggle3)
+                                })
+                            }}>
+                                Yes
+                            </Button>
+                            <Button onClick={toggle3}>
+                                Cancel
+                            </Button>
+                        </ModalBody>
+
+                    </Modal>
                 </div>
             </div>
         </>

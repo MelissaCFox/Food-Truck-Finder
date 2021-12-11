@@ -5,7 +5,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const TruckForm = (props) => {
+export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
     const [foodTypes, setFoodTypes] = useState([])
     const [name, setName] = useState("")
     const [foodTypeId, setFoodTypeId] = useState(0)
@@ -38,13 +38,15 @@ export const TruckForm = (props) => {
 
             TruckRepository.add(truck).then(res => {
                 const truckOwner = {
-                    userId: props.userId,
+                    userId: userId,
                     truckId: res.id
                 }
-                UserRepository.addTruckOwner(truckOwner)
+                UserRepository.addTruckOwner(truckOwner).then(() => {
+                    UserRepository.get(userId).then(setUser)
+                    toggle()
+                })
             })
-    
-            props.toggle()
+
         } else {
             window.alert("Please fill in all fields")
         }
@@ -52,7 +54,7 @@ export const TruckForm = (props) => {
 
     return (
         <>
-            Register a New Truck For User # {props.userId}
+            Register a New Truck For User # {userId}
 
 
             <form className="truckForm">
