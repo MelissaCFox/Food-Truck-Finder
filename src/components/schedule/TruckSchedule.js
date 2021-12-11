@@ -50,6 +50,8 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             className="form-control"
                                         >
                                             <option value="">--Change Location--</option>
+                                            <option value="0">OFF</option>
+
                                             {
                                                 neighborhoods.map(neighborhood => {
                                                     return <option key={`neighborhood--${dayId}--${neighborhood.id}`} id={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>
@@ -69,11 +71,12 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                         id="locationId"
                                         onChange={e => {
                                             createNewLocation(truckId, e.target.value, dayId)
-
+                                            TruckLocationRepository.getTruckLocationsByTruckAndDay(truckId, dayId).then(setTruckNeighborhoods)
                                         }}
                                         className="form-control"
                                     >
                                         <option value="">--Change Location--</option>
+                                        <option value="0">OFF</option>
                                         {
                                             neighborhoods.map(neighborhood => {
                                                 return <option key={neighborhood.id} id={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>

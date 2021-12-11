@@ -27,6 +27,10 @@ const TruckLocationRepository = {
         return await fetchIt(`${Settings.remoteURL}/truckLocations`, "POST", JSON.stringify(truckLocation))
     },
 
+    async delete(id) {
+        return await fetchIt(`${Settings.remoteURL}/truckLocations/${id}`, "DELETE")
+    },
+
     async update(truckLocationId, newTruckLocationObj) {
         return await fetchIt(`${Settings.remoteURL}/truckLocations/${truckLocationId}`, "PUT", JSON.stringify(newTruckLocationObj))
     },

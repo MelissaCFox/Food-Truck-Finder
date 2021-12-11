@@ -11,7 +11,7 @@ import { TruckSchedule } from "../schedule/TruckSchedule"
 
 
 
-export const Truck = ({truckID}) => {
+export const Truck = ({ truckID }) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -23,7 +23,7 @@ export const Truck = ({truckID}) => {
 
     useEffect(() => {
         TruckLocationRepository.getAllDays().then(setDays)
-    },[truckID])
+    }, [truckID])
 
     useEffect(() => {
         const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
@@ -63,7 +63,11 @@ export const Truck = ({truckID}) => {
             dayId: dayId
         }
         const existingTruckLocation = truckLocations.find(location => location.truckId === truckId && location.dayId === dayId)
-        if (existingTruckLocation && neighborhoodId) {
+
+        if (existingTruckLocation && neighborhoodId === "0") {
+            TruckLocationRepository.delete(existingTruckLocation.id).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
+            
+        } else if (existingTruckLocation && neighborhoodId) {
             TruckLocationRepository.update(existingTruckLocation.id, newTruckLocation)
         } else if (neighborhoodId) {
             TruckLocationRepository.add(newTruckLocation).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
@@ -144,21 +148,21 @@ export const Truck = ({truckID}) => {
                     {
                         days.map(day => {
                             return <div key={day.id} className="card schedule-card">
-                            <div className="day__name">{day.day}</div>
-                            <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`} 
-                            dayId={day.id} 
-                            truckId={truck.id} 
-                            truckPage={truckId} 
-                            createNewLocation={createNewLocation}
-                            truckLocations={truckLocations}
-                            setTruckLocations={setTruckLocations}
-                            neighborhoods={neighborhoods} 
-                            />
+                                <div className="day__name">{day.day}</div>
+                                <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
+                                    dayId={day.id}
+                                    truckId={truck.id}
+                                    truckPage={truckId}
+                                    createNewLocation={createNewLocation}
+                                    truckLocations={truckLocations}
+                                    setTruckLocations={setTruckLocations}
+                                    neighborhoods={neighborhoods}
+                                />
                             </div>
                         })
                     }
 
-                    
+
                 </div>
             </div>
             Customer Reviews
