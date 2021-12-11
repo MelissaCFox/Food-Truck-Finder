@@ -88,6 +88,7 @@ export const Truck = ({truckID}) => {
                 const like = favorites.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
                 UserTruckFavoriteRepository.delete(like.id).then(() => {
                     setExistingLike(false)
+                    UserTruckFavoriteRepository.getAll().then(setFavorites)
                 })
 
             } else {

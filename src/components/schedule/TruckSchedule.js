@@ -43,7 +43,10 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             defaultValue=""
                                             name="location"
                                             id="locationId"
-                                            onChange={e => createNewLocation(truckId, e.target.value, dayId)}
+                                            onChange={e => {
+                                                createNewLocation(truckId, e.target.value, dayId)
+                                                TruckLocationRepository.getTruckLocationsByTruckAndDay(truckId, dayId).then(setTruckNeighborhoods)
+                                            }}
                                             className="form-control"
                                         >
                                             <option value="">--Change Location--</option>
@@ -66,7 +69,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                         id="locationId"
                                         onChange={e => {
                                             createNewLocation(truckId, e.target.value, dayId)
-                                        
+
                                         }}
                                         className="form-control"
                                     >
