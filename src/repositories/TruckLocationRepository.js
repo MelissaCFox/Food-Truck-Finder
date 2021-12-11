@@ -1,7 +1,7 @@
 import Settings from "./Settings";
 import { fetchIt } from "./Fetch";
 
-export default {
+const TruckLocationRepository = {
 
     async getTruckLocationsByDay(dayId) {
         return await fetchIt(`${Settings.remoteURL}/truckLocations?dayId=${dayId}&_expand=truck`)
@@ -35,3 +35,5 @@ export default {
         return await fetchIt(`${Settings.remoteURL}/days`)
     }
 }
+
+export default TruckLocationRepository

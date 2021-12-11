@@ -11,7 +11,7 @@ export const NeighborhoodSchedule = ({ neighborhoodId, dayId }) => {
         if (neighborhoodId) {
             TruckLocationRepository.getTruckLocationsByNeighborhoodAndDay(neighborhoodId, dayId).then(setNeighborhoodTrucks)
         }
-    }, [])
+    }, [neighborhoodId, dayId])
 
     return (
         <>

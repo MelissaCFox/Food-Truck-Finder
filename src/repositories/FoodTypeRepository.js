@@ -1,7 +1,7 @@
 import Settings from "./Settings";
 import { fetchIt } from "./Fetch";
 
-export default {
+const FoodTypeRepository = {
 
     async getAll() {
         return await fetchIt(`${Settings.remoteURL}/foodTypes`)
@@ -12,3 +12,5 @@ export default {
         return await fetchIt(`${Settings.remoteURL}/foodTypes/${foodtypeId}?_embed=trucks`)
     }
 }
+
+export default FoodTypeRepository

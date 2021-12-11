@@ -27,11 +27,11 @@ export const Favorites = ({ userId }) => {
                 user.userTruckFavorites?.length > 0
                     ? user.userTruckFavorites?.map(favorite => {
                         const foundTruck = allTrucks?.find(truck => truck.id === favorite.truckId)
-                        if (foundTruck) {
-                            return <li className="card truck" key={foundTruck.id}>
-                                <TruckCard key={foundTruck.id} truckId={foundTruck.id} />
-                            </li>
-                        }
+
+                        return <li className="card truck" key={foundTruck.id}>
+                            <TruckCard key={foundTruck.id} truckId={foundTruck.id} />
+                        </li>
+
                     })
                     : <li className="card truck"><div className="card-body">No Favorites Yet</div></li>
             }

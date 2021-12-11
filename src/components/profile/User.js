@@ -5,23 +5,23 @@ import UserRepository from "../../repositories/UserRepository"
 import { Review } from "../reviews/Review"
 import { Favorites } from "./Favorites"
 
-export const User = (props) => {
+export const User = ({userId}) => {
     const [user, setUser] = useState({})
     const [userReviews, setUserReviews] = useState([])
 
     useEffect(() => {
-        ReviewRepository.getAllForUser(props.userId).then(setUserReviews)
-    }, [])
+        ReviewRepository.getAllForUser(userId).then(setUserReviews)
+    }, [userId])
 
     useEffect(() => {
-        UserRepository.get(props.userId).then(setUser)
-    }, [])
+        UserRepository.get(userId).then(setUser)
+    }, [userId])
 
     return (
         <>
             <ul className="favorites">
                 <h3>My Favorite Food Trucks</h3>
-                <Favorites userId={props.userId} />
+                <Favorites userId={userId} />
             </ul>
 
             <ul className="reviews">

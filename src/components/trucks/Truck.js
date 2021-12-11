@@ -11,7 +11,7 @@ import { TruckSchedule } from "../schedule/TruckSchedule"
 
 
 
-export const Truck = (props) => {
+export const Truck = ({truckID}) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -23,7 +23,7 @@ export const Truck = (props) => {
 
     useEffect(() => {
         TruckLocationRepository.getAllDays().then(setDays)
-    },[])
+    },[truckID])
 
     useEffect(() => {
         const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
@@ -32,29 +32,29 @@ export const Truck = (props) => {
         } else {
             setExistingLike(false)
         }
-    }, [truck])
+    }, [truck, favorites, getCurrentUser])
 
     useEffect(() => {
         UserTruckFavoriteRepository.getAll().then(setFavorites)
-    }, [])
+    }, [truckID])
 
     useEffect(() => {
         truckId
             ? TruckLocationRepository.getTruckLocationsByTruck(truckId).then(setTruckLocations)
-            : TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations)
+            : TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations)
 
-    }, [])
+    }, [truckId, truckID])
 
     useEffect(() => {
         NeighborhoodRepository.getAll().then(setNeighborhoods)
-    }, [])
+    }, [truckID])
 
     useEffect(() => {
         truckId
             ? TruckRepository.get(truckId).then(setTruck)
-            : TruckRepository.get(props.truckId).then(setTruck)
+            : TruckRepository.get(truckID).then(setTruck)
 
-    }, [truckId])
+    }, [truckId, truckID])
 
     const createNewLocation = (truckId, neighborhoodId, dayId) => {
         const newTruckLocation = {
@@ -66,9 +66,9 @@ export const Truck = (props) => {
         if (existingTruckLocation && neighborhoodId) {
             TruckLocationRepository.update(existingTruckLocation.id, newTruckLocation)
         } else if (neighborhoodId) {
-            TruckLocationRepository.add(newTruckLocation).then(() => { TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations) })
+            TruckLocationRepository.add(newTruckLocation).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
         }
-        TruckRepository.get(props.truckId).then(() => { TruckLocationRepository.getTruckLocationsByTruck(props.truckId).then(setTruckLocations) })
+        TruckRepository.get(truckID).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
     }
 
 
@@ -113,8 +113,8 @@ export const Truck = (props) => {
                         {
                             truckId
                                 ? existingLike
-                                    ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
-                                    : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
+                                    ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img alt="star" className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
+                                    : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img alt="star" className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
                                 : ""
                         }
                     </div>
@@ -122,8 +122,8 @@ export const Truck = (props) => {
                         <div className="truck__info--type">{truck.foodType?.type}</div>
                         <div className="truck__info--description">{truck.description}</div>
                         <div className="truck__info--links">
-                            <a className="link" target="_blank" href={truck.websiteURL} ><img className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
-                            <a className="link" target="_blank" href={truck.instagramURL}><img className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
+                            <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
+                            <a className="link" target="_blank" rel="noreferrer" href={truck.instagramURL}><img alt="logo" className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
                         </div>
                     </div>
                 </div>

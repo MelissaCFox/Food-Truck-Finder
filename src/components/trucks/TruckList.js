@@ -4,36 +4,35 @@ import TruckRepository from "../../repositories/TruckRepository"
 import { TruckCard } from "./TruckCard"
 
 
-export const TruckList = (props) => {
+export const TruckList = ({ neighborhood, date }) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
-    }, [])
+    }, [date])
 
     useEffect(() => {
-        const currentDayId = props.date?.getDay() + 1
+        const currentDayId = date.getDay() + 1
         TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
-    }, [])
+    }, [date])
 
-    const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === props.neighborhood?.id)
+    const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
 
     return (
         <>
             <ul className="trucks">
                 {
-                    props.neighborhood
+                    neighborhood
                         ? filteredLocations.length > 0
                             ? filteredLocations.map(truckLocation => {
                                 const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
-                                if (foundTruck) {
-                                    return <li className="card truck" key={truckLocation.id}>
-                                        <TruckCard truckId={foundTruck.id}/>
-                                    </li>
-                                }
+                                return <li className="card truck" key={truckLocation.id}>
+                                    <TruckCard truckId={foundTruck.id} />
+                                </li>
+
                             })
-                            : <li className="card no-truck" key={props.neighborhood.id}>
+                            : <li className="card no-truck" key={neighborhood.id}>
                                 <div className="card-body">
                                     No Trucks Today
                                 </div>

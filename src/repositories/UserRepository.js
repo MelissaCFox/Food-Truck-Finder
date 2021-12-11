@@ -1,7 +1,7 @@
 import Settings from "./Settings";
 import { fetchIt } from "./Fetch";
 
-export default {
+const UserRepository = {
 
     async get(id) {
         return await fetchIt(`${Settings.remoteURL}/users/${id}?_embed=truckOwners&_embed=userTruckFavorites&_embed=userTruckReviews`)
@@ -17,3 +17,5 @@ export default {
 
 
 }
+
+export default UserRepository

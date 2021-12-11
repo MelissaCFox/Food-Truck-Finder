@@ -7,7 +7,7 @@ import { Truck } from "../trucks/Truck"
 import { TruckForm } from "./TruckForm"
 import { Favorites } from "./Favorites"
 
-export const Owner = (props) => {
+export const Owner = ({userId}) => {
     const [user, setUser] = useState({})
     const [trucks, setTrucks] = useState([])
     const [modal, setModal] = useState(false)
@@ -19,15 +19,12 @@ export const Owner = (props) => {
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
-    }, [])
+    }, [userId])
 
-    const refreshUser = () => {
-        UserRepository.get(props.userId).then(setUser)
-    }
-
+   
     useEffect(() => {
-        refreshUser()
-    }, [])
+        UserRepository.get(userId).then(setUser)
+    }, [userId])
 
     return (
         <>
@@ -51,7 +48,7 @@ export const Owner = (props) => {
                             Register New Truck
                         </ModalHeader>
                         <ModalBody>
-                            <TruckForm userId={props.userId} toggle={toggle} />
+                            <TruckForm userId={userId} toggle={toggle} />
                         </ModalBody>
                         <ModalFooter>
 
@@ -64,7 +61,7 @@ export const Owner = (props) => {
                     <Button color="success" outline onClick={toggle2}>Favorites</Button>
                     <div>
                         <Collapse animation="false" isOpen={collapse}>
-                            <Favorites userId={props.userId} />
+                            <Favorites userId={userId} />
                         </Collapse>
                     </div>
                 </div>
@@ -77,9 +74,9 @@ export const Owner = (props) => {
                     {
                         user.truckOwners?.map(truckOwner => {
                             const foundTruck = trucks.find(truck => truck.id === truckOwner.truckId)
-                            if (foundTruck) {
+                            
                                 return <li className="card" key={truckOwner.id}>
-                                    <Truck key={foundTruck.id} truckId={foundTruck.id} refresh={refreshUser} />
+                                    <Truck key={foundTruck.id} truckID={foundTruck.id} />
 
                                     <Button type="retire"
                                         color="danger"
@@ -108,7 +105,7 @@ export const Owner = (props) => {
                                     </Modal>
 
                                 </li>
-                            }
+                            
                         })
 
                     }

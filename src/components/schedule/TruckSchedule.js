@@ -36,7 +36,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                             ? (
                                 <>
                                     <div>{truckNeighborhood.name}</div>
-                                    <NeighborhoodCard key={`Profile--${truckId}--${dayId}--${truckNeighborhood?.id}`} neighborhoodId={truckNeighborhood.id} />
+                                    <NeighborhoodCard key={`Profile--${truckId}--${dayId}`} neighborhoodId={truckNeighborhood.id} />
                                     <div className="form-group">
                                         <select
                                             key={truckNeighborhood.id}

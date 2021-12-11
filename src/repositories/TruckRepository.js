@@ -1,7 +1,7 @@
 import Settings from "./Settings";
 import { fetchIt } from "./Fetch";
 
-export default {
+const TruckRepository = {
 
     async get(id) {
         return await fetchIt(`${Settings.remoteURL}/trucks/${id}?_expand=foodType&_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews`)
@@ -19,3 +19,5 @@ export default {
         return await fetchIt(`${Settings.remoteURL}/trucks/${id}`, "DELETE")
     }
 }
+
+export default TruckRepository

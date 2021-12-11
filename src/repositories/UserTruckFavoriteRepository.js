@@ -1,7 +1,7 @@
 import Settings from "./Settings";
 import { fetchIt } from "./Fetch";
 
-export default {
+const userTruckFavorites = {
 
     async get(id) {
         return await fetchIt(`${Settings.remoteURL}/userTruckFavorites/${id}?_expand=user&_expand=truck`)
@@ -19,3 +19,5 @@ export default {
         return await fetchIt(`${Settings.remoteURL}/userTruckFavorites/${id}`, "DELETE")
     }
 }
+
+export default userTruckFavorites

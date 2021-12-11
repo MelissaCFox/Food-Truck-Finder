@@ -4,7 +4,6 @@ import { useEffect } from "react/cjs/react.development"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodSchedule } from "../schedule/NeighborhoodSchedule"
-import { Schedule } from "../schedule/TruckSchedule"
 import { TruckCard } from "../trucks/TruckCard"
 
 
@@ -17,22 +16,22 @@ export const Neighborhood = () => {
 
     useEffect(() => {
         TruckLocationRepository.getAllDays().then(setDays)
-    }, [])
+    }, [neighborhoodId])
 
     useEffect(() => {
         NeighborhoodRepository.get(neighborhoodId).then(setNeighborhood)
-    }, [])
+    }, [neighborhoodId])
 
     useEffect(() => {
         const currentDayId = new Date().getDay() + 1
         TruckLocationRepository.getTruckLocationsByNeighborhoodAndDay(neighborhoodId, currentDayId).then(setTodaysTrucks)
-    }, [])
+    }, [neighborhoodId])
 
 
     return (
         <>
             <div className="neighborhood__header">
-                <div className="neighborhood__image"><img className="neighborhood-logo" src={neighborhood.profileImgSrc} /></div>
+                <div className="neighborhood__image"><img alt="logo" className="neighborhood-logo" src={neighborhood.profileImgSrc} /></div>
                 <div className="neighborhood__name">{neighborhood.name}</div>
                 <div className="neighborhood__description">{neighborhood.description}</div>
                 <div className="neighborhood__currentTrucks">
