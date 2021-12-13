@@ -49,7 +49,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
             {
                 review.userId === getCurrentUser().id
                     ? (<div className="review-options">
-                        <Button color="caution" onClick={editToggle}>Edit Review</Button>
+                        <Button color="secondary" onClick={editToggle}>Edit Review</Button>
 
                         <Modal animation="false"
                             isOpen={editModal}

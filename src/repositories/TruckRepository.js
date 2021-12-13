@@ -3,6 +3,10 @@ import { fetchIt } from "./Fetch";
 
 const TruckRepository = {
 
+    async getBasic(id) {
+        return await fetchIt(`${Settings.remoteURL}/trucks/${id}`)
+    },
+
     async get(id) {
         return await fetchIt(`${Settings.remoteURL}/trucks/${id}?_expand=foodType&_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews`)
     },
@@ -17,6 +21,10 @@ const TruckRepository = {
 
     async delete(id) {
         return await fetchIt(`${Settings.remoteURL}/trucks/${id}`, "DELETE")
+    },
+
+    async update(truckId, newTruckObj) {
+        return await fetchIt(`${Settings.remoteURL}/trucks/${truckId}`, "PUT", JSON.stringify(newTruckObj))
     }
 }
 

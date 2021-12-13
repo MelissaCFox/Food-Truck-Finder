@@ -8,10 +8,12 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
 import { TruckSchedule } from "../schedule/TruckSchedule"
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import UserRepository from "../../repositories/UserRepository"
 
 
 
-export const Truck = ({ truckID }) => {
+export const Truck = ({ truckID, setTrucks }) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -20,6 +22,14 @@ export const Truck = ({ truckID }) => {
     const [favorites, setFavorites] = useState([])
     const [existingLike, setExistingLike] = useState(false)
     const [days, setDays] = useState([])
+    const [editModal, setEditModal] = useState(false)
+    const editToggle = () => setEditModal(!editModal)
+    const [thisTruck, setThisTruck] = useState({})
+
+    useEffect(() => {
+        TruckRepository.getBasic(truckID).then(setThisTruck)
+    },[truckID])
+
 
     useEffect(() => {
         TruckLocationRepository.getAllDays().then(setDays)
@@ -81,8 +91,15 @@ export const Truck = ({ truckID }) => {
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
     const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
 
+    const updateTruck = () => {
+        TruckRepository.update(thisTruck.id, thisTruck)
+        .then(() => {
+            TruckRepository.getAll().then(setTrucks)
+        })
+        .then(editToggle)
+    }
+    
     const toggleFavorite = (favoriteTruckId) => {
-
         const newLike = {
             userId: getCurrentUser().id,
             truckId: favoriteTruckId
@@ -133,6 +150,40 @@ export const Truck = ({ truckID }) => {
                     </div>
                 </div>
                 <div className="truck__currentLocation">
+
+                    <Button onClick={editToggle}>Edit Details</Button>
+
+                    <Modal animation="false"
+                            isOpen={editModal}
+                            centered
+                            fullscreen="md"
+                            size="md"
+                            toggle={editToggle}
+                        >
+                            <ModalHeader toggle={editToggle}>
+                                Edit Truck Details
+                            </ModalHeader>
+                            <ModalBody>
+                                <input type="text" className="form-control" defaultValue={truck.name} 
+                                onChange={(e) => {
+                                    const copy = {...thisTruck}
+                                    copy.name = e.target.value
+                                    setThisTruck(copy)
+                                }} ></input>
+
+                            
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button onClick={() => updateTruck()}>
+                                    Save Changes
+                                </Button>
+                                <Button onClick={editToggle}>
+                                    Cancel
+                                </Button>
+                            </ModalFooter>
+                        </Modal>
+
+
                     {
                         currentNeighborhood
                             ? <div>Find Us Today in {currentNeighborhood.name}!</div>
