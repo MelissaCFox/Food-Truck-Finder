@@ -151,73 +151,80 @@ export const Truck = ({ truckID }) => {
                 </div>
                 <div className="truck__currentLocation">
 
-                    <Button onClick={editToggle}>Edit Details</Button>
+                    {
+                        truckId
+                            ? ""
+                            : <><Button onClick={editToggle}>Edit Details</Button>
 
-                    <Modal animation="false"
-                        isOpen={editModal}
-                        centered
-                        fullscreen="md"
-                        size="md"
-                        toggle={editToggle}
-                    >
-                        <ModalHeader toggle={editToggle}>
-                            Edit Truck Details
-                        </ModalHeader>
-                        <ModalBody>
-                            <label >Name</label>
-                            <input type="text" className="form-control" defaultValue={truck.name}
-                                onChange={(e) => {
-                                    const copy = { ...thisTruck }
-                                    copy.name = e.target.value
-                                    setThisTruck(copy)
-                                }} ></input>
-                            <label >Description</label>
-                            <input type="text" className="form-control" defaultValue={truck.description}
-                                onChange={(e) => {
-                                    const copy = { ...thisTruck }
-                                    copy.description = e.target.value
-                                    setThisTruck(copy)
-                                }} ></input>
-                            <label >Hours</label>
-                            <input type="text" className="form-control" defaultValue={truck.hours}
-                                onChange={(e) => {
-                                    const copy = { ...thisTruck }
-                                    copy.hours = e.target.value
-                                    setThisTruck(copy)
-                                }} ></input>
-                            <label >Website</label>
-                            <input type="text" className="form-control" defaultValue={truck.websiteURL}
-                                onChange={(e) => {
-                                    const copy = { ...thisTruck }
-                                    copy.websiteURL = e.target.value
-                                    setThisTruck(copy)
-                                }} ></input>
-                            <label >Instagram</label>
-                            <input type="text" className="form-control" defaultValue={truck.instagramURL}
-                                onChange={(e) => {
-                                    const copy = { ...thisTruck }
-                                    copy.instagramURL = e.target.value
-                                    setThisTruck(copy)
-                                }} ></input>
-                            <label >Profile Image</label>
-                            <input type="text" className="form-control" defaultValue={truck.profileImgSrc}
-                                onChange={(e) => {
-                                    const copy = { ...thisTruck }
-                                    copy.profileImgSrc = e.target.value
-                                    setThisTruck(copy)
-                                }} ></input>
+                                <Modal animation="false"
+                                    isOpen={editModal}
+                                    centered
+                                    fullscreen="md"
+                                    size="md"
+                                    toggle={editToggle}
+                                >
+                                    <ModalHeader toggle={editToggle}>
+                                        Edit Truck Details
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <label >Name</label>
+                                        <input type="text" className="form-control" defaultValue={truck.name}
+                                            onChange={(e) => {
+                                                const copy = { ...thisTruck }
+                                                copy.name = e.target.value
+                                                setThisTruck(copy)
+                                            }} ></input>
+                                        <label >Description</label>
+                                        <input type="text" className="form-control" defaultValue={truck.description}
+                                            onChange={(e) => {
+                                                const copy = { ...thisTruck }
+                                                copy.description = e.target.value
+                                                setThisTruck(copy)
+                                            }} ></input>
+                                        <label >Hours</label>
+                                        <input type="text" className="form-control" defaultValue={truck.hours}
+                                            onChange={(e) => {
+                                                const copy = { ...thisTruck }
+                                                copy.hours = e.target.value
+                                                setThisTruck(copy)
+                                            }} ></input>
+                                        <label >Website</label>
+                                        <input type="text" className="form-control" defaultValue={truck.websiteURL}
+                                            onChange={(e) => {
+                                                const copy = { ...thisTruck }
+                                                copy.websiteURL = e.target.value
+                                                setThisTruck(copy)
+                                            }} ></input>
+                                        <label >Instagram</label>
+                                        <input type="text" className="form-control" defaultValue={truck.instagramURL}
+                                            onChange={(e) => {
+                                                const copy = { ...thisTruck }
+                                                copy.instagramURL = e.target.value
+                                                setThisTruck(copy)
+                                            }} ></input>
+                                        <label >Profile Image</label>
+                                        <input type="text" className="form-control" defaultValue={truck.profileImgSrc}
+                                            onChange={(e) => {
+                                                const copy = { ...thisTruck }
+                                                copy.profileImgSrc = e.target.value
+                                                setThisTruck(copy)
+                                            }} ></input>
 
 
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={() => updateTruck()}>
-                                Save Changes
-                            </Button>
-                            <Button onClick={editToggle}>
-                                Cancel
-                            </Button>
-                        </ModalFooter>
-                    </Modal>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button onClick={() => updateTruck()}>
+                                            Save Changes
+                                        </Button>
+                                        <Button onClick={editToggle}>
+                                            Cancel
+                                        </Button>
+                                    </ModalFooter>
+                                </Modal></>
+
+                    }
+
+
 
 
                     {
