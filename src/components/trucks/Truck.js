@@ -27,7 +27,9 @@ export const Truck = ({ truckID }) => {
     const [thisTruck, setThisTruck] = useState({})
 
     useEffect(() => {
-        TruckRepository.getBasic(truckID).then(setThisTruck)
+        if (truckId) {
+            TruckRepository.getBasic(truckID).then(setThisTruck)
+        }
     }, [truckID])
 
 
@@ -210,7 +212,6 @@ export const Truck = ({ truckID }) => {
                                                 setThisTruck(copy)
                                             }} ></input>
 
-
                                     </ModalBody>
                                     <ModalFooter>
                                         <Button onClick={() => updateTruck()}>
@@ -221,11 +222,7 @@ export const Truck = ({ truckID }) => {
                                         </Button>
                                     </ModalFooter>
                                 </Modal></>
-
                     }
-
-
-
 
                     {
                         currentNeighborhood
