@@ -28,7 +28,7 @@ export const TruckList = ({ neighborhood, date }) => {
                             ? filteredLocations.map(truckLocation => {
                                 const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
                                 return <li className="card truck" key={truckLocation.id}>
-                                    <TruckCard truckId={foundTruck.id} />
+                                    <TruckCard truckId={foundTruck?.id} />
                                 </li>
 
                             })

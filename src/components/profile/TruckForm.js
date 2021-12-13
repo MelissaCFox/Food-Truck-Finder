@@ -42,6 +42,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     truckId: res.id
                 }
                 UserRepository.addTruckOwner(truckOwner).then(() => {
+                    TruckRepository.getAll().then(setTrucks)
                     UserRepository.get(userId).then(setUser)
                     toggle()
                 })
@@ -54,9 +55,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
 
     return (
         <>
-            Register a New Truck For User # {userId}
-
-
             <form className="truckForm">
 
                 <div className="form-group">

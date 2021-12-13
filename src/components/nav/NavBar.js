@@ -26,7 +26,7 @@ export const NavBar = () => {
                                 onKeyUp={() => {}}
                                 className="form-control w-100"
                                 type="search"
-                                placeholder="Search"
+                                placeholder="No Search Feature Yet"
                                 aria-label="Search" />
                         </li>
                     </ul>

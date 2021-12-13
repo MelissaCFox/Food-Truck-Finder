@@ -2,9 +2,10 @@ import { useState } from "react"
 import { Input } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
+import TruckRepository from "../../repositories/TruckRepository"
 
 
-export const ReviewForm = (props) => {
+export const ReviewForm = ({truckId, setTruck}) => {
     const [review, setReview] = useState("")
     const [date, setDate] = useState("")
     const { getCurrentUser } = useSimpleAuth()
@@ -12,13 +13,13 @@ export const ReviewForm = (props) => {
     const submitReview = () => {
         const reviewObj = {
             userId: getCurrentUser().id,
-            truckId: parseInt(props.truckId),
+            truckId: parseInt(truckId),
             review: review,
             date: date
         }
 
         if (review && date) {
-            ReviewRepository.add(reviewObj)
+            ReviewRepository.add(reviewObj).then(() => {TruckRepository.get(truckId).then(setTruck)})
         }
     }
 

@@ -24,7 +24,7 @@ export const FoodTruckFinder = () => {
         <Route path="/login">
             <Login />
         </Route>
-        <Route path="/register">
+        <Route path="/register">    
             <Register />
         </Route>
     </>

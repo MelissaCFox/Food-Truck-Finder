@@ -180,7 +180,7 @@ export const Truck = ({ truckID }) => {
                     {
                         getCurrentUser().owner
                             ? ""
-                            : <ReviewForm truckId={truckId} />
+                            : <ReviewForm truckId={truckId} setTruck={setTruck} />
                     }
 
                 </div>

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
-import { Input } from "reactstrap"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
 
