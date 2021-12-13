@@ -27,6 +27,8 @@ const Login = () => {
                 if (success) {
                     console.log("*** Rerouting to root URL ***")
                     history.push("/")
+                } else {
+                    window.alert("Please log in with existing credentials or register as a new user.")
                 }
             })
     }
