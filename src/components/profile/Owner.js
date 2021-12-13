@@ -75,7 +75,7 @@ export const Owner = ({ userId }) => {
                         user.truckOwners?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
                             return <li className="card" key={truckOwner.id}>
-                                <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} />
+                                <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} />
                                 <Button type="retire"
                                     color="danger"
                                     value={foundTruck?.id}

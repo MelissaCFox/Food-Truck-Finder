@@ -13,7 +13,7 @@ import UserRepository from "../../repositories/UserRepository"
 
 
 
-export const Truck = ({ truckID, setTrucks }) => {
+export const Truck = ({ truckID }) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -28,7 +28,7 @@ export const Truck = ({ truckID, setTrucks }) => {
 
     useEffect(() => {
         TruckRepository.getBasic(truckID).then(setThisTruck)
-    },[truckID])
+    }, [truckID])
 
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export const Truck = ({ truckID, setTrucks }) => {
 
         if (existingTruckLocation && neighborhoodId === "0") {
             TruckLocationRepository.delete(existingTruckLocation.id).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
-            
+
         } else if (existingTruckLocation && neighborhoodId) {
             TruckLocationRepository.update(existingTruckLocation.id, newTruckLocation)
         } else if (neighborhoodId) {
@@ -93,12 +93,12 @@ export const Truck = ({ truckID, setTrucks }) => {
 
     const updateTruck = () => {
         TruckRepository.update(thisTruck.id, thisTruck)
-        .then(() => {
-            TruckRepository.getAll().then(setTrucks)
-        })
-        .then(editToggle)
+            .then(() => {
+                TruckRepository.get(thisTruck.id).then(setTruck)
+            })
+            .then(editToggle)
     }
-    
+
     const toggleFavorite = (favoriteTruckId) => {
         const newLike = {
             userId: getCurrentUser().id,
@@ -154,34 +154,70 @@ export const Truck = ({ truckID, setTrucks }) => {
                     <Button onClick={editToggle}>Edit Details</Button>
 
                     <Modal animation="false"
-                            isOpen={editModal}
-                            centered
-                            fullscreen="md"
-                            size="md"
-                            toggle={editToggle}
-                        >
-                            <ModalHeader toggle={editToggle}>
-                                Edit Truck Details
-                            </ModalHeader>
-                            <ModalBody>
-                                <input type="text" className="form-control" defaultValue={truck.name} 
+                        isOpen={editModal}
+                        centered
+                        fullscreen="md"
+                        size="md"
+                        toggle={editToggle}
+                    >
+                        <ModalHeader toggle={editToggle}>
+                            Edit Truck Details
+                        </ModalHeader>
+                        <ModalBody>
+                            <label >Name</label>
+                            <input type="text" className="form-control" defaultValue={truck.name}
                                 onChange={(e) => {
-                                    const copy = {...thisTruck}
+                                    const copy = { ...thisTruck }
                                     copy.name = e.target.value
                                     setThisTruck(copy)
                                 }} ></input>
+                            <label >Description</label>
+                            <input type="text" className="form-control" defaultValue={truck.description}
+                                onChange={(e) => {
+                                    const copy = { ...thisTruck }
+                                    copy.description = e.target.value
+                                    setThisTruck(copy)
+                                }} ></input>
+                            <label >Hours</label>
+                            <input type="text" className="form-control" defaultValue={truck.hours}
+                                onChange={(e) => {
+                                    const copy = { ...thisTruck }
+                                    copy.hours = e.target.value
+                                    setThisTruck(copy)
+                                }} ></input>
+                            <label >Website</label>
+                            <input type="text" className="form-control" defaultValue={truck.websiteURL}
+                                onChange={(e) => {
+                                    const copy = { ...thisTruck }
+                                    copy.websiteURL = e.target.value
+                                    setThisTruck(copy)
+                                }} ></input>
+                            <label >Instagram</label>
+                            <input type="text" className="form-control" defaultValue={truck.instagramURL}
+                                onChange={(e) => {
+                                    const copy = { ...thisTruck }
+                                    copy.instagramURL = e.target.value
+                                    setThisTruck(copy)
+                                }} ></input>
+                            <label >Profile Image</label>
+                            <input type="text" className="form-control" defaultValue={truck.profileImgSrc}
+                                onChange={(e) => {
+                                    const copy = { ...thisTruck }
+                                    copy.profileImgSrc = e.target.value
+                                    setThisTruck(copy)
+                                }} ></input>
 
-                            
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button onClick={() => updateTruck()}>
-                                    Save Changes
-                                </Button>
-                                <Button onClick={editToggle}>
-                                    Cancel
-                                </Button>
-                            </ModalFooter>
-                        </Modal>
+
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button onClick={() => updateTruck()}>
+                                Save Changes
+                            </Button>
+                            <Button onClick={editToggle}>
+                                Cancel
+                            </Button>
+                        </ModalFooter>
+                    </Modal>
 
 
                     {
