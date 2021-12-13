@@ -31,7 +31,7 @@ export const User = ({userId}) => {
                         ? userReviews.map(review => {
                             return <Review key={review.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} />
                         })
-                        : ""
+                        : <div>No Reviews Yet</div>
                 }
             </ul>
         </>

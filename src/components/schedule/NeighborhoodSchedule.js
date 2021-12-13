@@ -21,7 +21,6 @@ export const NeighborhoodSchedule = ({ neighborhoodId, dayId }) => {
                     : <div className="card card-body">
                         No Trucks Today
                     </div>
-
             }
         </>
     )

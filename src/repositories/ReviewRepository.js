@@ -3,6 +3,10 @@ import { fetchIt } from "./Fetch";
 
 const ReviewRepository = {
 
+    async getBasic(id) {
+        return await fetchIt(`${Settings.remoteURL}/userTruckReviews/${id}`)
+    },
+    
     async get(id) {
         return await fetchIt(`${Settings.remoteURL}/userTruckReviews/${id}?_expand=truck&_expand=user`)
     },
@@ -21,6 +25,10 @@ const ReviewRepository = {
 
     async delete(reviewId) {
         return await fetchIt(`${Settings.remoteURL}/userTruckReviews/${reviewId}`, "DELETE")
+    },
+    
+    async update(reviewId, newReviewObj) {
+        return await fetchIt(`${Settings.remoteURL}/userTruckReviews/${reviewId}`, "PUT", JSON.stringify(newReviewObj))
     }
 
 }

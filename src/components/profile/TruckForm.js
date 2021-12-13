@@ -35,7 +35,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
             userRating: null
         }
         if (name && foodTypeId && description && websiteURL && instagramURL && profileImgSrc && hours && dollars) {
-
             TruckRepository.add(truck).then(res => {
                 const truckOwner = {
                     userId: userId,
@@ -47,7 +46,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     toggle()
                 })
             })
-
         } else {
             window.alert("Please fill in all fields")
         }
@@ -56,7 +54,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
     return (
         <>
             <form className="truckForm">
-
                 <div className="form-group">
                     <label htmlFor="truckName">Truck Name</label>
                     <input
@@ -69,7 +66,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         placeholder="Truck Name"
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="description">Description</label>
                     <input
@@ -82,7 +78,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         placeholder="Description"
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="foodType">Food Type</label>
                     <select
@@ -101,7 +96,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         }
                     </select>
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="websiteURL">Website URL</label>
                     <input
@@ -114,7 +108,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         placeholder="Website URL"
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="instaURL">Instagram URL</label>
                     <input
@@ -127,7 +120,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         placeholder="Instagram URL"
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="profileImg">Profile Image URL</label>
                     <input
@@ -140,7 +132,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         placeholder="Profile Image URL"
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="hours">Hours</label>
                     <input
@@ -153,7 +144,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         placeholder="10am-4pm"
                     />
                 </div>
-
                 <div className="form-group">
                     <label htmlFor="cost">Cost: </label>
                     <select
@@ -171,15 +161,11 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
 
                     </select>
                 </div>
-
                 <Button type="register"
                     color="blue"
                     onClick={registerTruck}
                     className="btn btn-primary"> Register Truck </Button>
             </form>
-
-
         </>
-
     )
 }

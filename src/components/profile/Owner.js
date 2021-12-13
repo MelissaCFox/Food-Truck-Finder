@@ -52,7 +52,6 @@ export const Owner = ({ userId }) => {
                             <TruckForm userId={userId} toggle={toggle} setTrucks={setTrucks} setUser={setUser} />
                         </ModalBody>
                         <ModalFooter>
-
                             <Button onClick={toggle}>
                                 Cancel
                             </Button>
@@ -75,10 +74,8 @@ export const Owner = ({ userId }) => {
                     {
                         user.truckOwners?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
-
                             return <li className="card" key={truckOwner.id}>
                                 <Truck key={foundTruck?.id} truckID={foundTruck?.id} />
-
                                 <Button type="retire"
                                     color="danger"
                                     value={foundTruck?.id}
@@ -87,12 +84,8 @@ export const Owner = ({ userId }) => {
                                         toggle3()
                                     }}
                                     className="btn btn-primary"> Retire Truck </Button>
-
-
                             </li>
-
                         })
-
                     }
                     <Modal
                         isOpen={confirm}

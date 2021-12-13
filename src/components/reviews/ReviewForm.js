@@ -32,10 +32,7 @@ export const ReviewForm = ({truckId, setTruck}) => {
             <div className="form-group">
                 <Input type="text" required autoFocus className="form-control" onChange={e => setReview(e.target.value)} id="review" placeholder="Review"></Input>
             </div>
-
             <button type="submit" onClick={submitReview} className="btn btn-primary">Submit Review</button>
-
-
         </form>
     )
 }
