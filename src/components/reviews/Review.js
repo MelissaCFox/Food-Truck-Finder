@@ -26,7 +26,6 @@ export const Review = ({ review, user, setUserReviews, setTruck }) => {
             {
                 review.userId === getCurrentUser().id
                     ? (<div className="review-options">
-                        <Button onClick={() => { }}>Edit</Button>
                         <Button color="danger" onClick={reviewToggle}>Delete Review</Button>
 
                         <Modal

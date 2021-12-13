@@ -33,7 +33,6 @@ useEffect(() => {
 return (
     <>
     <div className="date">
-        <Input className="date-picker" type="date"></Input>
         <div className="date-string">{dateString}</div>
     </div>
     <div className="filter-options"></div>
