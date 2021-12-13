@@ -105,7 +105,7 @@ export const Owner = ({ userId }) => {
                             Are You Sure You Want to Retire {truckToRetire.name}?
                         </ModalHeader>
                         <ModalBody>
-                            <Button onClick={() => {
+                            <Button color="danger" onClick={() => {
                                 TruckRepository.delete(truckToRetire.id).then(() => {
                                     UserRepository.get(userId).then(setUser)
                                         .then(toggle3)

@@ -6,7 +6,7 @@ import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 
 
-export const Review = ({ review, user, setUserReviews, setTruck }) => {
+export const Review = ({ review, userId, setUserReviews, setTruck }) => {
     const { getCurrentUser } = useSimpleAuth()
     const { truckId } = useParams()
     const [ modal, setModal ] = useState(false)
@@ -28,7 +28,7 @@ export const Review = ({ review, user, setUserReviews, setTruck }) => {
                     ? (<div className="review-options">
                         <Button color="danger" onClick={reviewToggle}>Delete Review</Button>
 
-                        <Modal
+                        <Modal animation="false"
                             isOpen={modal}
                             centered
                             fullscreen="md"
@@ -48,7 +48,7 @@ export const Review = ({ review, user, setUserReviews, setTruck }) => {
                                         ReviewRepository.delete(review.id).then(() => {
                                             truckId
                                                 ? TruckRepository.get(truckId).then(setTruck)
-                                                : ReviewRepository.getAllForUser(user.id).then(setUserReviews)
+                                                : ReviewRepository.getAllForUser(userId).then(setUserReviews)
                                             reviewToggle()
                                         })
                                     }}>
