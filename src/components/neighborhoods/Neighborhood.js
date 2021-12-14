@@ -39,7 +39,7 @@ export const Neighborhood = () => {
                     {
                         todaysTrucks.length > 0
                             ? todaysTrucks.map(truckLocation => {
-                                return <div className="" key={truckLocation.id}>
+                                return <div className="card today" key={truckLocation.id}>
                                     <TruckCard truckId={truckLocation.truckId} />
                                 </div>
                             })

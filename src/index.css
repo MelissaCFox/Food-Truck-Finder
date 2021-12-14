@@ -112,8 +112,31 @@ dialog {
   justify-content: center;
 }
 
+.truck-card-body {
+  
+  flex-direction: column;
+}
+
+.mini-info {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: auto;
+}
+
+.userStar {
+  height: 1rem;
+  width: 1rem;
+}
+
 .card {
   margin: 0.5rem 1rem 1rem 1rem ;
+}
+
+.today {
+  width: 20rem;
 }
 
 button {
