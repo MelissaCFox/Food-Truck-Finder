@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react"
+import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import TruckRepository from "../../repositories/TruckRepository"
+import userTruckFavorites from "../../repositories/UserTruckFavoriteRepository"
 import { TruckCard } from "./TruckCard"
 
 
-export const TruckList = ({ neighborhood, date }) => {
+export const TruckList = ({ neighborhood, date, favorites }) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
+    const [favoriteTrucks, setFavoriteTrucks] = useState([])
+    const {getCurrentUser} = useSimpleAuth()
+
+    useEffect(() => {
+        userTruckFavorites.getAll().then(setFavoriteTrucks)
+    }, [])
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -14,8 +22,24 @@ export const TruckList = ({ neighborhood, date }) => {
 
     useEffect(() => {
         const currentDayId = date.getDay() + 1
-        TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
-    }, [date])
+        if (favorites === true) {
+            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+            .then((res) => {
+                const favoriteLocations = res.filter((location) => {
+                    const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
+                    if (foundFavorite) {
+                        return location
+                    }
+                })
+                updateTruckLocations(favoriteLocations)
+            })
+        } else {
+            TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
+        }
+    }, [date, favorites])
+
+
+
 
     const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
 
@@ -33,9 +57,14 @@ export const TruckList = ({ neighborhood, date }) => {
 
                             })
                             : <li className="card no-truck" key={neighborhood.id}>
-                                <div className="card-body">
-                                    No Trucks Today
-                                </div>
+                                
+                                {
+                                    favorites
+                                    ? <div className="card-body">No Favorites in This Neighborhood</div>
+                                    : <div className="card-body">No Trucks Today</div>
+                                }
+                                
+
                             </li>
                         : ""
                 }

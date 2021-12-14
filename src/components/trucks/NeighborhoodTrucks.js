@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { FormGroup, Input, Label } from "reactstrap"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
 
@@ -9,6 +10,9 @@ export const NeighborhoodTruckList = () => {
     const [dateString, setDateString] = useState("")
     const history = useHistory()
     const [dateForList, setDateForList] = useState("")
+    const [favorites, setFavorites] = useState(false)
+    const toggleFavorites = () => setFavorites(!favorites)
+
 
     useEffect(() => {
         let newDate = new Date()
@@ -44,17 +48,23 @@ export const NeighborhoodTruckList = () => {
                     const newDate = event.target.value
                     const parsedDate = Date.parse(newDate) + 86400000
                     const accurateDate = new Date(parsedDate)
-                    setDateForList(accurateDate)  
+                    setDateForList(accurateDate)
                 }}></input>
                 <div className="date-string">{dateString}</div>
             </div>
-            <div className="filter-options"></div>
+            <div className="filter-options">
+                <FormGroup check>
+                    <Label check>Show Only Favorites</Label>
+                    <Input type="checkbox" onChange={toggleFavorites} />
+                </FormGroup>
+
+            </div>
             <ul className="neighborhoods">
                 {
                     neighborhoods.map(neighborhood => {
                         return <li className="card neighborhood" key={neighborhood.id}>
                             <button onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>{neighborhood.name}</button>
-                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} />
+                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} />
 
                         </li>
                     })
