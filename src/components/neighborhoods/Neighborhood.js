@@ -34,12 +34,12 @@ export const Neighborhood = () => {
                 <div className="neighborhood__image"><img alt="logo" className="neighborhood-logo" src={neighborhood.profileImgSrc} /></div>
                 <div className="neighborhood__name">{neighborhood.name}</div>
                 <div className="neighborhood__description">{neighborhood.description}</div>
-                <div className="neighborhood__currentTrucks">
+                <div className="neighborhood__currentTrucks card truck today">
                     Trucks in the Area Today:
                     {
                         todaysTrucks.length > 0
                             ? todaysTrucks.map(truckLocation => {
-                                return <div className="card today" key={truckLocation.id}>
+                                return <div className="card truck" key={truckLocation.id}>
                                     <TruckCard truckId={truckLocation.truckId} />
                                 </div>
                             })

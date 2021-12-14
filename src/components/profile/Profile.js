@@ -11,6 +11,7 @@ export const Profile = () => {
 
     useEffect(() => {
         const user = getCurrentUser()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         setUser(user)
         
     },[])

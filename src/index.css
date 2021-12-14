@@ -136,7 +136,7 @@ dialog {
 }
 
 .today {
-  width: 20rem;
+  flex-direction: row;
 }
 
 button {

@@ -122,6 +122,14 @@ export const Truck = ({ truckID }) => {
         }
     }
 
+
+    let truckPrice = "$"
+    if (truck.dollars === 2) {
+        truckPrice = "$$"
+    } else if (truck.dollars === 3) {
+        truckPrice = "$$"
+    }
+
     return (
         <>
             <div className="truck__header">
@@ -144,6 +152,11 @@ export const Truck = ({ truckID }) => {
                     <div className="truck__info">
                         <div className="truck__info--type">{truck.foodType?.type}</div>
                         <div className="truck__info--description">{truck.description}</div>
+                        <div className="truck__info--dollars">{truckPrice}</div>
+                        <div className="truck__info--rating ">
+                            <div><img className="userStar" alt="user rating star" src="https://png.pngitem.com/pimgs/s/625-6256492_yellow-star-advertising-hd-png-download.png" /></div>
+                            <div>{truck.userRating}</div>
+                        </div>
                         <div className="truck__info--links">
                             <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
                             <a className="link" target="_blank" rel="noreferrer" href={truck.instagramURL}><img alt="logo" className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>

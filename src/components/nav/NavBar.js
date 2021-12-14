@@ -12,6 +12,7 @@ export const NavBar = () => {
 
     useEffect(() => {
         UserRepository.get(getCurrentUser().id).then(setCurrentUser)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
 

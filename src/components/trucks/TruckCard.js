@@ -30,7 +30,7 @@ export const TruckCard = ({truckId}) => {
 
     return (
 
-        <div className="card ">
+        <div className="card">
             <div className="truck-card-body">
             <button onClick={() => { history.push(`/trucks/${truck?.id}`) }} className={favorite ? "favorite card-body" : "regular card-body"}><img className="truck-logo" src={truck?.profileImgSrc} alt={`${truck?.name} logo`} /></button>
             <div className="mini-info">
