@@ -9,7 +9,6 @@ import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRep
 import { Review } from "../reviews/Review"
 import { TruckSchedule } from "../schedule/TruckSchedule"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
-import UserRepository from "../../repositories/UserRepository"
 
 
 
@@ -27,7 +26,7 @@ export const Truck = ({ truckID }) => {
     const [thisTruck, setThisTruck] = useState({})
 
     useEffect(() => {
-        if (truckId) {
+        if (truckID) {
             TruckRepository.getBasic(truckID).then(setThisTruck)
         }
     }, [truckID])

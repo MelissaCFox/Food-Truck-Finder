@@ -19,7 +19,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
 
     useEffect(() => {
         ReviewRepository.getBasic(review.id).then(setSelectedReview)
-    }, [])
+    }, [review])
 
     const updateReview = () => {
         const reviewCopy = { ...selectedReview }
