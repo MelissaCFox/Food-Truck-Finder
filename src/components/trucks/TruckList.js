@@ -6,11 +6,11 @@ import userTruckFavorites from "../../repositories/UserTruckFavoriteRepository"
 import { TruckCard } from "./TruckCard"
 
 
-export const TruckList = ({ neighborhood, date, favorites }) => {
+export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
     const [favoriteTrucks, setFavoriteTrucks] = useState([])
-    const {getCurrentUser} = useSimpleAuth()
+    const { getCurrentUser } = useSimpleAuth()
 
     useEffect(() => {
         userTruckFavorites.getAll().then(setFavoriteTrucks)
@@ -22,21 +22,41 @@ export const TruckList = ({ neighborhood, date, favorites }) => {
 
     useEffect(() => {
         const currentDayId = date.getDay() + 1
-        if (favorites === true) {
+        if (favorites === true && typePref !== 0) {
             TruckLocationRepository.getTruckLocationsByDay(currentDayId)
-            .then((res) => {
-                const favoriteLocations = res.filter((location) => {
-                    const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
-                    if (foundFavorite) {
-                        return location
-                    }
+                .then((res) => {
+                    const favoriteLocations = res.filter((location) => {
+                        const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
+                        if (foundFavorite) {
+                            return location
+                        }
+                    })
+                    const favoriteTypeLocations = favoriteLocations.filter(location => location.truck.foodTypeId === typePref)
+                    updateTruckLocations(favoriteTypeLocations)
                 })
-                updateTruckLocations(favoriteLocations)
-            })
+
+        } else if (favorites === true) {
+            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                .then((res) => {
+                    const favoriteLocations = res.filter((location) => {
+                        const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
+                        if (foundFavorite) {
+                            return location
+                        }
+                    })
+                    updateTruckLocations(favoriteLocations)
+                })
+        } else if (typePref !== 0) {
+            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                .then((res) => {
+                    const TypeLocations = res.filter(location => location.truck.foodTypeId === typePref)
+                    updateTruckLocations(TypeLocations)
+                })
+
         } else {
             TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
         }
-    }, [date, favorites])
+    }, [date, favorites, typePref])
 
 
 
@@ -57,13 +77,13 @@ export const TruckList = ({ neighborhood, date, favorites }) => {
 
                             })
                             : <li className="card no-truck" key={neighborhood.id}>
-                                
+
                                 {
                                     favorites
-                                    ? <div className="card-body">No Favorites in This Neighborhood</div>
-                                    : <div className="card-body">No Trucks Today</div>
+                                        ? <div className="card-body">No Favorites in This Neighborhood</div>
+                                        : <div className="card-body">No Trucks Today</div>
                                 }
-                                
+
 
                             </li>
                         : ""

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { FormGroup, Input, Label } from "reactstrap"
+import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
 
@@ -12,14 +13,17 @@ export const NeighborhoodTruckList = () => {
     const [dateForList, setDateForList] = useState("")
     const [favorites, setFavorites] = useState(false)
     const toggleFavorites = () => setFavorites(!favorites)
+    const [typePref, setTypePref] = useState(0)
+    const [foodTypes, setFoodTypes] = useState([])
 
+    useEffect(() => {
+        FoodTypeRepository.getAll().then(setFoodTypes)
+    },[])
 
     useEffect(() => {
         let newDate = new Date()
         setDateForList(newDate)
     }, [])
-
-
 
     useEffect(() => {
         let date = new Date(dateForList)
@@ -53,9 +57,20 @@ export const NeighborhoodTruckList = () => {
                 <div className="date-string">{dateString}</div>
             </div>
             <div className="filter-options">
-                <FormGroup check>
-                    <Label check>Show Only Favorites</Label>
+                <FormGroup >
+                    <Label >Show Only Favorites</Label>
                     <Input type="checkbox" onChange={toggleFavorites} />
+                </FormGroup>
+
+                <FormGroup >
+                    <Label for="typeSelect">Filter By Food Type</Label>
+                    <Input id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
+                        <option value="">--Food Type--</option>
+                        {
+                            foodTypes.map(type => <option key={type.id} value={type.id}>{type.type}</option>)
+                        }
+
+                    </Input>
                 </FormGroup>
 
             </div>
@@ -64,7 +79,7 @@ export const NeighborhoodTruckList = () => {
                     neighborhoods.map(neighborhood => {
                         return <li className="card neighborhood" key={neighborhood.id}>
                             <button onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>{neighborhood.name}</button>
-                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} />
+                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} />
 
                         </li>
                     })
