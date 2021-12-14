@@ -5,6 +5,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
+import UserRepository from "../../repositories/UserRepository"
 
 
 export const Review = ({ review, userId, setUserReviews, setTruck }) => {
@@ -16,6 +17,11 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
     const editToggle = () => setEditModal(!editModal)
     const [newDescription, setNewDescription] = useState("")
     const [selectedReview, setSelectedReview] = useState({})
+    const [reviewer, setReviewer] = useState({})
+
+    useEffect(() => {
+        UserRepository.get(review.userId).then(setReviewer)
+    },[])
 
     useEffect(() => {
         ReviewRepository.getBasic(review.id).then(setSelectedReview)
@@ -26,15 +32,15 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
         reviewCopy.review = newDescription
 
         ReviewRepository.update(review.id, reviewCopy)
-        .then(() => {
-            truckId
-                ? TruckRepository.get(truckId).then(setTruck)
-                : ReviewRepository.getAllForUser(userId).then(setUserReviews)
+            .then(() => {
+                truckId
+                    ? TruckRepository.get(truckId).then(setTruck)
+                    : ReviewRepository.getAllForUser(userId).then(setUserReviews)
 
-        })
-        .then(editToggle)
-
+            })
+            .then(editToggle)
     }
+
 
     return (
         <div className="card review-card" key={review.id}>
@@ -46,6 +52,13 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
 
             <div>{review.date}</div>
             <div>{review.review}</div>
+            
+            {
+                review.anonymous
+                ? <div>~ Anonymous</div>
+                : <div>~ {reviewer.firstName} {reviewer?.lastName?.charAt(0)}.</div>
+            }
+
             {
                 review.userId === getCurrentUser().id
                     ? (<div className="review-options">

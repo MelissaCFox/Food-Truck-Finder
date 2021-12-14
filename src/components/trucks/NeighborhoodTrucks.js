@@ -65,7 +65,7 @@ export const NeighborhoodTruckList = () => {
                 <FormGroup >
                     <Label for="typeSelect">Filter By Food Type</Label>
                     <Input id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
-                        <option value="">--Food Type--</option>
+                        <option value="0">--All--</option>
                         {
                             foodTypes.map(type => <option key={type.id} value={type.id}>{type.type}</option>)
                         }

@@ -53,7 +53,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
                     updateTruckLocations(TypeLocations)
                 })
 
-        } else {
+        } else if (favorites === false && typePref === 0) {
             TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
         }
     }, [date, favorites, typePref])
@@ -80,7 +80,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
 
                                 {
                                     favorites
-                                        ? <div className="card-body">No Favorites in This Neighborhood</div>
+                                        ? ""
                                         : <div className="card-body">No Trucks Today</div>
                                 }
 

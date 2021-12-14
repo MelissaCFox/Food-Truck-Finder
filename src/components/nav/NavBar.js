@@ -1,12 +1,18 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link} from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
+import UserRepository from "../../repositories/UserRepository";
 
 
 
 
 export const NavBar = () => {
     const { isAuthenticated, logout, getCurrentUser } = useSimpleAuth()
+    const [currentUser, setCurrentUser] = useState({})
+
+    useEffect(() => {
+        UserRepository.get(getCurrentUser().id).then(setCurrentUser)
+    },[])
 
 
     return (
@@ -34,7 +40,7 @@ export const NavBar = () => {
                     <li className="nav-item dropdown">
                             {
                                 isAuthenticated()
-                                    ? <Link className="nav-link" to="/profile">Welcome, {getCurrentUser().name} !</Link>
+                                    ? <Link className="nav-link" to="/profile">Welcome, {currentUser.firstName} {currentUser.lastName}!</Link>
                                     : <Link className="nav-link" to="/login">Login</Link>
                             }
                         </li>
