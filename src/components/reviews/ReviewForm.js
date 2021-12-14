@@ -9,8 +9,8 @@ export const ReviewForm = ({truckId, setTruck}) => {
     const [review, setReview] = useState("")
     const [date, setDate] = useState("")
     const { getCurrentUser } = useSimpleAuth()
-    const [anonymous, setAnonymous] = useState(false)
-    const toggleAnonymous = () => setAnonymous(!anonymous)
+    const [anonymousState, setAnonymous] = useState(false)
+    const toggleAnonymous = () => setAnonymous(!anonymousState)
 
     const submitReview = () => {
         const reviewObj = {
@@ -18,7 +18,7 @@ export const ReviewForm = ({truckId, setTruck}) => {
             truckId: parseInt(truckId),
             review: review,
             date: date,
-            anonymous: anonymous
+            anonymous: anonymousState
         }
 
         if (review && date) {

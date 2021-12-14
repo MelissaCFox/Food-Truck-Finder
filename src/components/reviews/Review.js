@@ -21,7 +21,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
 
     useEffect(() => {
         UserRepository.get(review.userId).then(setReviewer)
-    },[])
+    }, [])
 
     useEffect(() => {
         ReviewRepository.getBasic(review.id).then(setSelectedReview)
@@ -52,11 +52,13 @@ export const Review = ({ review, userId, setUserReviews, setTruck }) => {
 
             <div>{review.date}</div>
             <div>{review.review}</div>
-            
+
             {
-                review.anonymous
-                ? <div>~ Anonymous</div>
-                : <div>~ {reviewer.firstName} {reviewer?.lastName?.charAt(0)}.</div>
+                truckId
+                    ? review.anonymous
+                        ? <div>~ Anonymous</div>
+                        : <div>~ {reviewer.firstName} {reviewer?.lastName?.charAt(0)}.</div>
+                    : ""
             }
 
             {
