@@ -6,7 +6,7 @@ import userTruckFavorites from "../../repositories/UserTruckFavoriteRepository"
 import { TruckCard } from "./TruckCard"
 
 
-export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
+export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref }) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
     const [favoriteTrucks, setFavoriteTrucks] = useState([])
@@ -20,6 +20,24 @@ export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
         TruckRepository.getAll().then(setTrucks)
     }, [date])
 
+
+    const sortTruckLocations = (array) => {
+
+        if (sortPref === "priceAsc") {
+            return array.sort((a, b) => {
+                return a.truck.dollars - b.truck.dollars
+            })
+        } else if (sortPref === "priceDesc") {
+            return array.sort((a, b) => {
+                return b.truck.dollars - a.truck.dollars
+            })
+        } else if (sortPref === "userRating") {
+            return array.sort((a, b) => {
+                return b.truck.userRating - a.truck.userRating
+            })
+        }
+    }
+
     useEffect(() => {
         const currentDayId = date.getDay() + 1
         if (favorites === true && typePref !== 0) {
@@ -32,7 +50,9 @@ export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
                         }
                     })
                     const favoriteTypeLocations = favoriteLocations.filter(location => location.truck.foodTypeId === typePref)
-                    updateTruckLocations(favoriteTypeLocations)
+                    sortPref
+                        ? updateTruckLocations(sortTruckLocations(favoriteTypeLocations))
+                        : updateTruckLocations(favoriteTypeLocations)
                 })
 
         } else if (favorites === true) {
@@ -44,31 +64,40 @@ export const TruckList = ({ neighborhood, date, favorites, typePref }) => {
                             return location
                         }
                     })
-                    updateTruckLocations(favoriteLocations)
+                    sortPref
+                        ? updateTruckLocations(sortTruckLocations(favoriteLocations))
+                        : updateTruckLocations(favoriteLocations)
                 })
         } else if (typePref !== 0) {
             TruckLocationRepository.getTruckLocationsByDay(currentDayId)
                 .then((res) => {
                     const TypeLocations = res.filter(location => location.truck.foodTypeId === typePref)
-                    updateTruckLocations(TypeLocations)
+                    sortPref
+                        ? updateTruckLocations(sortTruckLocations(TypeLocations))
+                        : updateTruckLocations(TypeLocations)
                 })
 
         } else if (favorites === false && typePref === 0) {
-            TruckLocationRepository.getTruckLocationsByDay(currentDayId).then(updateTruckLocations)
+            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                .then((res) => {
+                    sortPref
+                        ? updateTruckLocations(sortTruckLocations(res))
+                        : updateTruckLocations(res)
+                })
         }
-    }, [date, favorites, typePref])
+    }, [date, favorites, typePref, sortPref])
 
 
 
 
-    const filteredLocations = truckLocations.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
+    const filteredLocations = truckLocations?.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
 
     return (
         <>
             <ul className="trucks">
                 {
                     neighborhood
-                        ? filteredLocations.length > 0
+                        ? filteredLocations?.length > 0
                             ? filteredLocations.map(truckLocation => {
                                 const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
                                 return <li className="card truck" key={truckLocation.id}>

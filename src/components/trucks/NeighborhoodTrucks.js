@@ -15,6 +15,7 @@ export const NeighborhoodTruckList = () => {
     const toggleFavorites = () => setFavorites(!favorites)
     const [typePref, setTypePref] = useState(0)
     const [foodTypes, setFoodTypes] = useState([])
+    const [sortPref, setSortPref] = useState("")
 
     useEffect(() => {
         FoodTypeRepository.getAll().then(setFoodTypes)
@@ -73,13 +74,24 @@ export const NeighborhoodTruckList = () => {
                     </Input>
                 </FormGroup>
 
+                <FormGroup >
+                    <Label for="sortPref">Sort By:</Label>
+                    <Input id="sortPref" type="select" onChange={e => setSortPref(e.target.value)}>
+                        <option value="">--All--</option>
+                        <option value="priceAsc">Price (low to high)</option>
+                        <option value="priceDesc">Price (high to low)</option>
+                        <option value="userRating">User Rating</option>
+
+                    </Input>
+                </FormGroup>
+
             </div>
             <ul className="neighborhoods">
                 {
                     neighborhoods.map(neighborhood => {
                         return <li className="card neighborhood" key={neighborhood.id}>
                             <button onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>{neighborhood.name}</button>
-                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} />
+                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
 
                         </li>
                     })
