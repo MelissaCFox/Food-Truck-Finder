@@ -14,7 +14,6 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 
 export const Truck = ({ truckID }) => {
     const [truck, setTruck] = useState({})
-    const [basicTruck, setBasicTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
     const [truckLocations, setTruckLocations] = useState([])
@@ -25,10 +24,6 @@ export const Truck = ({ truckID }) => {
     const [editModal, setEditModal] = useState(false)
     const editToggle = () => setEditModal(!editModal)
     const [thisTruck, setThisTruck] = useState({})
-
-    useEffect(() => {
-        TruckRepository.getBasic(truckId).then(setBasicTruck)
-    }, [truckId])
 
     useEffect(() => {
         if (truckID) {
@@ -126,25 +121,6 @@ export const Truck = ({ truckID }) => {
             }
         }
     }
-
-    useEffect(() => {
-        
-        let totalRating = 0
-        if (truckId && truck.id && basicTruck.id) {
-            for (const review of truck.userTruckReviews) {
-                totalRating += review.rating
-            }
-            let averageRating = totalRating / truck.userTruckReviews.length
-            const updatedTruckObj = { ...basicTruck }
-            updatedTruckObj.userRating = averageRating
-            TruckRepository.update(truck.id, updatedTruckObj)
-                .then(() => {
-                    TruckRepository.get(basicTruck.id).then(setTruck)
-                })
-                
-        }
-
-    }, [truck.id, basicTruck])
 
     let truckPrice = "$"
     if (truck.dollars === 2) {

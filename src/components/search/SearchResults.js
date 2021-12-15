@@ -15,7 +15,7 @@ export const SearchResults = () => {
                     
                     <div>
                         {
-                            location.state.trucks.map(truck => <TruckCard truckId={truck.id} />)
+                            location.state.trucks.map(truck => <TruckCard key={truck.id} truckId={truck.id} />)
                         }
                     </div>
                 </>
@@ -33,7 +33,7 @@ export const SearchResults = () => {
 
                     <div>
                         {
-                            location.state.neighborhoods.map(neighborhood => <NeighborhoodCard neighborhoodId={neighborhood.id} />)
+                            location.state.neighborhoods.map(neighborhood => <NeighborhoodCard key={neighborhood.id} neighborhoodId={neighborhood.id} />)
                         }
                     </div>
                 </>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useEffect } from "react/cjs/react.development"
 import { Input, Label, FormGroup } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
@@ -12,6 +13,19 @@ export const ReviewForm = ({ truckId, setTruck }) => {
     const [anonymousState, setAnonymous] = useState(false)
     const toggleAnonymous = () => setAnonymous(!anonymousState)
     const [rating, setRating] = useState(0)
+    const [newRating, setNewRating] = useState(false)
+    const [thisTruck, setThisTruck] = useState({})
+    const [fullTruck, setFullTruck] = useState({})
+
+    useEffect(() => {
+        TruckRepository.get(parseInt(truckId)).then(setFullTruck)
+    }, [truckId])
+
+    useEffect(() => {
+        TruckRepository.getBasic(parseInt(truckId)).then(setThisTruck)
+    }, [truckId])
+
+    const toggleNewRating = () => setNewRating(!newRating)
 
     const submitReview = (event) => {
         event.preventDefault()
@@ -25,12 +39,37 @@ export const ReviewForm = ({ truckId, setTruck }) => {
         }
 
         if (review && date) {
-            ReviewRepository.add(reviewObj).then(() => {
-                TruckRepository.get(truckId).then(setTruck)
-            })
-
+            ReviewRepository.add(reviewObj)
+                .then(() => {
+                    TruckRepository.get(parseInt(truckId))
+                        .then((truck) => {
+                            setFullTruck(truck)
+                            toggleNewRating()
+                        })
+                })
         }
     }
+
+
+    useEffect(() => {
+        
+        let totalRating = 0
+        if (fullTruck?.userTruckReviews?.length > 0) {
+
+            for (const review of fullTruck?.userTruckReviews) {
+                totalRating += review.rating
+            }
+            let averageRating = totalRating / fullTruck?.userTruckReviews?.length
+            const updatedTruckObj = { ...thisTruck }
+            updatedTruckObj.userRating = averageRating
+            TruckRepository.update(thisTruck.id, updatedTruckObj)
+                .then(() => {
+                    TruckRepository.get(thisTruck.id).then(setTruck)
+                })
+        }
+
+    }, [newRating, thisTruck, fullTruck])
+
 
     return (
         <form className="form review-form">
