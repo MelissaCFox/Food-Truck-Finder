@@ -5,7 +5,7 @@ import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 
 
-export const ReviewForm = ({truckId, setTruck}) => {
+export const ReviewForm = ({ truckId, setTruck }) => {
     const [review, setReview] = useState("")
     const [date, setDate] = useState("")
     const { getCurrentUser } = useSimpleAuth()
@@ -13,7 +13,8 @@ export const ReviewForm = ({truckId, setTruck}) => {
     const toggleAnonymous = () => setAnonymous(!anonymousState)
     const [rating, setRating] = useState(0)
 
-    const submitReview = () => {
+    const submitReview = (event) => {
+        event.preventDefault()
         const reviewObj = {
             userId: getCurrentUser().id,
             truckId: parseInt(truckId),
@@ -24,7 +25,10 @@ export const ReviewForm = ({truckId, setTruck}) => {
         }
 
         if (review && date) {
-            ReviewRepository.add(reviewObj).then(() => {TruckRepository.get(truckId).then(setTruck)})
+            ReviewRepository.add(reviewObj).then(() => {
+                TruckRepository.get(truckId).then(setTruck)
+            })
+
         }
     }
 
@@ -44,9 +48,9 @@ export const ReviewForm = ({truckId, setTruck}) => {
             </div>
 
             <FormGroup >
-                    <Label>Remain Anonymous?</Label>
-                    <Input type="checkbox" onChange={toggleAnonymous} />
-                </FormGroup>
+                <Label>Remain Anonymous?</Label>
+                <Input type="checkbox" onChange={toggleAnonymous} />
+            </FormGroup>
 
             <button type="submit" onClick={submitReview} className="btn btn-primary">Submit Review</button>
         </form>
