@@ -131,7 +131,7 @@ export const Truck = ({ truckID }) => {
 
     useEffect(() => {
         
-        if (truckId && truck.id && simpleTruck.id) {
+        if (truckId && truck?.id && simpleTruck?.id) {
             
             let totalRating = 0
             if (truck?.userTruckReviews?.length > 0) {
@@ -148,7 +148,7 @@ export const Truck = ({ truckID }) => {
                     })
             }
         }
-    }, [simpleTruck])
+    }, [truckId, simpleTruck])
 
 
     let truckPrice = "$"
@@ -302,7 +302,7 @@ export const Truck = ({ truckID }) => {
                     {
                         truck?.userTruckReviews?.length > 0
                             ? truck?.userTruckReviews?.map(review => {
-                                return <Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setBasicTruck} />
+                                return <Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setSimpleTruck} />
                             })
                             : <div>No Reviews Yet</div>
                     }
@@ -311,7 +311,7 @@ export const Truck = ({ truckID }) => {
                     {
                         getCurrentUser().owner
                             ? ""
-                            : <ReviewForm truckId={truckId} setTruck={setTruck} />
+                            : <ReviewForm truckId={truckId} setTruck={setTruck} setBasicTruck={setSimpleTruck} />
                     }
 
                 </div>

@@ -62,8 +62,8 @@ export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
             TruckRepository.update(thisTruck.id, updatedTruckObj)
                 .then(() => {
                     TruckRepository.get(thisTruck.id)
-                        .then(setTruck)
-                        .then(setBasicTruck)
+                        .then((truck) => setTruck(truck))
+                        .then((truck) => setBasicTruck(truck))
 
                 })
         }

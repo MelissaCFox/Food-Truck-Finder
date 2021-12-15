@@ -8,7 +8,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck }) => {
+export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck }) => {
     const { getCurrentUser } = useSimpleAuth()
     const { truckId } = useParams()
     const [modal, setModal] = useState(false)
@@ -147,9 +147,9 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck }
                                                 .then(() => {
                                                     TruckRepository.get(parseInt(thisTruckId))
                                                         .then((truck) => {
-                                                            setThisTruck(truck)
-                                                            updateRatings()
-                                                            setTruck(truck)
+                                                            
+                                                            setBasicTruck(truck)
+                                                            
                                                             reviewToggle()
                                                         })
                                                 })
