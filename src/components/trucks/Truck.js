@@ -23,11 +23,18 @@ export const Truck = ({ truckID }) => {
     const [days, setDays] = useState([])
     const [editModal, setEditModal] = useState(false)
     const editToggle = () => setEditModal(!editModal)
-    const [thisTruck, setThisTruck] = useState({})
+    const [basicTruck, setBasicTruck] = useState({})
+    const [simpleTruck, setSimpleTruck] = useState({})
+
+    useEffect(() => {
+        if (truckId) {
+            TruckRepository.getBasic(truckId).then(setSimpleTruck)
+        }
+    },[])
 
     useEffect(() => {
         if (truckID) {
-            TruckRepository.getBasic(truckID).then(setThisTruck)
+            TruckRepository.getBasic(truckID).then(setBasicTruck)
         }
     }, [truckID])
 
@@ -93,9 +100,9 @@ export const Truck = ({ truckID }) => {
     const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
 
     const updateTruck = () => {
-        TruckRepository.update(thisTruck.id, thisTruck)
+        TruckRepository.update(basicTruck.id, basicTruck)
             .then(() => {
-                TruckRepository.get(thisTruck.id).then(setTruck)
+                TruckRepository.get(basicTruck.id).then(setTruck)
             })
             .then(editToggle)
     }
@@ -121,6 +128,28 @@ export const Truck = ({ truckID }) => {
             }
         }
     }
+
+    useEffect(() => {
+        
+        if (truckId && truck.id && simpleTruck.id) {
+            
+            let totalRating = 0
+            if (truck?.userTruckReviews?.length > 0) {
+
+                for (const review of truck?.userTruckReviews) {
+                    totalRating += review.rating
+                }
+                let averageRating = totalRating / truck?.userTruckReviews?.length
+                const updatedTruckObj = { ...simpleTruck }
+                updatedTruckObj.userRating = averageRating
+                TruckRepository.update(simpleTruck.id, updatedTruckObj)
+                    .then(() => {
+                        TruckRepository.get(simpleTruck.id).then(setTruck)
+                    })
+            }
+        }
+    }, [simpleTruck])
+
 
     let truckPrice = "$"
     if (truck.dollars === 2) {
@@ -183,44 +212,44 @@ export const Truck = ({ truckID }) => {
                                         <label >Name</label>
                                         <input type="text" className="form-control" defaultValue={truck.name}
                                             onChange={(e) => {
-                                                const copy = { ...thisTruck }
+                                                const copy = { ...basicTruck }
                                                 copy.name = e.target.value
-                                                setThisTruck(copy)
+                                                setBasicTruck(copy)
                                             }} ></input>
                                         <label >Description</label>
                                         <input type="text" className="form-control" defaultValue={truck.description}
                                             onChange={(e) => {
-                                                const copy = { ...thisTruck }
+                                                const copy = { ...basicTruck }
                                                 copy.description = e.target.value
-                                                setThisTruck(copy)
+                                                setBasicTruck(copy)
                                             }} ></input>
                                         <label >Hours</label>
                                         <input type="text" className="form-control" defaultValue={truck.hours}
                                             onChange={(e) => {
-                                                const copy = { ...thisTruck }
+                                                const copy = { ...basicTruck }
                                                 copy.hours = e.target.value
-                                                setThisTruck(copy)
+                                                setBasicTruck(copy)
                                             }} ></input>
                                         <label >Website</label>
                                         <input type="text" className="form-control" defaultValue={truck.websiteURL}
                                             onChange={(e) => {
-                                                const copy = { ...thisTruck }
+                                                const copy = { ...basicTruck }
                                                 copy.websiteURL = e.target.value
-                                                setThisTruck(copy)
+                                                setBasicTruck(copy)
                                             }} ></input>
                                         <label >Instagram</label>
                                         <input type="text" className="form-control" defaultValue={truck.instagramURL}
                                             onChange={(e) => {
-                                                const copy = { ...thisTruck }
+                                                const copy = { ...basicTruck }
                                                 copy.instagramURL = e.target.value
-                                                setThisTruck(copy)
+                                                setBasicTruck(copy)
                                             }} ></input>
                                         <label >Profile Image</label>
                                         <input type="text" className="form-control" defaultValue={truck.profileImgSrc}
                                             onChange={(e) => {
-                                                const copy = { ...thisTruck }
+                                                const copy = { ...basicTruck }
                                                 copy.profileImgSrc = e.target.value
-                                                setThisTruck(copy)
+                                                setBasicTruck(copy)
                                             }} ></input>
 
                                     </ModalBody>
@@ -273,7 +302,7 @@ export const Truck = ({ truckID }) => {
                     {
                         truck?.userTruckReviews?.length > 0
                             ? truck?.userTruckReviews?.map(review => {
-                                return <Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} />
+                                return <Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setBasicTruck} />
                             })
                             : <div>No Reviews Yet</div>
                     }

@@ -19,6 +19,24 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck }
     const [selectedReview, setSelectedReview] = useState({})
     const [reviewer, setReviewer] = useState({})
 
+    const [thisTruck, setThisTruck] = useState({})
+    const [fullTruck, setFullTruck] = useState({})
+
+    useEffect(() => {
+        if (truckId) {
+
+            TruckRepository.get(parseInt(truckId)).then(setFullTruck)
+        }
+    }, [truckId])
+
+    useEffect(() => {
+        if (truckId) {
+
+            TruckRepository.getBasic(parseInt(truckId)).then(setThisTruck)
+        }
+    }, [truckId])
+
+
     useEffect(() => {
         UserRepository.get(review.userId).then(setReviewer)
     }, [])
@@ -39,6 +57,24 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck }
 
             })
             .then(editToggle)
+    }
+
+    const updateRatings = () => {
+        let totalRating = 0
+        if (fullTruck?.userTruckReviews?.length > 0) {
+
+            for (const review of fullTruck?.userTruckReviews) {
+                totalRating += review.rating
+            }
+            let averageRating = totalRating / fullTruck?.userTruckReviews?.length
+            const updatedTruckObj = { ...thisTruck }
+            updatedTruckObj.userRating = averageRating
+            TruckRepository.update(thisTruck.id, updatedTruckObj)
+                .then(() => {
+                    TruckRepository.get(thisTruck.id).then(setTruck)
+
+                })
+        }
     }
 
 
@@ -106,12 +142,28 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck }
                             <ModalFooter>
                                 <Button onClick={
                                     () => {
-                                        ReviewRepository.delete(review.id).then(() => {
-                                            truckId
-                                                ? TruckRepository.get(thisTruckId).then(setTruck)
-                                                : ReviewRepository.getAllForUser(userId).then(setUserReviews)
-                                            reviewToggle()
-                                        })
+                                        truckId
+                                            ? ReviewRepository.delete(review.id)
+                                                .then(() => {
+                                                    TruckRepository.get(parseInt(thisTruckId))
+                                                        .then((truck) => {
+                                                            setThisTruck(truck)
+                                                            updateRatings()
+                                                            setTruck(truck)
+                                                            reviewToggle()
+                                                        })
+                                                })
+                                            : ReviewRepository.delete(review.id)
+                                                .then(() => {
+                                                    
+                                                            ReviewRepository.getAllForUser(userId)
+                                                                .then((reviews) => {
+                                                                    setUserReviews(reviews)
+                                                                    reviewToggle()
+                                                                })
+                                                        
+                                                })
+
                                     }}>
                                     Yes, Delete
                                 </Button>

@@ -6,14 +6,13 @@ import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 
 
-export const ReviewForm = ({ truckId, setTruck }) => {
+export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
     const [review, setReview] = useState("")
     const [date, setDate] = useState("")
     const { getCurrentUser } = useSimpleAuth()
     const [anonymousState, setAnonymous] = useState(false)
     const toggleAnonymous = () => setAnonymous(!anonymousState)
     const [rating, setRating] = useState(0)
-    const [newRating, setNewRating] = useState(false)
     const [thisTruck, setThisTruck] = useState({})
     const [fullTruck, setFullTruck] = useState({})
 
@@ -25,7 +24,7 @@ export const ReviewForm = ({ truckId, setTruck }) => {
         TruckRepository.getBasic(parseInt(truckId)).then(setThisTruck)
     }, [truckId])
 
-    const toggleNewRating = () => setNewRating(!newRating)
+
 
     const submitReview = (event) => {
         event.preventDefault()
@@ -44,15 +43,13 @@ export const ReviewForm = ({ truckId, setTruck }) => {
                     TruckRepository.get(parseInt(truckId))
                         .then((truck) => {
                             setFullTruck(truck)
-                            toggleNewRating()
+                            updateRatings()
                         })
                 })
         }
     }
 
-
-    useEffect(() => {
-        
+    const updateRatings = () => {
         let totalRating = 0
         if (fullTruck?.userTruckReviews?.length > 0) {
 
@@ -64,12 +61,13 @@ export const ReviewForm = ({ truckId, setTruck }) => {
             updatedTruckObj.userRating = averageRating
             TruckRepository.update(thisTruck.id, updatedTruckObj)
                 .then(() => {
-                    TruckRepository.get(thisTruck.id).then(setTruck)
+                    TruckRepository.get(thisTruck.id)
+                        .then(setTruck)
+                        .then(setBasicTruck)
+
                 })
         }
-
-    }, [newRating, thisTruck, fullTruck])
-
+    }
 
     return (
         <form className="form review-form">
