@@ -11,6 +11,7 @@ export const ReviewForm = ({truckId, setTruck}) => {
     const { getCurrentUser } = useSimpleAuth()
     const [anonymousState, setAnonymous] = useState(false)
     const toggleAnonymous = () => setAnonymous(!anonymousState)
+    const [rating, setRating] = useState(0)
 
     const submitReview = () => {
         const reviewObj = {
@@ -18,7 +19,8 @@ export const ReviewForm = ({truckId, setTruck}) => {
             truckId: parseInt(truckId),
             review: review,
             date: date,
-            anonymous: anonymousState
+            anonymous: anonymousState,
+            rating: rating
         }
 
         if (review && date) {
@@ -34,6 +36,11 @@ export const ReviewForm = ({truckId, setTruck}) => {
             </div>
             <div className="form-group">
                 <Input type="text" required autoFocus className="form-control" onChange={e => setReview(e.target.value)} id="review" placeholder="Review"></Input>
+            </div>
+
+            <div className="form-group">
+                <Label for="rating">Rating</Label>
+                <Input type="range" min="0" max="5" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></Input>
             </div>
 
             <FormGroup >
