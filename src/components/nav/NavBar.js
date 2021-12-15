@@ -3,6 +3,8 @@ import { Link, useHistory } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import Settings from "../../repositories/Settings";
 import UserRepository from "../../repositories/UserRepository";
+import FoodTruckFinderLogo from './FoodTruckFinderLogo.png';
+import './NavBar.css';
 
 
 
@@ -51,9 +53,9 @@ export const NavBar = () => {
                 </button>
                 <div id="navbarNavDropdown" className="navbar-collapse collapse">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <Link className="nav-link" to="/trucks">Food Truck Finder</Link>
-                        </li>
+                        <button onClick={() => { history.push(`/trucks`) }}>
+                        <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="logo" />
+                        </button>
 
                         <li className="nav-item">
                             <input id="searchTerms"

@@ -48,24 +48,29 @@ export const NeighborhoodTruckList = () => {
 
     return (
         <>
+        <div className="options">
             <div className="date">
-                <input type="date" onChange={(event) => {
+                <h2 className="date-string">
+                <input className="date-picker" type="date" onChange={(event) => {
                     const newDate = event.target.value
                     const parsedDate = Date.parse(newDate) + 86400000
                     const accurateDate = new Date(parsedDate)
                     setDateForList(accurateDate)
                 }}></input>
-                <div className="date-string">{dateString}</div>
+                                {dateString}
+                </h2>
+                
             </div>
             <div className="filter-options">
-                <FormGroup >
-                    <Label >Show Only Favorites</Label>
-                    <Input type="checkbox" onChange={toggleFavorites} />
+                
+                <FormGroup className="filter-option">
+                    <Label className="dropDown" >Show Only Favorites</Label>
+                    <Input className="checkbox" type="checkbox" onChange={toggleFavorites} />
                 </FormGroup>
 
-                <FormGroup >
-                    <Label for="typeSelect">Filter By Food Type</Label>
-                    <Input id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
+                <FormGroup className="filter-option">
+                    <Label className="dropDown" for="typeSelect">Filter By Food Type</Label>
+                    <Input className="dropDown" id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
                         <option value="0">--All--</option>
                         {
                             foodTypes.map(type => <option key={type.id} value={type.id}>{type.type}</option>)
@@ -74,9 +79,9 @@ export const NeighborhoodTruckList = () => {
                     </Input>
                 </FormGroup>
 
-                <FormGroup >
-                    <Label for="sortPref">Sort By:</Label>
-                    <Input id="sortPref" type="select" onChange={e => setSortPref(e.target.value)}>
+                <FormGroup className="filter-option">
+                    <Label className="dropDown" for="sortPref">Sort By:</Label>
+                    <Input className="dropDown" id="sortPref" type="select" onChange={e => setSortPref(e.target.value)}>
                         <option value="">--All--</option>
                         <option value="priceAsc">Price (low to high)</option>
                         <option value="priceDesc">Price (high to low)</option>
@@ -85,6 +90,7 @@ export const NeighborhoodTruckList = () => {
                     </Input>
                 </FormGroup>
 
+            </div>
             </div>
             <ul className="neighborhoods">
                 {

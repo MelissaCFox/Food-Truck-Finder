@@ -12,11 +12,12 @@ export const SearchResults = () => {
         if (location.state?.trucks.length > 0) {
             return (
                 <>
-                    
-                    <div>
-                        {
-                            location.state.trucks.map(truck => <TruckCard key={truck.id} truckId={truck.id} />)
-                        }
+                    <div className="card">
+                        <div>
+                            {
+                                location.state.trucks.map(truck => <TruckCard key={truck.id} truckId={truck.id} />)
+                            }
+                        </div>
                     </div>
                 </>
             )
@@ -30,11 +31,12 @@ export const SearchResults = () => {
         if (location.state?.neighborhoods.length > 0) {
             return (
                 <>
-
-                    <div>
-                        {
-                            location.state.neighborhoods.map(neighborhood => <NeighborhoodCard key={neighborhood.id} neighborhoodId={neighborhood.id} />)
-                        }
+                    <div className="card">
+                        <div>
+                            {
+                                location.state.neighborhoods.map(neighborhood => <NeighborhoodCard key={neighborhood.id} neighborhoodId={neighborhood.id} />)
+                            }
+                        </div>
                     </div>
                 </>
             )
@@ -47,13 +49,13 @@ export const SearchResults = () => {
         <div className="searchResults">
 
             <div>
-            <h2>Matching Trucks</h2>
+                <h2>Matching Trucks</h2>
                 <div>{displayTrucks()}</div>
             </div>
 
             <div>
-            <h2>Matching Neighborhoods</h2>
-            <div>{displayNeighborhoods()}</div>
+                <h2>Matching Neighborhoods</h2>
+                <div>{displayNeighborhoods()}</div>
             </div>
         </div>
     )

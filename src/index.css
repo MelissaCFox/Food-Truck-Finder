@@ -1,5 +1,7 @@
+@import "Card.css";
+
 body {
-  padding-top: 5em;
+  padding-top: 15em;
 }
 
 label {
@@ -65,18 +67,16 @@ dialog {
   }
 }
 
-.date {
-  display: flex;
-}
-
 .date-picker {
-  width: 11rem;
+  width:2em;
+  height: 3rem;
+  margin-left: 2rem;
+  border: none;
+  margin-right: 2rem;
 }
 
 .date-string {
   margin-left: 2rem;
-  display: flex;
-  align-items: center;
 
 }
 
@@ -133,6 +133,7 @@ dialog {
 
 .card {
   margin: 0.5rem 1rem 1rem 1rem ;
+
 }
 
 .today {
@@ -184,6 +185,14 @@ button {
   flex-wrap: wrap;
 }
 
+.neighborhood-card {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+}
+
 .star-icon {
   width: 100px;
   height: 100px
@@ -191,4 +200,51 @@ button {
 
 .favorite {
   background-color: goldenrod;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-evenly;
+  flex: 3;
+  margin-right: 2rem;
+  margin-bottom: 0;
+}
+
+.filter-option {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+  margin-bottom: 3rem;
+   
+}
+
+.date {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  flex: 4;
+}
+
+.dropDown {
+  height: 2.5rem;
+  width: 12rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: center;
+}
+.favCheck {
+  height: 2rem;
+}
+
+.checkbox {
+  align-self: center;
 }

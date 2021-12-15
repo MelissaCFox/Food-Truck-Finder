@@ -15,9 +15,12 @@ export const NeighborhoodCard = ({neighborhoodId}) => {
 
 
     return (
-
+        <div className="neighborhood-card">
+        <div className="neighborhood-card">
         <div className="card-body">
             <button onClick={() => { history.push(`/neighborhoods/${neighborhood.id}`) }}><img className="neighborhood-logo" src={neighborhood.profileImgSrc} alt={`${neighborhood?.name} logo`} /></button>
+        </div>
+        </div>
         </div>
     )
 
