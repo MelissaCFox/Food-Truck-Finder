@@ -14,3 +14,89 @@
 .trucks {
     background-color: #2D4263;
 }
+
+
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    flex: 3;
+    margin-right: 2.65rem;
+    margin-bottom: 0;
+  }
+  
+  .filter-option {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    color: #ECDBBA;
+    justify-content: flex-end;
+    margin-bottom: 0; 
+  }
+
+  .dropDown {
+    height: 1.5rem;
+    width: 12rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+  }
+
+  .label {
+      margin-bottom: 0.25rem;
+  }
+
+ 
+  .checkbox {
+    align-self: center;
+    height:1.5rem;
+    margin-bottom: 0.4rem;
+  }
+
+
+  .date {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    flex: 4;
+  }
+  
+.date-string {
+    display: flex;
+    flex-direction: left;
+    margin-left: 2rem;
+    font-family: "Readex Pro";
+    font-weight: 200;
+    margin-bottom: 0;
+    padding-top: 0.5rem;
+
+  }
+
+  .date-picker {
+      width: 4rem;
+      margin-right: 2rem;
+  }
+
+  input[type=date] {
+    background-color: #191919;
+    color: #191919;
+    border: none;
+  }
+
+  input::-webkit-calendar-picker-indicator{
+      filter: invert(1);
+  }
+
+  .mini-info {
+    padding-top: 0.2rem;
+}
+  

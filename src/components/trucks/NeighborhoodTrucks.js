@@ -20,7 +20,7 @@ export const NeighborhoodTruckList = () => {
 
     useEffect(() => {
         FoodTypeRepository.getAll().then(setFoodTypes)
-    },[])
+    }, [])
 
     useEffect(() => {
         let newDate = new Date()
@@ -49,49 +49,49 @@ export const NeighborhoodTruckList = () => {
 
     return (
         <>
-        <div className="options">
-            <div className="date">
-                <h2 className="date-string">
-                <input className="date-picker" type="date" onChange={(event) => {
-                    const newDate = event.target.value
-                    const parsedDate = Date.parse(newDate) + 86400000
-                    const accurateDate = new Date(parsedDate)
-                    setDateForList(accurateDate)
-                }}></input>
-                                <h2>{dateString}</h2>
-                </h2>
-                
-            </div>
-            <div className="filter-options">
-                
-                <FormGroup className="filter-option">
-                    <Label className="dropDown" >Show Only Favorites</Label>
-                    <Input className="checkbox" type="checkbox" onChange={toggleFavorites} />
-                </FormGroup>
+            <div className="options">
+                <div className="date">
+                    <h2 className="date-string">
+                        <input className="date-picker" type="date" onChange={(event) => {
+                            const newDate = event.target.value
+                            const parsedDate = Date.parse(newDate) + 86400000
+                            const accurateDate = new Date(parsedDate)
+                            setDateForList(accurateDate)
+                        }}></input>
+                        <h2>{dateString}</h2>
+                    </h2>
 
-                <FormGroup className="filter-option">
-                    <Label className="dropDown" for="typeSelect">Filter By Food Type</Label>
-                    <Input className="dropDown" id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
-                        <option value="0">--All--</option>
-                        {
-                            foodTypes.map(type => <option key={type.id} value={type.id}>{type.type}</option>)
-                        }
+                </div>
+                <div className="filter-options">
 
-                    </Input>
-                </FormGroup>
+                    <div className="filter-option">
+                        <label className="dropDown" >Show Only Favorites</label>
+                        <Input className="checkbox" type="checkbox" onChange={toggleFavorites} />
+                    </div>
 
-                <FormGroup className="filter-option">
-                    <Label className="dropDown" for="sortPref">Sort By:</Label>
-                    <Input className="dropDown" id="sortPref" type="select" onChange={e => setSortPref(e.target.value)}>
-                        <option value="">--All--</option>
-                        <option value="priceAsc">Price (low to high)</option>
-                        <option value="priceDesc">Price (high to low)</option>
-                        <option value="userRating">User Rating</option>
+                    <div className="filter-option">
+                        <label className="dropDown label" for="typeSelect">Filter By Food Type</label>
+                        <select className="dropDown" id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
+                            <option value="0">--All--</option>
+                            {
+                                foodTypes.map(type => <option key={type.id} value={type.id}>{type.type}</option>)
+                            }
 
-                    </Input>
-                </FormGroup>
+                        </select>
+                    </div>
 
-            </div>
+                    <div className="filter-option">
+                        <label className="dropDown label" for="sortPref">Sort Trucks By</label>
+                        <select className="dropDown" id="sortPref" type="select" onChange={e => setSortPref(e.target.value)}>
+                            <option value="">--All--</option>
+                            <option value="priceAsc">Price (low to high)</option>
+                            <option value="priceDesc">Price (high to low)</option>
+                            <option value="userRating">User Rating</option>
+
+                        </select>
+                    </div>
+
+                </div>
             </div>
             <ul className="neighborhoods">
                 {

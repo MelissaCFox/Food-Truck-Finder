@@ -2,7 +2,7 @@
 @import "Card.css";
 
 body {
-  padding-top: 8em;
+  padding-top: 5em;
   background-color: #191919;
 }
 
@@ -69,19 +69,9 @@ dialog {
   }
 }
 
-.date-picker {
-  width:2em;
-  height: 3rem;
-  margin-left: 2rem;
-  border: none;
-  margin-right: 2rem;
-}
 
-.date-string {
-  margin-left: 2rem;
-  font-family: "Readex Pro";
-  font-weight: 200;
-}
+
+
 
 .trucks {
   display: flex;
@@ -209,52 +199,10 @@ h2 {
   background-color: #F7B917;
 }
 
-.options {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-}
 
-.filter-options {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content:space-evenly;
-  flex: 3;
-  margin-right: 2rem;
-  margin-bottom: 0;
-}
 
-.filter-option {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-content: center;
-  margin-bottom: 3rem;
-   
-}
 
-.date {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  flex: 4;
-}
 
-.dropDown {
-  height: 2.5rem;
-  width: 12rem;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  align-content: center;
-}
-.favCheck {
-  height: 2rem;
-}
-
-.checkbox {
-  align-self: center;
-}
 
 .neighborhoods {
   margin: 0 3rem;
