@@ -195,7 +195,7 @@ export const Truck = ({ truckID }) => {
 
     return (
         <>
-            <div className="truck__page card">
+            <div className="truck__page-card">
 
                 <div className="truck__info">
 
@@ -220,10 +220,6 @@ export const Truck = ({ truckID }) => {
                                 <div className="truck__image">
                                     <img className="truck__logo" src={truck.profileImgSrc} alt={`${truck.name} logo`} />
                                 </div>
-                                <div className="truck__info--links">
-                                    <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
-                                    <a className="link" target="_blank" rel="noreferrer" href={truck.instagramURL}><img alt="logo" className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
-                                </div>
                             </div>
 
                             <div className="truck__description">
@@ -232,6 +228,10 @@ export const Truck = ({ truckID }) => {
                                 <div className="truck__info--dollars">{truckPrice}</div>
                                 <div className="truck__info--rating ">User Rating: <img className="truck-userStar" alt="user rating star" src={starRating} /></div>
                                     
+                                <div className="truck__info--links">
+                                    <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
+                                    <a className="link" target="_blank" rel="noreferrer" href={truck.instagramURL}><img alt="logo" className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
+                                </div>
                                 
                             </div>
                         </div>

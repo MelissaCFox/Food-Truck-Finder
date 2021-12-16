@@ -1,16 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 
+.truck__page-card {
+    background-color: #07aa30;
+    margin: 0.5rem 2rem 2rem 2rem ;
+}
+
 .truck__info {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    padding: 0;
+    padding: 0 2rem;
 }
 
 .truck__heading {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+}
+
+.truck__name {
+    align-self: center;
+    padding-left: 5rem;
+    font-family: "Modak";
+    font-size: 4rem;
+    color:#ECDBBA;
 }
 
 .truck__details {
@@ -25,7 +38,8 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    flex: 2
+    flex: 2;
+    
 }
 
 .truck__media {
@@ -38,16 +52,19 @@
 }
 
 .truck__logo {
-    height: 10rem;
+    height: 16rem;
     
+}
+
+.link__logo {
+    margin: 0.5rem 0.5rem 0 0;
 }
 
 .truck__info--links {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row; 
-    justify-content: space-evenly;
-    padding: 1rem 0;
+    
 }
 
 .truck__description {
@@ -55,7 +72,7 @@
     flex-wrap: wrap;
     flex-direction: column; 
     background-color: #ECDBBA;
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 2rem;
 }
 
 .truck__info--description {
@@ -80,7 +97,6 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    background-color: teal;
     margin: 2rem;
 }
 
@@ -105,6 +121,7 @@
     text-align: center;
     color:#ECDBBA;
     font-family: "Readex Pro";
+    font-size: 1.25rem;
 }
 
 .truck__reviews {
