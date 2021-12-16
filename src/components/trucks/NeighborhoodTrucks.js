@@ -4,6 +4,7 @@ import { FormGroup, Input, Label } from "reactstrap"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
+import './TruckList.css';
 
 
 export const NeighborhoodTruckList = () => {
@@ -57,7 +58,7 @@ export const NeighborhoodTruckList = () => {
                     const accurateDate = new Date(parsedDate)
                     setDateForList(accurateDate)
                 }}></input>
-                                {dateString}
+                                <h2>{dateString}</h2>
                 </h2>
                 
             </div>
@@ -96,7 +97,7 @@ export const NeighborhoodTruckList = () => {
                 {
                     neighborhoods.map(neighborhood => {
                         return <li className="card neighborhood" key={neighborhood.id}>
-                            <button onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>{neighborhood.name}</button>
+                            <button className="neighborhoodName" onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}><h3 className="neighborhood-name">{neighborhood.name}</h3></button>
                             <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
 
                         </li>

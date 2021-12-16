@@ -1,3 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200&display=swap');
+
+/* * {
+    border: black solid 1px;
+} */
+
 img {
-    height: 10rem;
+    height: 5rem;
 }
+
+.name-btn button {
+    background-color: #2D4263;
+}
+
+.name {
+    font-family: "Modak";
+    font-size: 2.3rem;
+    color: #191919;
+}
+
+.logout-btn {
+    background-color: #2D4263;
+    font-family: "Modak";
+    font-size: 2.3rem;
+    color: #191919;
+}
+
+.container nav {
+    padding: 0;
+}
+
+.appLogo button {
+    background-color: #2D4263;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #2D4263;
+}
+
+.appLogo {
+    flex: 0
+}
+
+.search {
+    flex: 1;
+    
+}
+
+.profile {
+    flex: 2;
+    margin: 0 0 0 5rem;
+}
+
+.logout {
+    flex: 1;
+    margin-left: 10rem;
+    justify-content: center;
+}
+

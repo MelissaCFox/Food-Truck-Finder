@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200&display=swap');
+
+.neighborhood-name {
+ color:  #ECDBBA;
+ font-family: "Readex Pro";
+ font-weight: 700;
+ margin-top: 0.4rem;
+}
+
+.neighborhoodName {
+    background-color:#C84B31;
+}
+
+.trucks {
+    background-color: #2D4263;
+}

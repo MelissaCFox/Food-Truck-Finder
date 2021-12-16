@@ -21,28 +21,28 @@ export const NavBar = () => {
 
 
     const search = () => {
-        
-            const terms = document.querySelector("#searchTerms").value
-            const foundItems = {
-                trucks: [],
-                neighborhoods: []
-            }
 
-            fetch(`${Settings.remoteURL}/trucks?name_like=${encodeURI(terms)}`)
-                .then(r => r.json())
-                .then(trucks => {
-                    foundItems.trucks = trucks
-                    return fetch(`${Settings.remoteURL}/neighborhoods?name_like=${encodeURI(terms)}`)
+        const terms = document.querySelector("#searchTerms").value
+        const foundItems = {
+            trucks: [],
+            neighborhoods: []
+        }
+
+        fetch(`${Settings.remoteURL}/trucks?name_like=${encodeURI(terms)}`)
+            .then(r => r.json())
+            .then(trucks => {
+                foundItems.trucks = trucks
+                return fetch(`${Settings.remoteURL}/neighborhoods?name_like=${encodeURI(terms)}`)
+            })
+            .then(r => r.json())
+            .then(neighborhoods => {
+                foundItems.neighborhoods = neighborhoods
+                history.push({
+                    pathname: "/search",
+                    state: foundItems
                 })
-                .then(r => r.json())
-                .then(neighborhoods => {
-                    foundItems.neighborhoods = neighborhoods
-                    history.push({
-                        pathname: "/search",
-                        state: foundItems
-                    })
-                })
-        
+            })
+
     }
 
     return (
@@ -51,36 +51,39 @@ export const NavBar = () => {
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div id="navbarNavDropdown" className="navbar-collapse collapse">
-                    <ul className="navbar-nav mr-auto">
+                <div id="navbarNavDropdown" className="navbar-collapse collapse header">
+                    <ul className="navbar-nav mr-auto appLogo">
                         <button onClick={() => { history.push(`/trucks`) }}>
-                        <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="logo" />
+                            <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="logo" />
                         </button>
-
-                        <li className="nav-item">
+                    </ul>
+                    <ul className="navbar-nav profile">
+                        <li className="nav-item dropdown">
+                            {
+                                isAuthenticated()
+                                    ? <div className="name-btn"><button className="nav-link name-btn" onClick={()=>{history.push("/profile")}}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
+                                    : <Link className="nav-link" to="/login">Login</Link>
+                            }
+                        </li>
+                    </ul>
+                    <ul className="navbar-nav search">
+                        <li className="nav-item search">
                             <input id="searchTerms"
                                 onKeyUp={search}
                                 className="form-control w-100"
                                 type="search"
-                                placeholder=""
+                                placeholder="Search"
                                 aria-label="Search" />
                         </li>
                     </ul>
-                    <ul className="navbar-nav">
+                    <ul className="navbar-nav logout">
                         <li className="nav-item dropdown">
                             {
                                 isAuthenticated()
-                                    ? <Link className="nav-link" to="/profile">Welcome, {currentUser.firstName} {currentUser.lastName}!</Link>
-                                    : <Link className="nav-link" to="/login">Login</Link>
-                            }
-                        </li>
-
-                        <li className="nav-item dropdown">
-                            {
-                                isAuthenticated()
-                                    ? <Link onClick={() => {
+                                    ? <div className="logout-btn"><button className="nav-link logout-btn" onClick={() => {
                                         logout()
-                                    }} className="nav-link" to="/login">Logout</Link>
+                                        history.push("/login")
+                                    }}><div className="logout-btn">Logout</div></button></div>
                                     : <Link className="nav-link" to="/login">Login</Link>
                             }
                         </li>
