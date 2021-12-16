@@ -159,10 +159,10 @@ h2 {
   flex-wrap: wrap;
 }
 
-.review-list {
+.reviews {
   display: flex;
   justify-content: left;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
 }
 

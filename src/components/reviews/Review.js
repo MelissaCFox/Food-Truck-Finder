@@ -176,7 +176,7 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
                         </Modal>
 
                     </div>)
-                    : ""
+                    : <div className="review-options-blank"></div>
             }
         </div>
     )

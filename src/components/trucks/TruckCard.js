@@ -41,22 +41,21 @@ export const TruckCard = ({ truckId }) => {
     }
 
     let starRating = truck?.userRating
-
-    if (0 < starRating && starRating < 1.25) {
+    if (0 < starRating && starRating < 1.25 || starRating === 1.25) {
         starRating = OneStar
-    } else if (1.25 < starRating && starRating < 1.75) {
+    } else if (1.25 < starRating && starRating < 1.75 || starRating === 1.75) {
         starRating = OneAndStar
-    } else if (1.75 < starRating && starRating < 2.25) {
+    } else if (1.75 < starRating && starRating < 2.25 || starRating === 2.25) {
         starRating = TwoStar
-    } else if (2.25 < starRating && starRating < 2.75) {
+    } else if (2.25 < starRating && starRating < 2.75 || starRating === 2.75) {
         starRating = TwoAndStar
-    } else if (2.75 < starRating && starRating < 3.25) {
+    } else if (2.75 < starRating && starRating < 3.25 || starRating === 3.25) {
         starRating = ThreeStar
-    } else if (3.25 < starRating && starRating < 3.75) {
+    } else if (3.25 < starRating && starRating < 3.75 || starRating === 3.75) {
         starRating = ThreeAndStar
-    } else if (3.75 < starRating && starRating < 4.25) {
+    } else if (3.75 < starRating && starRating < 4.25 || starRating === 4.25) {
         starRating = FourStar
-    } else if ( 4.25 < starRating && starRating < 4.75) {
+    } else if ( 4.25 < starRating && starRating < 4.75 || starRating === 4.75) {
         starRating = FourAndStar
     } else if ( 4.75 < starRating) {
         starRating = FiveStar

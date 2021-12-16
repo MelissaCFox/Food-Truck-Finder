@@ -61,7 +61,10 @@ export const Owner = ({ userId }) => {
                     <Button color="success" outline onClick={toggle2}>Favorites</Button>
                     <div>
                         <Collapse animation="false" isOpen={collapse}>
-                            <Favorites userId={userId} />
+                            <ul className="favorites card">
+                                <div className="profile-header"><h3>My Favorite Food Trucks</h3></div>
+                                <div className="profile-container"><Favorites userId={userId} /></div>
+                            </ul>
                         </Collapse>
                     </div>
                 </div>

@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
+
+.truck__info {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 0;
+}
+
+.truck__heading {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.truck__details {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 0.5rem 2rem;
+    background-color: #2D4263;
+}
+
+.truck-info-details {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex: 2
+}
+
+.truck__media {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column; 
+    background-color: #ECDBBA;
+    
+
+}
+
+.truck__logo {
+    height: 10rem;
+    
+}
+
+.truck__info--links {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; 
+    justify-content: space-evenly;
+    padding: 1rem 0;
+}
+
+.truck__description {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column; 
+    background-color: #ECDBBA;
+    padding: 1rem;
+}
+
+.truck__info--description {
+    flex: 2;
+    padding-bottom: 2rem;
+}
+
+.truck__info--dollars {
+    font-size: 24px;
+    font-family: "Modak";
+    padding-top: 0.4rem;
+}
+
+.truck-userStar {
+    width: 10rem;
+    height: 2rem;
+}
+
+
+
+.truck__schedule-card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: teal;
+    margin: 2rem;
+}
+
+.truck-schedule-card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:space-between;
+    background-color: #2D4263;
+    padding: 0.5rem 3rem 0;
+}
+
+.schedule-heading {
+    margin: 0;
+    background-color: #C84B31;
+    color: #ECDBBA;
+    padding: 0.25rem 0.5rem;
+}
+
+.day__name {
+    background-color: #C84B31;
+    text-align: center;
+    color:#ECDBBA;
+    font-family: "Readex Pro";
+}
+
+.truck__reviews {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.truck-reviews-heading {
+    background-color: #C84B31;
+    margin-bottom: 0;
+    color: #ECDBBA;
+    padding: 0.25rem 0.5rem;
+}
+
+.review-list {
+    flex: 3;
+    padding: 0;
+
+}
+
+.noReviewForm {
+    width: 1rem;
+    padding: 0;
+}
+
+.truck-review-card {
+    margin: 0;
+}
+
+.review-message {
+    margin-bottom: 0;
+}
+
+.review-author {
+    text-align: right;
+    padding-bottom: 0.4rem;
+    padding-right: 0.4rem;
+}
+
+.review-form {
+    padding: 0.5rem;
+    flex: 1.5;
+    background-color: #ECDBBA;
+}
+
+.review-options-blank {
+    height: 2.3rem;
+}
+
+.truck-reviews-section {
+    background-color:#2D4263;
+    margin: 0 2rem;
+}
