@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 
 .neighborhood-name {
  color:  #ECDBBA;
  font-family: "Readex Pro";
- font-weight: 700;
+ font-weight: 400;
  margin-top: 0.4rem;
 }
 

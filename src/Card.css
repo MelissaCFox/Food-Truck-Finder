@@ -1,7 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 
 .truck , .truck-card-body, .card-body, .neighborhood-card {
     background-color: #ECDBBA;
+    
 }
+
+.truck-price {
+    font-family: "Modak";
+    font-size: 1.25rem;
+    color: #2D4263;
+}
+
+.truck {
+    margin-bottom: 0;
+}
+
+.userStar {
+    width: 4rem;
+    height: 1.5rem;
+
+  }
 
 

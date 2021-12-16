@@ -70,7 +70,7 @@ export const NeighborhoodTruckList = () => {
                     </div>
 
                     <div className="filter-option">
-                        <label className="dropDown label" for="typeSelect">Filter By Food Type</label>
+                        <label className="dropDown label">Filter By Food Type</label>
                         <select className="dropDown" id="typeSelect" type="select" onChange={e => setTypePref(parseInt(e.target.value))}>
                             <option value="0">--All--</option>
                             {
@@ -81,7 +81,7 @@ export const NeighborhoodTruckList = () => {
                     </div>
 
                     <div className="filter-option">
-                        <label className="dropDown label" for="sortPref">Sort Trucks By</label>
+                        <label className="dropDown label">Sort Trucks By</label>
                         <select className="dropDown" id="sortPref" type="select" onChange={e => setSortPref(e.target.value)}>
                             <option value="">--All--</option>
                             <option value="priceAsc">Price (low to high)</option>

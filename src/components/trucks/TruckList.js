@@ -4,6 +4,7 @@ import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import userTruckFavorites from "../../repositories/UserTruckFavoriteRepository"
 import { TruckCard } from "./TruckCard"
+import './TruckList.css';
 
 
 export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref }) => {

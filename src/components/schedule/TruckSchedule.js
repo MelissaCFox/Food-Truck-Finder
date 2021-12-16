@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
+import '../trucks/TruckList.css';
 
 
 export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods }) => {
