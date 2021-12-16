@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 @import "Card.css";
 
+
 body {
   padding-top: 5em;
   background-color: #191919;
@@ -195,10 +196,6 @@ h2 {
 .favorite {
   background-color: #F7B917;
 }
-
-
-
-
 
 
 .neighborhoods {

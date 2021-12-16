@@ -21,4 +21,52 @@
 
   }
 
+  .reviews {
+      background-color: #2D4263;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+  }
+
+  .review-card {
+    background-color: #ECDBBA;
+    width: 25rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.review-author {
+    color:#191919;
+}
+
+.review-truckName button {
+    background-color: #ECDBBA;
+}
+
+.review-truckName {
+    color: #ECDBBA;
+    font-family: "Readex Pro";
+}
+
+.review-date {
+    color:#191919;
+    margin-top: 0.25rem;
+    margin-left: 1.5rem;
+}
+
+.review-message {
+    color:#191919;
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+    flex: 3;
+}
+
+
+.review-options {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    
+}
+
 

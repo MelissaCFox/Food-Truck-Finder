@@ -1,0 +1,23 @@
+
+.profile-view {
+    padding-top: 1.5rem;
+    margin: 0 2rem;
+}
+
+.profile-header {
+    background-color: #C84B31;
+    margin-bottom: 0;
+    color: #ECDBBA;
+    padding: 0.25rem 0.5rem 0 0.5rem;
+}
+
+.favorites {
+    border-bottom: #191919 solid 2rem;
+}
+
+.profile-container {
+    padding-top: 0.5rem;
+    background-color: #2D4263;
+    
+}
+

@@ -4,8 +4,9 @@ import ReviewRepository from "../../repositories/ReviewRepository"
 import UserRepository from "../../repositories/UserRepository"
 import { Review } from "../reviews/Review"
 import { Favorites } from "./Favorites"
+import './User.css';
 
-export const User = ({userId}) => {
+export const User = ({ userId }) => {
     const [user, setUser] = useState({})
     const [userReviews, setUserReviews] = useState([])
 
@@ -18,14 +19,16 @@ export const User = ({userId}) => {
     }, [userId])
 
     return (
-        <>
-            <ul className="favorites">
-                <h3>My Favorite Food Trucks</h3>
-                <Favorites userId={user.id} />
+        <div className="profile-view">
+            <ul className="favorites card">
+                <div className="profile-header"><h3>My Favorite Food Trucks</h3></div>
+                <div className="profile-container"><Favorites userId={user.id} /></div>
             </ul>
 
-            <ul className="reviews">
-                <h3>My Reviews</h3>
+            <ul className="reviews-container card">
+                <div className="profile-header"><h3>My Reviews</h3></div>
+                <div className="reviews">
+                <div className="profile-container"></div>
                 {
                     userReviews.length > 0
                         ? userReviews.map(review => {
@@ -33,7 +36,8 @@ export const User = ({userId}) => {
                         })
                         : <div>No Reviews Yet</div>
                 }
+                </div>
             </ul>
-        </>
+        </div>
     )
 }

@@ -111,7 +111,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                                 {
                                     favorites
                                         ? ""
-                                        : <div className="card-body">No Trucks Today</div>
+                                        : <div className="card-body">No Trucks</div>
                                 }
 
 

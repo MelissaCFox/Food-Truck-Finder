@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useEffect } from "react/cjs/react.development"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
@@ -10,6 +11,7 @@ import UserRepository from "../../repositories/UserRepository"
 
 export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck }) => {
     const { getCurrentUser } = useSimpleAuth()
+    const history = useHistory()
     const { truckId } = useParams()
     const [modal, setModal] = useState(false)
     const reviewToggle = () => setModal(!modal)
@@ -82,18 +84,18 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
         <div className="card review-card" key={review.id}>
             {
                 truckId
-                    ? <div>{review.truck?.name}</div>
-                    : <div>{review.truck?.name}</div>
+                    ? <div></div>
+                    : <div className="review-truckName"><button onClick={() => history.push(`/trucks/${review.truck?.id}`)}>{review.truck?.name}</button></div>
             }
 
-            <div>{review.date}</div>
-            <div>{review.review}</div>
+            <div className="review-date">{review.date}</div>
+            <div className="review-message">"{review.review}"</div>
 
             {
                 truckId
                     ? review.anonymous
-                        ? <div>~ Anonymous</div>
-                        : <div>~ {reviewer.firstName} {reviewer?.lastName?.charAt(0)}.</div>
+                        ? <div className="review-author">~ Anonymous</div>
+                        : <div className="review-author">~ {reviewer.firstName} {reviewer?.lastName?.charAt(0)}.</div>
                     : ""
             }
 

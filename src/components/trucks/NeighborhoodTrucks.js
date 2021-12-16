@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
-import { FormGroup, Input, Label } from "reactstrap"
+import { Input} from "reactstrap"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
