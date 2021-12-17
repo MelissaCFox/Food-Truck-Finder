@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# Food Truck Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Track You Favorite Food Trucks in Nashville 
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+### Table of Contents
 
-### `npm start`
+- [Description](#description)
+- [Featues](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [ERD](#erd)
+- [License](#license)
+- [Author Info](#author-info)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Description
 
-### `npm test`
+Food Truck Finder is an application for users to locate and keep track of their favorite food trucks in and around Nashville. Food trucks are an increasingly important part of a vibrant and happy community; they bring people together in a place where they can get great food, try something new, and sometimes even explore a different culture. The portability and limited menus that food trucks provide allow owners to react directly to the needs and wants of their customers. Sometimes, however, knowing where to find them can be a challenge. I wanted to build a tool that would help food truck owners and customers more easily find each other. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This initial application was developed over the course of two weeks, primarily using the React library for JavaScript. My developmental goals throughout this build were to increase my understanding and proficiency of the use of props, as well as to further develop my skills at manipulating state to create a dynamic, responsive CRUD user interface.
 
-### `npm run build`
+## Features
+- Users can view a list of food trucks currently located in Nashville.
+- Users can filter food truck list by date, food type, and/or favorites, as well as sort the lsit by price range and average user rating.
+- Users can view additional information and expanded weekly schedule for each truck and neighborhood by viewing their individual pages.
+- Users can add trucks to their favorites list.
+- User can rate and write reviews for individual trucks
+- Truck Owners can register (and retire) trucks and edit details and location schedules
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Technologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- HTML5
+- CSS3
+- JavaScript
+- React
+- Git
+- Github
+- JSON Server
+- Visual Studio Code
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Installation
+1. Clone this repository and change to the directory in the terminal.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+git@github.com:MelissaCFox/Food-Truck-Finder.git
+cd Food-Truck-Finder
+```
+2. Access the data
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<a href="https://github.com/MelissaCFox/food-truck-finder-api" target="_blank" rel="noreferrer"><img src="https://img.shields.io/badge/-Click%20Here-blue" alt="Food Truck Finder API Repository" style="height: 30px !important; width: 100px !important;" /></a>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. Launch the application
 
-## Learn More
+```sh
+npm install
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
+### Demo
+Preliminary Demo
+<img src="./book-keeper-demo.gif" alt="Application Demo">
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+#### ERD
+<img src="./Food-Truck-Finder-ERD.png" alt="Application ERD">
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## License
 
-### Analyzing the Bundle Size
+MIT License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Copyright (c) [2021] [Melissa C Fox]
 
-### Making a Progressive Web App
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-### Advanced Configuration
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Author Info
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Github - [MelissaCFox](https://github.com/MelissaCFox)
+- LinkedIn - [Melissa Fox](https://www.linkedin.com/in/melissacfox/)
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Back To The Top](#FoodTruckFinder)
