@@ -23,6 +23,8 @@ export const TruckCard = ({ truckId }) => {
     const [favorites, setFavorites] = useState([])
     const { getCurrentUser } = useSimpleAuth()
 
+    const [userRating, updateUserRating] = useState("")
+
     useEffect(() => {
         TruckRepository.get(truckId).then(setTruck)
     }, [truckId])
@@ -40,44 +42,49 @@ export const TruckCard = ({ truckId }) => {
         truckPrice = "$ $ $"
     }
 
-    let starRating = truck?.userRating
-    if (0 < starRating && starRating < 1.25) {
-        starRating = OneStar
-    } else if (starRating === 1.25){
-        starRating = OneStar
-    }else if (1.25 < starRating && starRating < 1.75 ) {
-        starRating = OneAndStar
-    } else if (starRating === 1.75) {
-        starRating = OneAndStar
-    } else if (1.75 < starRating && starRating < 2.25 ) {
-        starRating = TwoStar
-    } else if (starRating === 2.25) {
-        starRating = TwoStar
-    } else if (2.25 < starRating && starRating < 2.75) {
-        starRating = TwoAndStar
-    } else if (starRating === 2.75) {
-        starRating = TwoAndStar
-    } else if (2.75 < starRating && starRating < 3.25) {
-        starRating = ThreeStar
-    } else if (starRating === 3.25) {
-        starRating = ThreeStar
-    } else if (3.25 < starRating && starRating < 3.75) {
-        starRating = ThreeAndStar
-    } else if (starRating === 3.75) {
-        starRating = ThreeAndStar
-    } else if (3.75 < starRating && starRating < 4.25) {
-        starRating = FourStar
-    } else if (starRating === 4.25) {
-        starRating = FourStar
-    } else if (4.25 < starRating && starRating < 4.75) {
-        starRating = FourAndStar
-    } else if (starRating === 4.75) {
-        starRating = FourAndStar
-    } else if (4.75 < starRating) {
-        starRating = FiveStar
-    } else if (starRating === 0){
-        starRating = NoRating
-    } 
+    useEffect(() => {
+        let starRating = truck?.userRating
+        if (0 < starRating && starRating < 1.25) {
+            starRating = OneStar
+        } else if (starRating === 1.25) {
+            starRating = OneStar
+        } else if (1.25 < starRating && starRating < 1.75) {
+            starRating = OneAndStar
+        } else if (starRating === 1.75) {
+            starRating = OneAndStar
+        } else if (1.75 < starRating && starRating < 2.25) {
+            starRating = TwoStar
+        } else if (starRating === 2.25) {
+            starRating = TwoStar
+        } else if (2.25 < starRating && starRating < 2.75) {
+            starRating = TwoAndStar
+        } else if (starRating === 2.75) {
+            starRating = TwoAndStar
+        } else if (2.75 < starRating && starRating < 3.25) {
+            starRating = ThreeStar
+        } else if (starRating === 3.25) {
+            starRating = ThreeStar
+        } else if (3.25 < starRating && starRating < 3.75) {
+            starRating = ThreeAndStar
+        } else if (starRating === 3.75) {
+            starRating = ThreeAndStar
+        } else if (3.75 < starRating && starRating < 4.25) {
+            starRating = FourStar
+        } else if (starRating === 4.25) {
+            starRating = FourStar
+        } else if (4.25 < starRating && starRating < 4.75) {
+            starRating = FourAndStar
+        } else if (starRating === 4.75) {
+            starRating = FourAndStar
+        } else if (4.75 < starRating) {
+            starRating = FiveStar
+        } else if (starRating === 0) {
+            starRating = NoRating
+        }
+
+        updateUserRating(starRating)
+
+    },[truck, truckId])
 
 
     return (
@@ -89,7 +96,7 @@ export const TruckCard = ({ truckId }) => {
                 </button>
                 <div className="mini-info">
                     <div className="mini-info truck-price">{truckPrice}</div>
-                    <div className="mini-info truck-rating"><img className="mini-info userStar" alt="user rating star" src={starRating} /></div>
+                    <div className="mini-info truck-rating"><img className="mini-info userStar" alt="user rating star" src={userRating} /></div>
                 </div>
             </div>
         </div>
