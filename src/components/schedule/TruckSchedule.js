@@ -64,7 +64,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                 </>
                             )
 
-                            : <><div className="card-body">Off Today</div>
+                            : <><div className="neighborhood-card"><div className="card-body">Off Today</div></div>
                                 <div className="form-group">
                                     <select
                                         key={dayId}

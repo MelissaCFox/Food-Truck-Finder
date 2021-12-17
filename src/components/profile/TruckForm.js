@@ -53,7 +53,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
 
     return (
         <>
-            <form className="truckForm">
+            <form autoComplete="on" className="truckForm">
                 <div className="form-group">
                     <label htmlFor="truckName">Truck Name</label>
                     <input
@@ -63,6 +63,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         className="form-control"
                         onChange={e => setName(e.target.value)}
                         id="truckName"
+                        autoComplete="on"
                         placeholder="Truck Name"
                     />
                 </div>
