@@ -9,7 +9,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck, setUser }) => {
+export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck, setUser}) => {
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { truckId } = useParams()
@@ -144,7 +144,7 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
                                                                 .then((truck) => {
                                                                     setTruck(truck)
                                                                 })
-                                                            TruckRepository.get(parseInt(thisTruckId))
+                                                            TruckRepository.getBasic(parseInt(thisTruckId))
                                                                 .then((truck) => {
                                                                     setBasicTruck(truck)
                                                                     reviewToggle()
@@ -156,6 +156,8 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
                                                             ReviewRepository.getAllForUser(userId)
                                                                 .then((reviews) => {
                                                                     setUserReviews(reviews)
+                                                                })
+                                                                .then(() => {
                                                                     UserRepository.get(userId).then(setUser)
                                                                     reviewToggle()
                                                                 })

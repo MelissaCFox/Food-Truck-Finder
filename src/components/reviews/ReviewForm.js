@@ -66,12 +66,7 @@ export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
             const updatedTruckObj = { ...thisTruck }
             updatedTruckObj.userRating = averageRating
             TruckRepository.update(thisTruck.id, updatedTruckObj)
-                .then(() => {
-                    TruckRepository.get(thisTruck.id)
-                        .then((truck) => setTruck(truck))
-                        .then((truck) => setBasicTruck(truck))
-
-                })
+               
         }
     }
 

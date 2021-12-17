@@ -18,6 +18,8 @@ export const User = ({ userId }) => {
         UserRepository.get(userId).then(setUser)
     }, [userId])
 
+    
+  
     return (
         <div className="profile-view">
             <ul className="favorites card">
