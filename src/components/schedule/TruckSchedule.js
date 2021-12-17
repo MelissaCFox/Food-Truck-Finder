@@ -3,7 +3,7 @@ import { useEffect } from "react/cjs/react.development"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import '../trucks/TruckList.css';
-import './Schedule.css';
+
 
 
 export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods }) => {
@@ -32,12 +32,12 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                     ? truckPage
                         ? truckNeighborhood
                             ? <NeighborhoodCard key={truckNeighborhood.id} neighborhoodId={truckNeighborhood.id} />
-                            : <div className="card card-body">Off Today</div>
+                            : <div className="card-body">Off Today</div>
 
                         : truckNeighborhood
                             ? (
                                 <>
-                                    <div>{truckNeighborhood.name}</div>
+                                    <div className="neighborhood-label">{truckNeighborhood.name}</div>
                                     <NeighborhoodCard key={`Profile--${truckId}--${dayId}`} neighborhoodId={truckNeighborhood.id} />
                                     <div className="form-group">
                                         <select
@@ -64,7 +64,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                 </>
                             )
 
-                            : <><div className="card card-body">Off Today</div>
+                            : <><div className="card-body">Off Today</div>
                                 <div className="form-group">
                                     <select
                                         key={dayId}

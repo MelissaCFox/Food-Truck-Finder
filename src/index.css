@@ -85,16 +85,17 @@ dialog {
 .truck-logo {
   width: 100px;
   height: 100px;
+
 }
 
-.logo {
-  width: 50px;
-  height: 100px;
+#logo {
+    padding-left: 2rem;
 }
 
 .neighborhood-logo {
   width: 100px;
   height: 100px;
+
 }
 
 .card-body {
@@ -180,9 +181,13 @@ h2 {
   flex-wrap: wrap;
 }
 
+.neighborhood-logo-btn {
+  background-color: #ECDBBA;;
+}
+
 .neighborhood-card {
   display: flex;
-  justify-content: left;
+  align-content: center;
   flex-direction: column;
   flex-wrap: wrap;
 
@@ -190,7 +195,9 @@ h2 {
 
 .star-icon {
   width: 100px;
-  height: 100px
+  height: 100px;
+  background-color: #2D4263;
+  margin: 0.25rem 0 1.5rem 1rem;
 }
 
 .favorite {

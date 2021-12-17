@@ -11,6 +11,10 @@
     background-color:#C84B31;
 }
 
+.neighborhood-label {
+    text-align: center;
+}
+
 .trucks {
     background-color: #2D4263;
 }
@@ -86,17 +90,40 @@
       margin-right: 2rem;
   }
 
-  input[type=date] {
+  input.date-picker[type=date] {
     background-color: #191919;
     color: #191919;
     border: none;
   }
 
-  input::-webkit-calendar-picker-indicator{
+  input.date-picker::-webkit-calendar-picker-indicator{
       filter: invert(1);
   }
 
   .mini-info {
     padding-top: 0.2rem;
+}
+
+.search-heading {
+  padding-left: 2rem;
+  
+}
+
+.searchResults {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0;
+}
+
+.noMatch {
+  padding: 1rem;
+  color: #2D4263;
 }
   

@@ -72,12 +72,11 @@ export const Owner = ({ userId }) => {
             </div>
 
             <div className="owner-trucks">
-                <h3>My Truck(s)</h3>
-                <div className="truck-list">
+                <ul className="truck-list">
                     {
                         user.truckOwners?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
-                            return <li className="card" key={truckOwner.id}>
+                            return <li key={truckOwner.id}>
                                 <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} />
                                 <Button type="retire"
                                     color="danger"
@@ -115,7 +114,7 @@ export const Owner = ({ userId }) => {
                         </ModalBody>
 
                     </Modal>
-                </div>
+                </ul>
             </div>
         </>
     )

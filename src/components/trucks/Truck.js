@@ -19,6 +19,8 @@ import FourStar from './images/4Stars.png';
 import FourAndStar from './images/4-5Stars.png';
 import FiveStar from './images/5Stars.png';
 import NoRating from './images/NoRating.png';
+import Fav from './images/Fav.png';
+import NoFav from './images/NoFav.png';
 import './Truck.css';
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 
@@ -171,28 +173,45 @@ export const Truck = ({ truckID }) => {
     }
 
     let starRating = truck?.userRating
-    if (0 < starRating && starRating < 1.25 || starRating === 1.25) {
+    if (0 < starRating && starRating < 1.25) {
         starRating = OneStar
-    } else if (1.25 < starRating && starRating < 1.75 || starRating === 1.75) {
+    } else if (starRating === 1.25){
+        starRating = OneStar
+    }else if (1.25 < starRating && starRating < 1.75 ) {
         starRating = OneAndStar
-    } else if (1.75 < starRating && starRating < 2.25 || starRating === 2.25) {
+    } else if (starRating === 1.75) {
+        starRating = OneAndStar
+    } else if (1.75 < starRating && starRating < 2.25 ) {
         starRating = TwoStar
-    } else if (2.25 < starRating && starRating < 2.75 || starRating === 2.75) {
+    } else if (starRating === 2.25) {
+        starRating = TwoStar
+    } else if (2.25 < starRating && starRating < 2.75) {
         starRating = TwoAndStar
-    } else if (2.75 < starRating && starRating < 3.25 || starRating === 3.25) {
+    } else if (starRating === 2.75) {
+        starRating = TwoAndStar
+    } else if (2.75 < starRating && starRating < 3.25) {
         starRating = ThreeStar
-    } else if (3.25 < starRating && starRating < 3.75 || starRating === 3.75) {
+    } else if (starRating === 3.25) {
+        starRating = ThreeStar
+    } else if (3.25 < starRating && starRating < 3.75) {
         starRating = ThreeAndStar
-    } else if (3.75 < starRating && starRating < 4.25 || starRating === 4.25) {
+    } else if (starRating === 3.75) {
+        starRating = ThreeAndStar
+    } else if (3.75 < starRating && starRating < 4.25) {
         starRating = FourStar
-    } else if (4.25 < starRating && starRating < 4.75 || starRating === 4.75) {
+    } else if (starRating === 4.25) {
+        starRating = FourStar
+    } else if (4.25 < starRating && starRating < 4.75) {
+        starRating = FourAndStar
+    } else if (starRating === 4.75) {
         starRating = FourAndStar
     } else if (4.75 < starRating) {
         starRating = FiveStar
-    } else {
+    } else if (starRating === 0){
         starRating = NoRating
-    }
+    } 
 
+    
     return (
         <>
             <div className="truck__page-card">
@@ -204,8 +223,8 @@ export const Truck = ({ truckID }) => {
                             {
                                 truckId
                                     ? existingLike
-                                        ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img alt="star" className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1077px-Star_icon_stylized.svg.png" /></button>
-                                        : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img alt="star" className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src="https://www.shareicon.net/data/2015/09/19/103568_star_512x512.png" /></button>
+                                        ? <button key={foundLike?.id} className="star-icon" onClick={() => { toggleFavorite(truckId) }}><img alt="star" className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src={Fav} /></button>
+                                        : <button key={truck.name} className="star-icon" onClick={() => { toggleFavorite(truck.id) }}><img alt="star" className="star-icon" id={`favoriteTruck--${foundLike?.id}`} src={NoFav} /></button>
                                     : ""
                             }
                         </div>
@@ -226,7 +245,7 @@ export const Truck = ({ truckID }) => {
                                 <div className="truck__info--description">{truck.description}</div>
                                 <div className="truck__info--type">Type: {truck.foodType?.type}</div>
                                 <div className="truck__info--dollars">{truckPrice}</div>
-                                <div className="truck__info--rating ">User Rating: <img className="truck-userStar" alt="user rating star" src={starRating} /></div>
+                                <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={starRating} /> ({truck.userTruckReviews?.length} reviews)</div>
                                     
                                 <div className="truck__info--links">
                                     <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
@@ -236,7 +255,7 @@ export const Truck = ({ truckID }) => {
                             </div>
                         </div>
 
-                        <div className="truck-info-location truck__currentLocation">
+                        
 
                             {
                                 truckId
@@ -311,10 +330,12 @@ export const Truck = ({ truckID }) => {
 
                             {
                                 currentNeighborhood
-                                    ? <div>Find Us Today in <div><NeighborhoodCard neighborhoodId={currentNeighborhood.id}/> </div></div>
-                                    : <div>We Are Off Today!</div>
+                                    ? <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard neighborhoodId={currentNeighborhood.id}/> </div></div>
+                                    
+                                    : <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div> </div></div>
+                                    
                             }
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -353,7 +374,7 @@ export const Truck = ({ truckID }) => {
                                     ? truck?.userTruckReviews?.map(review => {
                                         return <div className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setSimpleTruck} /></div>
                                     })
-                                    : <div>No Reviews Yet</div>
+                                    : ""
                             }
                         </div>
                         

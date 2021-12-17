@@ -1,0 +1,49 @@
+.neighborhood {
+    background-color: #2D4263;
+    margin: 2rem;
+    padding: 1rem;
+}
+
+
+.neighborhood__id {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: #2D4263;
+}
+
+.neighborhood__image {
+    height: 15rem;
+    width: 15rem;
+}
+
+.neighborhood__name {
+    align-self: center;
+    padding-left: 5rem;
+    font-family: "Modak";
+    font-size: 4rem;
+    color:#ECDBBA;
+}
+
+.neighborhood__description {
+    padding: 2rem;
+    background-color: #2D4263;
+    font-family: "Readex Pro";
+    color:#ECDBBA;
+    font-size: 1rem;
+}
+
+.neighborhood__schedule  {
+    background-color: #2D4263;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 1rem;
+}
+
+.truck-card,.weekday {
+    background-color: #2D4263;
+
+}
+

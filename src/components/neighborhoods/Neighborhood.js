@@ -5,6 +5,7 @@ import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodSchedule } from "../schedule/NeighborhoodSchedule"
 import { TruckCard } from "../trucks/TruckCard"
+import './Neighborhood.css';
 
 
 export const Neighborhood = () => {
@@ -29,28 +30,38 @@ export const Neighborhood = () => {
 
 
     return (
-        <>
-            <div className="neighborhood__header">
-                <div className="neighborhood__image"><img alt="logo" className="neighborhood-logo" src={neighborhood.profileImgSrc} /></div>
-                <div className="neighborhood__name">{neighborhood.name}</div>
+        <div className="neighborhood">
+            <div className="neighborhood__info card">
+                <div className="neighborhood__id">
+                    <div className="neighborhood__image"><img alt="logo" className="neighborhood__image" src={neighborhood.profileImgSrc} /></div>
+                    <div className="neighborhood__name">{neighborhood.name}</div>
+                </div>
                 <div className="neighborhood__description">{neighborhood.description}</div>
-                <div className="neighborhood__currentTrucks card truck today">
-                    Trucks in the Area Today:
+            </div>
+
+            <div className="neighborhood__currentTrucks card truck ">
+
+
+                <h3 className="schedule-heading">Trucks in the Area Today: </h3>
+                <div className="neighborhood__schedule">
                     {
                         todaysTrucks.length > 0
                             ? todaysTrucks.map(truckLocation => {
-                                return <div className="card truck" key={truckLocation.id}>
-                                    <TruckCard truckId={truckLocation.truckId} />
+                                return <div className="card truck today" key={truckLocation.id}>
+                                    <TruckCard className="card-body" truckId={truckLocation.truckId} />
                                 </div>
                             })
                             : <div className="card-body">
                                 No Trucks Today
                             </div>
                     }
-
                 </div>
-                Trucks in the Area This Week
-                <div className="neighborhood__schedule schedule">
+
+            </div>
+
+            <div className="card ">
+                <h3 className="schedule-heading">Trucks in the Area This Week</h3>
+                <div className="neighborhood__schedule">
 
                     {
                         days.map(day => {
@@ -64,10 +75,11 @@ export const Neighborhood = () => {
                     }
 
                 </div>
-
             </div>
 
-        </>
+
+
+        </div >
     )
 
 }

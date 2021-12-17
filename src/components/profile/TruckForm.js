@@ -32,7 +32,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
             profileImgSrc: profileImgSrc,
             hours: hours,
             dollars: parseInt(dollars),
-            userRating: null
+            userRating: 0
         }
         if (name && foodTypeId && description && websiteURL && instagramURL && profileImgSrc && hours && dollars) {
             TruckRepository.add(truck).then(res => {

@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 
 .truck__page-card {
-    background-color: #07aa30;
-    margin: 0.5rem 2rem 2rem 2rem ;
+    background-color: #2D4263;
+    margin: 1rem 2rem 2rem 2rem ;
 }
 
 .truck__info {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    padding: 0 2rem;
+
 }
 
 .truck__heading {
@@ -30,7 +30,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 2rem 1rem 2rem;
     background-color: #2D4263;
 }
 
@@ -48,7 +48,6 @@
     flex-direction: column; 
     background-color: #ECDBBA;
     
-
 }
 
 .truck__logo {
@@ -73,31 +72,49 @@
     flex-direction: column; 
     background-color: #ECDBBA;
     padding: 1rem 1rem 1rem 2rem;
+    width: 25rem;
 }
 
 .truck__info--description {
-    flex: 2;
-    padding-bottom: 2rem;
+    flex: 1.5;
+    padding-bottom: 1.5rem;
+    font-family: "Readex Pro";
 }
 
 .truck__info--dollars {
     font-size: 24px;
     font-family: "Modak";
     padding-top: 0.4rem;
+    color: #2D4263;
 }
 
 .truck-userStar {
-    width: 10rem;
-    height: 2rem;
+    width: 7rem;
+    height: 1.5rem;
 }
 
+.truck__currentLocation {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: top;
+    padding-right: 10rem;
+}
 
+.truck-location-heading {
+    background-color: #C84B31;
+    text-align: center;
+    color:#ECDBBA;
+    font-family: "Readex Pro";
+    font-size: 1.25rem;
+    padding: 0.5rem 1rem;
+}
 
 .truck__schedule-card {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    margin: 2rem;
+
 }
 
 .truck-schedule-card {
@@ -162,10 +179,20 @@
     padding-right: 0.4rem;
 }
 
-.review-form {
+.form {
     padding: 0.5rem;
     flex: 1.5;
     background-color: #ECDBBA;
+}
+
+.review-form {
+    padding: 0.5rem;
+    flex: 1.5;
+    background-color: #2D4263;
+}
+
+.label {
+    padding-right: 1rem;
 }
 
 .review-options-blank {
@@ -174,5 +201,10 @@
 
 .truck-reviews-section {
     background-color:#2D4263;
-    margin: 0 2rem;
+
+}
+
+input.review-date-picker[type=date]  {
+
+    margin-bottom: 1rem;
 }

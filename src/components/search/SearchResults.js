@@ -7,22 +7,27 @@ import { TruckCard } from "../trucks/TruckCard"
 export const SearchResults = () => {
     const location = useLocation()
 
+
     const displayTrucks = () => {
 
         if (location.state?.trucks.length > 0) {
             return (
                 <>
                     <div className="card">
-                        <div>
+                        <ul className="trucks search-results">
+
                             {
-                                location.state.trucks.map(truck => <TruckCard key={truck.id} truckId={truck.id} />)
+                                location.state.trucks.map(truck => <li className="card truck" key={truck.id}><TruckCard key={truck.id} truckId={truck.id} /></li>)
                             }
-                        </div>
+
+                        </ul>
                     </div>
                 </>
             )
         } else {
-            return <div>No Matching Trucks</div>
+            return <div className="card"><ul className="trucks search-results">
+            <div className="card noMatch">No Matching Trucks</div>
+        </ul></div>
         }
     }
 
@@ -32,16 +37,18 @@ export const SearchResults = () => {
             return (
                 <>
                     <div className="card">
-                        <div>
+                        <ul className="trucks search-results">
                             {
-                                location.state.neighborhoods.map(neighborhood => <NeighborhoodCard key={neighborhood.id} neighborhoodId={neighborhood.id} />)
+                                location.state.neighborhoods.map(neighborhood => <li className="card neighborhood" key={neighborhood.id}><NeighborhoodCard key={neighborhood.id} neighborhoodId={neighborhood.id} /></li>)
                             }
-                        </div>
+                        </ul>
                     </div>
                 </>
             )
         } else {
-            return <div>No Matching Neighborhoods</div>
+            return <div className="card"><ul className="trucks search-results">
+                <div className="card noMatch">No Matching Neighborhoods</div>
+            </ul></div>
         }
     }
 
@@ -49,12 +56,12 @@ export const SearchResults = () => {
         <div className="searchResults">
 
             <div>
-                <h2>Matching Trucks</h2>
+                <h2 className="search-heading">Matching Trucks</h2>
                 <div>{displayTrucks()}</div>
             </div>
 
             <div>
-                <h2>Matching Neighborhoods</h2>
+                <h2 className="search-heading">Matching Neighborhoods</h2>
                 <div>{displayNeighborhoods()}</div>
             </div>
         </div>

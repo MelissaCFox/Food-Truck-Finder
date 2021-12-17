@@ -4,6 +4,7 @@ import { Input, Label, FormGroup } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
+import '../trucks/Truck.css';
 
 
 export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
@@ -70,24 +71,24 @@ export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
     }
 
     return (
-        <form className="form review-form">
+        <form className="form">
             <h3>Submit a Review</h3>
             <div className="form-group">
-                <Input type="date" onChange={e => setDate(e.target.value)}></Input>
+                <Input type="date" className="review-date-picker" onChange={e => setDate(e.target.value)} />
             </div>
             <div className="form-group">
-                <Input type="text" required autoFocus className="form-control" onChange={e => setReview(e.target.value)} id="review" placeholder="Review"></Input>
+                <Input type="textarea" height="4rem" required autoFocus className="form-control" onChange={e => setReview(e.target.value)} id="review" placeholder="Review"></Input>
             </div>
 
             <div className="form-group">
                 <Label for="rating">Rating</Label>
-                <Input type="range" min="0" max="5" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></Input>
+                <input type="range" defaultValue="0" min="0" max="4" step="1" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></input>
             </div>
 
-            <FormGroup >
-                <Label>Remain Anonymous?</Label>
-                <Input type="checkbox" onChange={toggleAnonymous} />
-            </FormGroup>
+            <div className="form-group anonymous-check">
+                <Label className="label">Remain Anonymous?</Label>
+                <input className="anonymous-checkbox" type="checkbox" onChange={toggleAnonymous} />
+            </div>
 
             <button type="submit" onClick={submitReview} className="btn btn-primary">Submit Review</button>
         </form>
