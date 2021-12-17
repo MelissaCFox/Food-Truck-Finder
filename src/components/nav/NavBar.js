@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link, useHistory } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import Settings from "../../repositories/Settings";
+import TruckRepository from "../../repositories/TruckRepository";
 import UserRepository from "../../repositories/UserRepository";
 import FoodTruckFinderLogo from './FoodTruckFinderLogo.png';
 
@@ -54,7 +55,10 @@ export const NavBar = () => {
                 </button>
                 <div id="navbarNavDropdown" className="navbar-collapse collapse header">
                     <ul className="navbar-nav mr-auto appLogo">
-                        <button onClick={() => { history.push(`/trucks`) }}>
+                        <button onClick={() => {
+                            TruckRepository.getAll()
+                                .then(() => history.push(`/trucks`))
+                        }}>
                             <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="logo" />
                         </button>
                     </ul>
@@ -62,7 +66,7 @@ export const NavBar = () => {
                         <li className="nav-item dropdown">
                             {
                                 isAuthenticated()
-                                    ? <div className="name-btn"><button className="nav-link name-btn" onClick={()=>{history.push("/profile")}}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
+                                    ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
                                     : <Link className="nav-link" to="/login">Login</Link>
                             }
                         </li>

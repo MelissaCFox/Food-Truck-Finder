@@ -7,20 +7,21 @@ import { User } from "./User"
 
 export const Profile = () => {
     const { getCurrentUser } = useSimpleAuth()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const [user, setUser] = useState({})
 
     useEffect(() => {
         const user = getCurrentUser()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         setUser(user)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         
     },[])
     
     return (
         
         user.owner
-        ? <Owner userId={getCurrentUser().id} />
-        : <User userId={getCurrentUser().id} />
+        ? <Owner userId={user.id} />
+        : <User userId={user.id} />
         
     )
     

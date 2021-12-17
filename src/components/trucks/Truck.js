@@ -41,6 +41,8 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const [basicTruck, setBasicTruck] = useState({})
     const [simpleTruck, setSimpleTruck] = useState({})
 
+    const [userRating, updateUserRating] = useState("")
+
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
     const [confirm, setConfirm] = useState(false)
@@ -51,7 +53,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
         if (truckId) {
             TruckRepository.getBasic(truckId).then(setSimpleTruck)
         }
-    }, [])
+    }, [truckId])
 
     useEffect(() => {
         if (truckID) {
@@ -179,44 +181,49 @@ export const Truck = ({ truckID, setUser, userId }) => {
         truckPrice = "$ $ $"
     }
 
-    let starRating = truck?.userRating
-    if (0 < starRating && starRating < 1.25) {
-        starRating = OneStar
-    } else if (starRating === 1.25) {
-        starRating = OneStar
-    } else if (1.25 < starRating && starRating < 1.75) {
-        starRating = OneAndStar
-    } else if (starRating === 1.75) {
-        starRating = OneAndStar
-    } else if (1.75 < starRating && starRating < 2.25) {
-        starRating = TwoStar
-    } else if (starRating === 2.25) {
-        starRating = TwoStar
-    } else if (2.25 < starRating && starRating < 2.75) {
-        starRating = TwoAndStar
-    } else if (starRating === 2.75) {
-        starRating = TwoAndStar
-    } else if (2.75 < starRating && starRating < 3.25) {
-        starRating = ThreeStar
-    } else if (starRating === 3.25) {
-        starRating = ThreeStar
-    } else if (3.25 < starRating && starRating < 3.75) {
-        starRating = ThreeAndStar
-    } else if (starRating === 3.75) {
-        starRating = ThreeAndStar
-    } else if (3.75 < starRating && starRating < 4.25) {
-        starRating = FourStar
-    } else if (starRating === 4.25) {
-        starRating = FourStar
-    } else if (4.25 < starRating && starRating < 4.75) {
-        starRating = FourAndStar
-    } else if (starRating === 4.75) {
-        starRating = FourAndStar
-    } else if (4.75 < starRating) {
-        starRating = FiveStar
-    } else if (starRating === 0) {
-        starRating = NoRating
-    }
+    useEffect(() => {
+        let starRating = truck?.userRating
+        if (0 < starRating && starRating < 1.25) {
+            starRating = OneStar
+        } else if (starRating === 1.25) {
+            starRating = OneStar
+        } else if (1.25 < starRating && starRating < 1.75) {
+            starRating = OneAndStar
+        } else if (starRating === 1.75) {
+            starRating = OneAndStar
+        } else if (1.75 < starRating && starRating < 2.25) {
+            starRating = TwoStar
+        } else if (starRating === 2.25) {
+            starRating = TwoStar
+        } else if (2.25 < starRating && starRating < 2.75) {
+            starRating = TwoAndStar
+        } else if (starRating === 2.75) {
+            starRating = TwoAndStar
+        } else if (2.75 < starRating && starRating < 3.25) {
+            starRating = ThreeStar
+        } else if (starRating === 3.25) {
+            starRating = ThreeStar
+        } else if (3.25 < starRating && starRating < 3.75) {
+            starRating = ThreeAndStar
+        } else if (starRating === 3.75) {
+            starRating = ThreeAndStar
+        } else if (3.75 < starRating && starRating < 4.25) {
+            starRating = FourStar
+        } else if (starRating === 4.25) {
+            starRating = FourStar
+        } else if (4.25 < starRating && starRating < 4.75) {
+            starRating = FourAndStar
+        } else if (starRating === 4.75) {
+            starRating = FourAndStar
+        } else if (4.75 < starRating) {
+            starRating = FiveStar
+        } else if (starRating === 0) {
+            starRating = NoRating
+        }
+
+        updateUserRating(starRating)
+
+    },[truck])
 
 
     return (
@@ -369,7 +376,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                 <div className="truck__info--description">{truck.description}</div>
                                 <div className="truck__info--type">Type: {truck.foodType?.type}</div>
                                 <div className="truck__info--dollars">{truckPrice}</div>
-                                <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={starRating} /> ({truck.userTruckReviews?.length} reviews)</div>
+                                <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} reviews)</div>
 
                                 <div className="truck__info--links">
                                     <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
@@ -429,7 +436,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                     ? truck?.userTruckReviews?.map(review => {
                                         return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setSimpleTruck} /></div>
                                     })
-                                    : ""
+                                    : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
                             }
                         </div>
 

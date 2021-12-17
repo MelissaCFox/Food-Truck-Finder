@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
-import { Input, Label, FormGroup } from "reactstrap"
+import { Input, Label } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
@@ -41,12 +41,17 @@ export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
         if (review && date) {
             ReviewRepository.add(reviewObj)
                 .then(() => {
+                    updateRatings()
                     TruckRepository.get(parseInt(truckId))
                         .then((truck) => {
-                            setFullTruck(truck)
-                            updateRatings()
+                            setTruck(truck)
                         })
-                })
+                    TruckRepository.getBasic(parseInt(truckId))
+                        .then((truck) => {
+                            setBasicTruck(truck)
+                        })
+                }
+                )
         }
     }
 

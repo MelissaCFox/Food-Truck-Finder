@@ -19,7 +19,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
-    }, [date])
+    }, [])
 
 
     const sortTruckLocations = (array) => {

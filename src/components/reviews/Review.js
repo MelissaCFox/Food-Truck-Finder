@@ -9,7 +9,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck }) => {
+export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck, setUser }) => {
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { truckId } = useParams()
@@ -41,7 +41,7 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
 
     useEffect(() => {
         UserRepository.get(review.userId).then(setReviewer)
-    }, [])
+    }, [review])
 
     useEffect(() => {
         ReviewRepository.getBasic(review.id).then(setSelectedReview)
@@ -139,20 +139,24 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
                                                 truckId
                                                     ? ReviewRepository.delete(review.id)
                                                         .then(() => {
+                                                            updateRatings()
                                                             TruckRepository.get(parseInt(thisTruckId))
                                                                 .then((truck) => {
-
+                                                                    setTruck(truck)
+                                                                })
+                                                            TruckRepository.get(parseInt(thisTruckId))
+                                                                .then((truck) => {
                                                                     setBasicTruck(truck)
-
                                                                     reviewToggle()
                                                                 })
                                                         })
                                                     : ReviewRepository.delete(review.id)
                                                         .then(() => {
-
+                                                            updateRatings()
                                                             ReviewRepository.getAllForUser(userId)
                                                                 .then((reviews) => {
                                                                     setUserReviews(reviews)
+                                                                    UserRepository.get(userId).then(setUser)
                                                                     reviewToggle()
                                                                 })
 

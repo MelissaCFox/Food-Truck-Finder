@@ -1,4 +1,3 @@
-import react from "react"
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min"
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import { TruckCard } from "../trucks/TruckCard"
