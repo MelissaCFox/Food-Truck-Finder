@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import { Link, useHistory } from "react-router-dom";
+import FoodTruckFinderLogo from '../nav/FoodTruckFinderLogo.png';
 import "./Login.css"
 
 
@@ -34,16 +35,16 @@ const Login = () => {
     }
 
     const handleUserInput = (event) => {
-        const copy = {...credentials}
+        const copy = { ...credentials }
         copy[event.target.id] = event.target.value
         syncAuth(copy)
     }
 
     return (
         <main className="container--login">
-            <section>
+            <section className="form-container">
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1>Food Truck Finder</h1>
+                    <h1 id="appName">Food Truck Finder</h1>
                     <h2 className="h3 mb-3 font-weight-normal">Please Sign In</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email Address </label>
@@ -57,7 +58,7 @@ const Login = () => {
                         <input
                             onChange={
                                 (event) => {
-                                    const copy = {...credentials}
+                                    const copy = { ...credentials }
                                     if (event.target.value === "on") {
                                         copy.remember = true
                                     }
@@ -74,13 +75,18 @@ const Login = () => {
                     <fieldset>
                         <button type="submit">
                             Sign in
-                    </button>
+                        </button>
                     </fieldset>
                 </form>
+                <section className="link--register">
+                    <Link className="link--register" to="/register">Not a member yet?</Link>
+                </section>
             </section>
-            <section className="link--register">
-                <Link to="/register">Not a member yet?</Link>
+
+            <section className="appLogo">
+            <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="login-logo" />
             </section>
+
         </main>
     )
 }

@@ -4,6 +4,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import Settings from "../../repositories/Settings";
 import UserRepository from "../../repositories/UserRepository";
 import FoodTruckFinderLogo from './FoodTruckFinderLogo.png';
+
 import './NavBar.css';
 
 

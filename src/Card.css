@@ -29,11 +29,13 @@
   }
 
   .review-card {
+    margin: 0.5rem 1rem 1rem 1rem ;
     background-color: #ECDBBA;
     width: 20rem;
     padding: 0.5rem;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .review-author {
@@ -53,9 +55,11 @@
     color:#191919;
     margin-top: 0.25rem;
     margin-left: 1.5rem;
+    background-color: #ECDBBA;
 }
 
 .review-message {
+    background-color: #ECDBBA;
     color:#191919;
     margin: 0.5rem 0.5rem 1rem 0.5rem;
     flex: 3;

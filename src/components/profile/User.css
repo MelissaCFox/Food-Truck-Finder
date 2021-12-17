@@ -1,5 +1,18 @@
+.owner-header {
+    background-color: #191919;
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction: column;
+}
 .buttons{ 
+    padding-top: 1rem;
     padding-left: 13rem;
+    background-color: #191919;
+}
+
+.favorites {
+    background-color: #191919;
+    padding-left: 5rem;
 }
 
 .profile-view {
@@ -8,18 +21,13 @@
 }
 
 .profile-header {
-    background-color: #C84B31;
+    background-color: #406882;
     margin-bottom: 0;
     color: #ECDBBA;
     padding: 0.25rem 0.5rem 0 0.5rem;
 }
 
-.favorites {
-    border-bottom: #191919 solid 2rem;
-}
-
 .profile-container {
-    padding-top: 0.5rem;
     background-color: #2D4263;
     
 }

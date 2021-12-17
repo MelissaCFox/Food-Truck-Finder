@@ -82,7 +82,7 @@ export const ReviewForm = ({ truckId, setTruck, setBasicTruck }) => {
 
             <div className="form-group">
                 <Label for="rating">Rating</Label>
-                <input type="range" defaultValue="0" min="0" max="4" step="1" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></input>
+                <input type="range" defaultValue="1" min="1" max="5" step="1" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></input>
             </div>
 
             <div className="form-group anonymous-check">

@@ -16,6 +16,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 .truck__name {
@@ -24,6 +25,11 @@
     font-family: "Modak";
     font-size: 4rem;
     color:#ECDBBA;
+    flex: 2
+}
+
+.editTruck-btn {
+ justify-self: right;   
 }
 
 .truck__details {
@@ -102,7 +108,7 @@
 }
 
 .truck-location-heading {
-    background-color: #C84B31;
+    background-color: #406882;
     text-align: center;
     color:#ECDBBA;
     font-family: "Readex Pro";
@@ -128,13 +134,13 @@
 
 .schedule-heading {
     margin: 0;
-    background-color: #C84B31;
+    background-color: #406882;
     color: #ECDBBA;
     padding: 0.25rem 0.5rem;
 }
 
 .day__name {
-    background-color: #C84B31;
+    background-color: #406882;
     text-align: center;
     color:#ECDBBA;
     font-family: "Readex Pro";
@@ -148,7 +154,7 @@
 
 
 .truck-reviews-heading {
-    background-color: #C84B31;
+    background-color: #406882;
     margin-bottom: 0;
     color: #ECDBBA;
     padding: 0.25rem 0.5rem;
@@ -208,3 +214,5 @@ input.review-date-picker[type=date]  {
 
     margin-bottom: 1rem;
 }
+
+

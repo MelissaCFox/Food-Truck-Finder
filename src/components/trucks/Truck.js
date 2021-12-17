@@ -23,10 +23,11 @@ import Fav from './images/Fav.png';
 import NoFav from './images/NoFav.png';
 import './Truck.css';
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
+import UserRepository from "../../repositories/UserRepository"
 
 
 
-export const Truck = ({ truckID }) => {
+export const Truck = ({ truckID, setUser, userId }) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -39,6 +40,12 @@ export const Truck = ({ truckID }) => {
     const editToggle = () => setEditModal(!editModal)
     const [basicTruck, setBasicTruck] = useState({})
     const [simpleTruck, setSimpleTruck] = useState({})
+
+    const [modal, setModal] = useState(false)
+    const toggle = () => setModal(!modal)
+    const [confirm, setConfirm] = useState(false)
+    const toggle3 = () => setConfirm(!confirm)
+    const [truckToRetire, setTruckToRetire] = useState({})
 
     useEffect(() => {
         if (truckId) {
@@ -175,13 +182,13 @@ export const Truck = ({ truckID }) => {
     let starRating = truck?.userRating
     if (0 < starRating && starRating < 1.25) {
         starRating = OneStar
-    } else if (starRating === 1.25){
+    } else if (starRating === 1.25) {
         starRating = OneStar
-    }else if (1.25 < starRating && starRating < 1.75 ) {
+    } else if (1.25 < starRating && starRating < 1.75) {
         starRating = OneAndStar
     } else if (starRating === 1.75) {
         starRating = OneAndStar
-    } else if (1.75 < starRating && starRating < 2.25 ) {
+    } else if (1.75 < starRating && starRating < 2.25) {
         starRating = TwoStar
     } else if (starRating === 2.25) {
         starRating = TwoStar
@@ -207,11 +214,11 @@ export const Truck = ({ truckID }) => {
         starRating = FourAndStar
     } else if (4.75 < starRating) {
         starRating = FiveStar
-    } else if (starRating === 0){
+    } else if (starRating === 0) {
         starRating = NoRating
-    } 
+    }
 
-    
+
     return (
         <>
             <div className="truck__page-card">
@@ -231,36 +238,11 @@ export const Truck = ({ truckID }) => {
                         <div className="truck__name">
                             {truck.name}
                         </div>
-                    </div>
-
-                    <div className="truck__details">
-                        <div className="truck-info-details">
-                            <div className="truck__media">
-                                <div className="truck__image">
-                                    <img className="truck__logo" src={truck.profileImgSrc} alt={`${truck.name} logo`} />
-                                </div>
-                            </div>
-
-                            <div className="truck__description">
-                                <div className="truck__info--description">{truck.description}</div>
-                                <div className="truck__info--type">Type: {truck.foodType?.type}</div>
-                                <div className="truck__info--dollars">{truckPrice}</div>
-                                <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={starRating} /> ({truck.userTruckReviews?.length} reviews)</div>
-                                    
-                                <div className="truck__info--links">
-                                    <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
-                                    <a className="link" target="_blank" rel="noreferrer" href={truck.instagramURL}><img alt="logo" className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
-                                </div>
-                                
-                            </div>
-                        </div>
-
-                        
-
+                        <div className="editTruck-btn">
                             {
                                 truckId
                                     ? ""
-                                    : <><Button onClick={editToggle}>Edit Details</Button>
+                                    : <><Button onClick={editToggle}>Edit/Retire Truck</Button>
 
                                         <Modal animation="false"
                                             isOpen={editModal}
@@ -318,6 +300,20 @@ export const Truck = ({ truckID }) => {
 
                                             </ModalBody>
                                             <ModalFooter>
+
+
+                                                <Button type="retire"
+                                                    color="danger"
+                                                    value={truck.id}
+                                                    onClick={() => {
+                                                        setTruckToRetire(truck)
+                                                        toggle3()
+                                                    }}
+                                                    className="btn btn-primary">
+                                                    Retire Truck
+                                                </Button>
+
+
                                                 <Button onClick={() => updateTruck()}>
                                                     Save Changes
                                                 </Button>
@@ -325,17 +321,76 @@ export const Truck = ({ truckID }) => {
                                                     Cancel
                                                 </Button>
                                             </ModalFooter>
-                                        </Modal></>
-                            }
+                                        </Modal>
 
-                            {
-                                currentNeighborhood
-                                    ? <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard neighborhoodId={currentNeighborhood.id}/> </div></div>
-                                    
-                                    : <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div> </div></div>
-                                    
+                                        <Modal
+                                            isOpen={confirm}
+                                            centered
+                                            fullscreen="sm"
+                                            size="sm"
+                                            toggle={toggle}
+                                        >
+                                            <ModalHeader toggle={toggle3}>
+                                                Are You Sure You Want to Retire {truckToRetire.name}?
+                                            </ModalHeader>
+                                            <ModalBody>
+                                                <Button color="danger" onClick={() => {
+                                                    TruckRepository.delete(truckToRetire.id).then(() => {
+                                                        UserRepository.get(userId).then(setUser)
+                                                            .then(() => {
+                                                                toggle3()
+                                                                editToggle()
+                                                            })
+                                                    })
+                                                }}>
+                                                    Yes
+                                                </Button>
+                                                <Button onClick={toggle3}>
+                                                    Cancel
+                                                </Button>
+                                            </ModalBody>
+
+                                        </Modal>
+
+                                    </>
                             }
-                        
+                        </div>
+                    </div>
+
+                    <div className="truck__details">
+                        <div className="truck-info-details">
+                            <div className="truck__media">
+                                <div className="truck__image">
+                                    <img className="truck__logo" src={truck.profileImgSrc} alt={`${truck.name} logo`} />
+                                </div>
+                            </div>
+
+                            <div className="truck__description">
+                                <div className="truck__info--description">{truck.description}</div>
+                                <div className="truck__info--type">Type: {truck.foodType?.type}</div>
+                                <div className="truck__info--dollars">{truckPrice}</div>
+                                <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={starRating} /> ({truck.userTruckReviews?.length} reviews)</div>
+
+                                <div className="truck__info--links">
+                                    <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="logo" className="link__logo" src="https://www.freepnglogos.com/uploads/logo-website-png/logo-website-file-globe-icon-svg-wikimedia-commons-21.png" /></a>
+                                    <a className="link" target="_blank" rel="noreferrer" href={truck.instagramURL}><img alt="logo" className="link__logo" src="https://www.nicepng.com/png/detail/1-12860_new-instagram-logo-png-transparent-png-format-instagram.png" /></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+                        {
+                            currentNeighborhood
+                                ? <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard neighborhoodId={currentNeighborhood.id} /> </div></div>
+
+                                : <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div> </div></div>
+
+                        }
+
                     </div>
                 </div>
 
@@ -347,7 +402,7 @@ export const Truck = ({ truckID }) => {
                         {
                             days.map(day => {
                                 return <div key={day.id} className="card schedule-card">
-                                    <div className="day__name">{day.day}</div>
+                                    <div key={`day--${day.id}`} className="day__name">{day.day}</div>
                                     <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
                                         dayId={day.id}
                                         truckId={truck.id}
@@ -372,19 +427,19 @@ export const Truck = ({ truckID }) => {
                             {
                                 truck?.userTruckReviews?.length > 0
                                     ? truck?.userTruckReviews?.map(review => {
-                                        return <div className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setSimpleTruck} /></div>
+                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setSimpleTruck} /></div>
                                     })
                                     : ""
                             }
                         </div>
-                        
-                            {
-                                getCurrentUser().owner
-                                    ? ""
-                                    : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} setBasicTruck={setSimpleTruck} /></div>
-                            }
 
-                        
+                        {
+                            getCurrentUser().owner
+                                ? ""
+                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} setBasicTruck={setSimpleTruck} /></div>
+                        }
+
+
                     </div>
                 </div>
             </div>
