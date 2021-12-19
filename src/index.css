@@ -7,6 +7,11 @@ body {
   background-color: #191919;
 }
 
+.review-rating {
+  height: 1.5rem;
+  width: 5rem;
+}
+
 label {
   margin-top: 1.25rem;
 }

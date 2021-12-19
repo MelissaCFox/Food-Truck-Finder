@@ -39,7 +39,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const [editModal, setEditModal] = useState(false)
     const editToggle = () => setEditModal(!editModal)
     const [basicTruck, setBasicTruck] = useState({})
-    const [simpleTruck, setSimpleTruck] = useState({})
 
     const [userRating, updateUserRating] = useState("")
 
@@ -49,17 +48,12 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const toggle3 = () => setConfirm(!confirm)
     const [truckToRetire, setTruckToRetire] = useState({})
 
-    useEffect(() => {
-        if (truckId) {
-            TruckRepository.getBasic(truckId).then(setSimpleTruck)
-        }
-    }, [truckId])
 
     useEffect(() => {
         if (truckID) {
             TruckRepository.getBasic(truckID).then(setBasicTruck)
         }
-    }, [truckID])
+    }, [truckID, userRating])
 
 
     useEffect(() => {
@@ -95,7 +89,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
             ? TruckRepository.get(truckId).then(setTruck)
             : TruckRepository.get(truckID).then(setTruck)
 
-    }, [truckId, truckID])
+    }, [truckId, truckID, userRating])
 
     const createNewLocation = (truckId, neighborhoodId, dayId) => {
         const newTruckLocation = {
@@ -152,26 +146,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
         }
     }
 
-    useEffect(() => {
-
-        if (truckId && truck?.id && simpleTruck?.id) {
-
-            let totalRating = 0
-            if (truck?.userTruckReviews?.length > 0) {
-
-                for (const review of truck?.userTruckReviews) {
-                    totalRating += review.rating
-                }
-                let averageRating = totalRating / truck?.userTruckReviews?.length
-                const updatedTruckObj = { ...simpleTruck }
-                updatedTruckObj.userRating = averageRating
-                TruckRepository.update(simpleTruck.id, updatedTruckObj)
-                    .then(() => {
-                        TruckRepository.get(simpleTruck.id).then(setTruck)
-                    })
-            }
-        }
-    }, [truckId, simpleTruck])
+   
 
 
     let truckPrice = "$"
@@ -182,6 +157,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
     }
 
     useEffect(() => {
+        
         let starRating = truck?.userRating
         if (0 < starRating && starRating < 1.25) {
             starRating = OneStar
@@ -434,7 +410,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                             {
                                 truck?.userTruckReviews?.length > 0
                                     ? truck?.userTruckReviews?.map(review => {
-                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} setBasicTruck={setSimpleTruck} /></div>
+                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} /></div>
                                     })
                                     : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
                             }
@@ -443,7 +419,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                         {
                             getCurrentUser().owner
                                 ? ""
-                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} setBasicTruck={setSimpleTruck} /></div>
+                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} /></div>
                         }
 
 

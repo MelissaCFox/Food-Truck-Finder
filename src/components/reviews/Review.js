@@ -7,9 +7,18 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
+import OneStar from '../trucks/images/1Star.png';
+import OneAndStar from '../trucks/images/1-5Stars.png';
+import TwoStar from '../trucks/images/2Stars.png';
+import TwoAndStar from '../trucks/images/2-5Stars.png';
+import ThreeStar from '../trucks/images/3Stars.png';
+import ThreeAndStar from '../trucks/images/3-5Stars.png';
+import FourStar from '../trucks/images/4Stars.png';
+import FourAndStar from '../trucks/images/4-5Stars.png';
+import FiveStar from '../trucks/images/5Stars.png';
 
 
-export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck, setUser}) => {
+export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, setBasicTruck, setUser }) => {
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { truckId } = useParams()
@@ -20,6 +29,7 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
     const [newDescription, setNewDescription] = useState("")
     const [selectedReview, setSelectedReview] = useState({})
     const [reviewer, setReviewer] = useState({})
+    const [userRating, updateUserRating] = useState("")
 
     const [thisTruck, setThisTruck] = useState({})
     const [fullTruck, setFullTruck] = useState({})
@@ -46,6 +56,51 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
     useEffect(() => {
         ReviewRepository.getBasic(review.id).then(setSelectedReview)
     }, [review])
+
+    useEffect(() => {
+
+        let starRating = review.rating
+        if (0 < starRating && starRating < 1.25) {
+            starRating = OneStar
+        } else if (starRating === 1.25) {
+            starRating = OneStar
+        } else if (1.25 < starRating && starRating < 1.75) {
+            starRating = OneAndStar
+        } else if (starRating === 1.75) {
+            starRating = OneAndStar
+        } else if (1.75 < starRating && starRating < 2.25) {
+            starRating = TwoStar
+        } else if (starRating === 2.25) {
+            starRating = TwoStar
+        } else if (2.25 < starRating && starRating < 2.75) {
+            starRating = TwoAndStar
+        } else if (starRating === 2.75) {
+            starRating = TwoAndStar
+        } else if (2.75 < starRating && starRating < 3.25) {
+            starRating = ThreeStar
+        } else if (starRating === 3.25) {
+            starRating = ThreeStar
+        } else if (3.25 < starRating && starRating < 3.75) {
+            starRating = ThreeAndStar
+        } else if (starRating === 3.75) {
+            starRating = ThreeAndStar
+        } else if (3.75 < starRating && starRating < 4.25) {
+            starRating = FourStar
+        } else if (starRating === 4.25) {
+            starRating = FourStar
+        } else if (4.25 < starRating && starRating < 4.75) {
+            starRating = FourAndStar
+        } else if (starRating === 4.75) {
+            starRating = FourAndStar
+        } else if (4.75 < starRating) {
+            starRating = FiveStar
+        }
+
+        updateUserRating(starRating)
+
+    }, [review])
+
+
 
     const updateReview = () => {
         const reviewCopy = { ...selectedReview }
@@ -90,6 +145,7 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
 
             <div className="review-date">{review.date}</div>
             <div className="review-message">"{review.review}"</div>
+            <div className="review-rating"><img className="review-rating" alt="user rating star" src={userRating} /></div>
 
             {
                 truckId
@@ -137,22 +193,14 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
                                         <Button onClick={
                                             () => {
                                                 truckId
-                                                    ? ReviewRepository.delete(review.id)
+                                                    ? ReviewRepository.deleteAndUpdate(review)
                                                         .then(() => {
-                                                            updateRatings()
-                                                            TruckRepository.get(parseInt(thisTruckId))
-                                                                .then((truck) => {
-                                                                    setTruck(truck)
-                                                                })
-                                                            TruckRepository.getBasic(parseInt(thisTruckId))
-                                                                .then((truck) => {
-                                                                    setBasicTruck(truck)
-                                                                    reviewToggle()
-                                                                })
+                                                            TruckRepository.get(truckId).then(setTruck)
+                                                                .then(editToggle)
+                                                                .then(reviewToggle)
                                                         })
-                                                    : ReviewRepository.delete(review.id)
+                                                    : ReviewRepository.deleteAndUpdate(review)
                                                         .then(() => {
-                                                            updateRatings()
                                                             ReviewRepository.getAllForUser(userId)
                                                                 .then((reviews) => {
                                                                     setUserReviews(reviews)
@@ -161,9 +209,7 @@ export const Review = ({ review, userId, setUserReviews, thisTruckId, setTruck, 
                                                                     UserRepository.get(userId).then(setUser)
                                                                     reviewToggle()
                                                                 })
-
                                                         })
-
                                             }}>
                                             Yes, Delete
                                         </Button>

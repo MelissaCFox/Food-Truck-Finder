@@ -24,7 +24,7 @@ export const User = ({ userId }) => {
         <div className="profile-view">
             <ul className="favorites card">
                 <div className="profile-header"><h3>My Favorite Food Trucks</h3></div>
-                <div className="profile-container"><Favorites userId={user.id} /></div>
+                <div className="profile-container"><Favorites key={user.id} userId={user.id} /></div>
             </ul>
 
             <ul className="reviews-container card">
@@ -34,7 +34,7 @@ export const User = ({ userId }) => {
                 {
                     userReviews.length > 0
                         ? userReviews.map(review => {
-                            return <Review key={review.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} />
+                            return <Review key={user.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} />
                         })
                         : <div>No Reviews Yet</div>
                 }
