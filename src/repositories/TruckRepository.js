@@ -8,7 +8,7 @@ const TruckRepository = {
     },
 
     async get(id) {
-        return await fetchIt(`${Settings.remoteURL}/trucks/${id}?_expand=foodType&_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews`)
+        return await fetchIt(`${Settings.remoteURL}/trucks/${id}?_expand=foodType&_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews&_embed=truckFoodTypes`)
     },
     
     async getAll() {

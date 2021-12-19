@@ -24,6 +24,7 @@ import NoFav from './images/NoFav.png';
 import './Truck.css';
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import UserRepository from "../../repositories/UserRepository"
+import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 
 
 
@@ -49,6 +50,12 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const [confirm, setConfirm] = useState(false)
     const toggle3 = () => setConfirm(!confirm)
     const [truckToRetire, setTruckToRetire] = useState({})
+
+    const [foodTypes, setFoodTypes] = useState([])
+    useEffect(() => {
+        FoodTypeRepository.getAll().then(setFoodTypes)
+
+    }, [])
 
 
     useEffect(() => {
@@ -148,7 +155,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
         }
     }
 
-   
+
 
 
     let truckPrice = "$"
@@ -159,7 +166,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
     }
 
     useEffect(() => {
-        
+
         let starRating = truck?.userRating
         if (0 < starRating && starRating < 1.25) {
             starRating = OneStar
@@ -201,7 +208,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
         updateUserRating(starRating)
 
-    },[truck, newRating])
+    }, [truck, newRating])
 
 
     return (
@@ -352,6 +359,19 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                             <div className="truck__description">
                                 <div className="truck__info--description">{truck.description}</div>
+
+                                <div className="truck__info--typeTags">
+                                    {
+                                        truck.truckFoodTypes?.map(
+                                            (type) => {
+                                                const foundType = foodTypes.find(foodType => foodType.id === type.foodTypeId)
+                                               
+                                                return <div className="typeTag" key={type.id}>{foundType?.type}</div>
+                                            })
+                                    }
+
+                                </div>
+
                                 <div className="truck__info--type">Type: {truck.foodType?.type}</div>
                                 <div className="truck__info--dollars">{truckPrice}</div>
                                 <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} reviews)</div>
