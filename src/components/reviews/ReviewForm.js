@@ -35,11 +35,14 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating}) => {
                             alertNewRating()
                         })   
                 })
-    }}
+
+    }
+
+}
 
 
         return (
-            <form className="form">
+            <form id="review-form" className="form">
                 <h3>Submit a Review</h3>
                 <div className="form-group">
                     <Input type="date" className="review-date-picker" onChange={e => setDate(e.target.value)} />
