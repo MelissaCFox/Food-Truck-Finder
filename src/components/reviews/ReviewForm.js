@@ -7,7 +7,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import '../trucks/Truck.css';
 
 
-export const ReviewForm = ({ truckId, setTruck}) => {
+export const ReviewForm = ({ truckId, setTruck, alertNewRating}) => {
     const [review, setReview] = useState("")
     const [date, setDate] = useState("")
     const { getCurrentUser } = useSimpleAuth()
@@ -32,6 +32,7 @@ export const ReviewForm = ({ truckId, setTruck}) => {
                     TruckRepository.get(parseInt(truckId))
                         .then((truck) => {
                             setTruck(truck)
+                            alertNewRating()
                         })   
                 })
     }}

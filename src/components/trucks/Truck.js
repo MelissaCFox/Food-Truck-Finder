@@ -41,6 +41,8 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const [basicTruck, setBasicTruck] = useState({})
 
     const [userRating, updateUserRating] = useState("")
+    const [newRating, toggleNewRating] = useState(false)
+    const alertNewRating = () => toggleNewRating(!newRating)
 
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
@@ -53,7 +55,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
         if (truckID) {
             TruckRepository.getBasic(truckID).then(setBasicTruck)
         }
-    }, [truckID, userRating])
+    }, [truckID, userRating, newRating])
 
 
     useEffect(() => {
@@ -89,7 +91,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
             ? TruckRepository.get(truckId).then(setTruck)
             : TruckRepository.get(truckID).then(setTruck)
 
-    }, [truckId, truckID, userRating])
+    }, [truckId, truckID, userRating, newRating])
 
     const createNewLocation = (truckId, neighborhoodId, dayId) => {
         const newTruckLocation = {
@@ -199,7 +201,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
         updateUserRating(starRating)
 
-    },[truck])
+    },[truck, newRating])
 
 
     return (
@@ -410,7 +412,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                             {
                                 truck?.userTruckReviews?.length > 0
                                     ? truck?.userTruckReviews?.map(review => {
-                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} /></div>
+                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
                                     })
                                     : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
                             }
@@ -419,7 +421,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                         {
                             getCurrentUser().owner
                                 ? ""
-                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} /></div>
+                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} alertNewRating={alertNewRating} /></div>
                         }
 
 
