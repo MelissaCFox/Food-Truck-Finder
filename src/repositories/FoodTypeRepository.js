@@ -15,6 +15,10 @@ const FoodTypeRepository = {
     async getForTruck(truckId) {
         return await fetchIt(`${Settings.remoteURL}/truckFoodTypes?truckId=${truckId}&_expand=foodType`)
        
+    },
+
+    async add(foodTypeObj) {
+        return await fetchIt(`${Settings.remoteURL}/foodTypes`, "POST", JSON.stringify(foodTypeObj))
     }
 }
 

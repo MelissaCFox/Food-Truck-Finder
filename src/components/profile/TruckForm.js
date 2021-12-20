@@ -4,6 +4,7 @@ import CreatableSelect from "react-select/creatable";
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
+import TruckFoodTypeRepository from "../../repositories/TruckFoodTypeRepository"
 
 
 export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
@@ -38,17 +39,53 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
             userRating: 0
         }
         if (name && foodTypeId && description && websiteURL && instagramURL && profileImgSrc && hours && dollars) {
-            TruckRepository.add(truck).then(res => {
-                const truckOwner = {
-                    userId: userId,
-                    truckId: res.id
-                }
-                UserRepository.addTruckOwner(truckOwner).then(() => {
-                    TruckRepository.getAll().then(setTrucks)
-                    UserRepository.get(userId).then(setUser)
-                    toggle()
+            TruckRepository.add(truck)
+                .then((truck) => {
+                    const truckOwner = {
+                        userId: userId,
+                        truckId: truck.id
+                    }
+                    UserRepository.addTruckOwner(truckOwner)
+
+                    const newFoodTypesArray = []
+                    const truckTypesPostArray = []
+                    for (const selection of userSelectedFoodtypes) {
+                        if (typeof selection.value === "string") {
+                            {
+                                const newFoodTypeObj = {
+                                    type: selection.value
+                                }
+                                newFoodTypesArray.push(FoodTypeRepository.add(newFoodTypeObj).then(foodType => {
+                                    const truckFoodTypeObj = {
+                                        truckId: truck.id,
+                                        foodTypeId: foodType.id
+                                    }
+                                    truckTypesPostArray.push(TruckFoodTypeRepository.add(truckFoodTypeObj))
+
+                                }))
+                            }
+
+                        } else {
+                            const truckFoodTypeObj = {
+                                truckId: truck.id,
+                                foodTypeId: selection.value
+                            }
+                            truckTypesPostArray.push(TruckFoodTypeRepository.add(truckFoodTypeObj))
+
+                        }
+                    }
+                    Promise.all(newFoodTypesArray)
+                        .then(Promise.all(truckTypesPostArray))
+                        .then(() => {
+                            TruckRepository.getAll().then(setTrucks)
+                            UserRepository.get(userId).then(setUser)
+                            toggle()
+
+                        })
+
+
                 })
-            })
+
         } else {
             window.alert("Please fill in all fields")
         }
