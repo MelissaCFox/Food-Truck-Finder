@@ -13,7 +13,7 @@ const FoodTypeRepository = {
     },
 
     async getForTruck(truckId) {
-        return await fetchIt(`${Settings.remoteURL}/truckFoodTypes?truckId=${truckId}&_expand=foodType`)
+        return await fetchIt(`${Settings.remoteURL}/truckFoodTypes?truckId=${truckId}`)
        
     },
 

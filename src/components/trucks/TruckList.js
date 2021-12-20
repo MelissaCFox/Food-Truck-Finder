@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
+import TruckFoodTypeRepository from "../../repositories/TruckFoodTypeRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import userTruckFavorites from "../../repositories/UserTruckFavoriteRepository"
@@ -12,6 +13,11 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
     const [trucks, setTrucks] = useState([])
     const [favoriteTrucks, setFavoriteTrucks] = useState([])
     const { getCurrentUser } = useSimpleAuth()
+    const [truckFoodTypes, setTruckFoodTypes] = useState([])
+
+    useEffect(() => {
+        TruckFoodTypeRepository.getAll().then(setTruckFoodTypes)
+    },[])
 
     useEffect(() => {
         userTruckFavorites.getAll().then(setFavoriteTrucks)
@@ -50,7 +56,13 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                             return location
                         }
                     })
-                    const favoriteTypeLocations = favoriteLocations.filter(location => location.truck.foodTypeId === typePref)
+                    const favoriteTypeLocations = favoriteLocations.filter(location => {
+                        const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
+                        if (foundType) {
+                            return location
+                        }
+                    
+                    })
                     sortPref
                         ? updateTruckLocations(sortTruckLocations(favoriteTypeLocations))
                         : updateTruckLocations(favoriteTypeLocations)
@@ -72,7 +84,14 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
         } else if (typePref !== 0) {
             TruckLocationRepository.getTruckLocationsByDay(currentDayId)
                 .then((res) => {
-                    const TypeLocations = res.filter(location => location.truck.foodTypeId === typePref)
+                    const TypeLocations = res.filter(location => {
+                        
+                        const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
+                        if (foundType) {
+                            return location
+                        }
+                    
+                    })
                     sortPref
                         ? updateTruckLocations(sortTruckLocations(TypeLocations))
                         : updateTruckLocations(TypeLocations)
