@@ -9,6 +9,9 @@ import './User.css';
 export const User = ({ userId }) => {
     const [user, setUser] = useState({})
     const [userReviews, setUserReviews] = useState([])
+    
+    const [newInfo, setNewInfo] = useState(false)
+    const alertNewInfo = () => setNewInfo(!newInfo)
 
     useEffect(() => {
         ReviewRepository.getAllForUser(userId).then(setUserReviews)
@@ -24,7 +27,7 @@ export const User = ({ userId }) => {
         <div className="profile-view">
             <ul className="favorites card">
                 <div className="profile-header"><h3>My Favorite Food Trucks</h3></div>
-                <div className="profile-container"><Favorites key={user.id} userId={user.id} /></div>
+                <div className="profile-container"><Favorites key={user.id} userId={user.id} newInfo={newInfo} /></div>
             </ul>
 
             <ul className="reviews-container card">
@@ -34,7 +37,7 @@ export const User = ({ userId }) => {
                 {
                     userReviews.length > 0
                         ? userReviews.map(review => {
-                            return <Review key={user.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} />
+                            return <Review key={user.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} alertNewInfo={alertNewInfo} />
                         })
                         : <div>No Reviews Yet</div>
                 }

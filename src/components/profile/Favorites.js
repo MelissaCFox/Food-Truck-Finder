@@ -4,7 +4,7 @@ import UserRepository from "../../repositories/UserRepository"
 import { TruckCard } from "../trucks/TruckCard"
 
 
-export const Favorites = ({ userId }) => {
+export const Favorites = ({ userId, newInfo }) => {
     const [user, setUser] = useState({})
     const [allTrucks, setAllTrucks] = useState([])
 
@@ -12,13 +12,13 @@ export const Favorites = ({ userId }) => {
         if (userId) {
             TruckRepository.getAll().then(setAllTrucks)
         }
-    }, [userId])
+    }, [userId, newInfo])
 
     useEffect(() => {
         if (userId) {
             UserRepository.get(userId).then(setUser)
         }
-    }, [userId])
+    }, [userId, newInfo])
 
     return (
         <ul className="favorites list">

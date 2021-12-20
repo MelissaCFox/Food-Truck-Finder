@@ -18,7 +18,7 @@ import FourAndStar from '../trucks/images/4-5Stars.png';
 import FiveStar from '../trucks/images/5Stars.png';
 
 
-export const Review = ({ review, userId, setUserReviews, setTruck, setUser, alertNewRating }) => {
+export const Review = ({ review, userId, setUserReviews, setTruck, setUser, alertNewRating, alertNewInfo }) => {
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { truckId } = useParams()
@@ -208,6 +208,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                                                                 })
                                                                 .then(() => {
                                                                     UserRepository.get(userId).then(setUser)
+                                                                    alertNewInfo()
                                                                     reviewToggle()
                                                                 })
                                                         })

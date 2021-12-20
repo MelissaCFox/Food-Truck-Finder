@@ -362,8 +362,9 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                                 <div className="truck__info--typeTags">
                                     {
-                                        truck.truckFoodTypes?.map(
+                                        truck?.truckFoodTypes?.map(
                                             (type) => {
+
                                                 const foundType = foodTypes.find(foodType => foodType.id === type.foodTypeId)
                                                
                                                 return <div className="typeTag" key={type.id}>{foundType?.type}</div>
@@ -372,7 +373,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                                 </div>
 
-                                <div className="truck__info--type">Type: {truck.foodType?.type}</div>
                                 <div className="truck__info--dollars">{truckPrice}</div>
                                 <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} reviews)</div>
 

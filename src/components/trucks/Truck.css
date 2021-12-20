@@ -45,7 +45,27 @@
     flex-wrap: wrap;
     flex-direction: row;
     flex: 2;
+
     
+}
+
+.truck__info--typeTags {
+    display: flex;
+    flex: wrap;
+    align-items: left;
+}
+
+.typeTag {
+
+    text-align: center;
+    padding: 2px;
+    font-size: 0.75rem;
+    padding: 0.25rem;
+    width: 4rem;
+    border-radius: 25px;
+    margin-right: 0.5rem;
+    background-color: #406882;
+    color:#ECDBBA;
 }
 
 .truck__media {
@@ -91,7 +111,7 @@
     font-size: 24px;
     font-family: "Modak";
     padding-top: 0.4rem;
-    color: #2D4263;
+    color: #406882;
 }
 
 .truck-userStar {
