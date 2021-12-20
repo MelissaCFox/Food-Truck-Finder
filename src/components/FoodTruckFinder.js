@@ -6,6 +6,7 @@ import {ApplicationViews} from "./ApplicationViews"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import { NavBar } from "./nav/NavBar"
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { Footer } from "./nav/Footer"
 
 export const FoodTruckFinder = () => {
     const { isAuthenticated } = useSimpleAuth()
@@ -16,6 +17,7 @@ export const FoodTruckFinder = () => {
                 return <>
                     <NavBar />
                     <ApplicationViews />
+                    <Footer />
                 </>
             } else {
                 return <Redirect to="/login" />

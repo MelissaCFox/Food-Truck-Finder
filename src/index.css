@@ -7,6 +7,17 @@ body {
   background-color: #191919;
 }
 
+.fixed-bottom {
+  background-color:#191919;
+  color: #4e4e4e;
+  text-align: right;
+  padding: 0.25rem 1rem 0.25rem ;
+}
+
+.footer-link {
+  color: #4e4e4e;
+}
+
 .review-rating {
   height: 1.5rem;
   width: 5rem;
