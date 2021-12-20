@@ -54,13 +54,13 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                         const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
                         if (foundFavorite) {
                             return location
-                        }
+                        } else return false
                     })
                     const favoriteTypeLocations = favoriteLocations.filter(location => {
                         const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
                         if (foundType) {
                             return location
-                        }
+                        } else return false
                     
                     })
                     sortPref
@@ -75,7 +75,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                         const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
                         if (foundFavorite) {
                             return location
-                        }
+                        } else return false
                     })
                     sortPref
                         ? updateTruckLocations(sortTruckLocations(favoriteLocations))
@@ -89,7 +89,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                         const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
                         if (foundType) {
                             return location
-                        }
+                        } else return false
                     
                     })
                     sortPref

@@ -14,11 +14,17 @@ export const User = ({ userId }) => {
     const alertNewInfo = () => setNewInfo(!newInfo)
 
     useEffect(() => {
-        ReviewRepository.getAllForUser(userId).then(setUserReviews)
+        if (userId) {
+
+            ReviewRepository.getAllForUser(userId).then(setUserReviews)
+        }
     }, [userId])
 
     useEffect(() => {
-        UserRepository.get(userId).then(setUser)
+        if (userId) {
+            UserRepository.get(userId).then(setUser)
+
+        }
     }, [userId])
 
     
@@ -37,7 +43,7 @@ export const User = ({ userId }) => {
                 {
                     userReviews.length > 0
                         ? userReviews.map(review => {
-                            return <Review key={user.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} alertNewInfo={alertNewInfo} />
+                            return <Review key={review.id} review={review} user={user} userId={user.id} setUser={setUser} setUserReviews={setUserReviews} alertNewInfo={alertNewInfo} />
                         })
                         : <div>No Reviews Yet</div>
                 }

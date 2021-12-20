@@ -51,19 +51,19 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     const truckTypesPostArray = []
                     for (const selection of userSelectedFoodtypes) {
                         if (typeof selection.value === "string") {
-                            {
-                                const newFoodTypeObj = {
-                                    type: selection.value
-                                }
-                                newFoodTypesArray.push(FoodTypeRepository.add(newFoodTypeObj).then(foodType => {
-                                    const truckFoodTypeObj = {
-                                        truckId: truck.id,
-                                        foodTypeId: foodType.id
-                                    }
-                                    truckTypesPostArray.push(TruckFoodTypeRepository.add(truckFoodTypeObj))
 
-                                }))
+                            const newFoodTypeObj = {
+                                type: selection.value
                             }
+                            newFoodTypesArray.push(FoodTypeRepository.add(newFoodTypeObj).then(foodType => {
+                                const truckFoodTypeObj = {
+                                    truckId: truck.id,
+                                    foodTypeId: foodType.id
+                                }
+                                truckTypesPostArray.push(TruckFoodTypeRepository.add(truckFoodTypeObj))
+
+                            }))
+
 
                         } else {
                             const truckFoodTypeObj = {

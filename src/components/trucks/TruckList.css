@@ -91,12 +91,15 @@
   .date-picker {
       width: 4rem;
       margin-right: 2rem;
+     
   }
 
   input.date-picker[type=date] {
     background-color: #191919;
     color: #191919;
     border: none;
+    font-size: 2rem;
+
   }
 
   input.date-picker::-webkit-calendar-picker-indicator{

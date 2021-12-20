@@ -51,7 +51,7 @@ export const NeighborhoodTruckList = () => {
         <>
             <div className="options">
                 <div className="date">
-                    <h2 className="date-string">
+                    <div className="date-string">
                         <input className="date-picker" type="date" onChange={(event) => {
                             const newDate = event.target.value
                             const parsedDate = Date.parse(newDate) + 86400000
@@ -59,7 +59,7 @@ export const NeighborhoodTruckList = () => {
                             setDateForList(accurateDate)
                         }}></input>
                         <h2>{dateString}</h2>
-                    </h2>
+                    </div>
 
                 </div>
                 <div className="filter-options">

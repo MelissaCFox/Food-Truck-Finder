@@ -31,23 +31,6 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
     const [reviewer, setReviewer] = useState({})
     const [userRating, updateUserRating] = useState("")
 
-    const [thisTruck, setThisTruck] = useState({})
-    const [fullTruck, setFullTruck] = useState({})
-
-    useEffect(() => {
-        if (truckId) {
-
-            TruckRepository.get(parseInt(truckId)).then(setFullTruck)
-        }
-    }, [truckId])
-
-    useEffect(() => {
-        if (truckId) {
-
-            TruckRepository.getBasic(parseInt(truckId)).then(setThisTruck)
-        }
-    }, [truckId])
-
 
     useEffect(() => {
         UserRepository.get(review.userId).then(setReviewer)
@@ -115,25 +98,6 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
             })
             .then(editToggle)
     }
-
-    const updateRatings = () => {
-        let totalRating = 0
-        if (fullTruck?.userTruckReviews?.length > 0) {
-
-            for (const review of fullTruck?.userTruckReviews) {
-                totalRating += review.rating
-            }
-            let averageRating = totalRating / fullTruck?.userTruckReviews?.length
-            const updatedTruckObj = { ...thisTruck }
-            updatedTruckObj.userRating = averageRating
-            TruckRepository.update(thisTruck.id, updatedTruckObj)
-                .then(() => {
-                    TruckRepository.get(thisTruck.id).then(setTruck)
-
-                })
-        }
-    }
-
 
     return (
         <div className="review-card" key={review.id}>

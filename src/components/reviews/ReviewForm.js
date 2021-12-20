@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useEffect } from "react/cjs/react.development"
 import { Input, Label } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
@@ -25,7 +24,6 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating}) => {
             anonymous: anonymousState,
             rating: rating
         }
-
         if (review && date) {
             ReviewRepository.addAndUpdate(reviewObj)
                 .then(() => {
@@ -35,11 +33,8 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating}) => {
                             alertNewRating()
                         })   
                 })
-
     }
-
 }
-
 
         return (
             <form id="review-form" className="form">
