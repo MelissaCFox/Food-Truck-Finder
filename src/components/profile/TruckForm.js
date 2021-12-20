@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { Button } from "reactstrap"
+import { Button, FormGroup, Label } from "reactstrap"
+import CreatableSelect from "react-select/creatable";
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
@@ -15,6 +16,8 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
     const [profileImgSrc, setProfileImgSrc] = useState("")
     const [hours, setHours] = useState("")
     const [dollars, setDollars] = useState(0)
+
+    const [userSelectedFoodtypes, setUserSelectedFoodTypes] = useState([])
 
     useEffect(() => {
         FoodTypeRepository.getAll().then(setFoodTypes)
@@ -80,7 +83,23 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="foodType">Food Type</label>
+                    <FormGroup>
+                        <Label>Food Type(s)</Label>
+
+                        <CreatableSelect
+                            required
+                            isMulti
+                            isClerable
+                            value={userSelectedFoodtypes}
+                            options={foodTypes.map(type => ({ label: type.type, value: type.id }))}
+                            onChange={tagChoices => {
+                                setUserSelectedFoodTypes(tagChoices)
+                            }}
+                            id="tagSelect"
+                            placeholder="Select food types..."
+                        />
+                    </FormGroup>
+
                     <select
                         defaultValue=""
                         required
@@ -96,6 +115,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                             })
                         }
                     </select>
+
                 </div>
                 <div className="form-group">
                     <label htmlFor="websiteURL">Website URL</label>
