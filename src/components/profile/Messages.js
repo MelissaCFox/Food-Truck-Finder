@@ -84,7 +84,7 @@ export const Messages = ({updateReadStateChange}) => {
                                 <div className="suggestion-truck">{suggestion.truck.name}</div>
                                 <div className="suggestion-neighborhood">Where:  {suggestion.neighborhood.name}</div>
                                 <div className="suggestion-date">When:  {suggestion.date}</div>
-                                <div className="suggestion-message">What Else:  {suggestion.message}</div>
+                                <div className="suggestion-message">What:  {suggestion.message}</div>
                                 <div className="suggestion-author">~{suggestion.user.name}</div>
                             </div>
                             <Button className="suggestion-btn" onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
