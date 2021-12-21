@@ -8,7 +8,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
 import { TruckSchedule } from "../schedule/TruckSchedule"
-import { Button, Collapse, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import OneStar from './images/1Star.png';
 import OneAndStar from './images/1-5Stars.png';
 import TwoStar from './images/2Stars.png';

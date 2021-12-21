@@ -47,7 +47,7 @@ export const Owner = ({ userId }) => {
                     setUnreadSuggestions(allTruckSuggestions)
                 })      
             })
-    },[readStateChange])
+    },[readStateChange, userId])
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
