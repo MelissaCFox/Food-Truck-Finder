@@ -8,7 +8,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
 import { TruckSchedule } from "../schedule/TruckSchedule"
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Collapse, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import OneStar from './images/1Star.png';
 import OneAndStar from './images/1-5Stars.png';
 import TwoStar from './images/2Stars.png';
@@ -25,6 +25,7 @@ import './Truck.css';
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import UserRepository from "../../repositories/UserRepository"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
+import { SuggestionForm } from "./SuggestionForm"
 
 
 
@@ -50,6 +51,9 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const [confirm, setConfirm] = useState(false)
     const toggle3 = () => setConfirm(!confirm)
     const [truckToRetire, setTruckToRetire] = useState({})
+
+    const [suggestion, setSuggestion] = useState(false)
+    const suggestionToggle = () => setSuggestion(!suggestion)
 
     const [foodTypes, setFoodTypes] = useState([])
     useEffect(() => {
@@ -366,7 +370,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                             (type) => {
 
                                                 const foundType = foodTypes.find(foodType => foodType.id === type.foodTypeId)
-                                               
+
                                                 return <div className="typeTag" key={type.id}>{foundType?.type}</div>
                                             })
                                     }
@@ -387,67 +391,90 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
 
 
-
-                        {
-                            currentNeighborhood
-                                ? <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard neighborhoodId={currentNeighborhood.id} /> </div></div>
-
-                                : <div className="truck__currentLocation"><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div> </div></div>
-
-                        }
-
-                    </div>
-                </div>
-
-
-                <div className="truck__schedule-card">
-                    <h3 className="schedule-heading">Current Schedule</h3>
-                    <div className="truck-schedule-card">
-
-                        {
-                            days.map(day => {
-                                return <div key={day.id} className="card schedule-card">
-                                    <div key={`day--${day.id}`} className="day__name">{day.day}</div>
-                                    <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
-                                        dayId={day.id}
-                                        truckId={truck.id}
-                                        truckPage={truckId}
-                                        createNewLocation={createNewLocation}
-                                        truckLocations={truckLocations}
-                                        setTruckLocations={setTruckLocations}
-                                        neighborhoods={neighborhoods}
-                                    />
-                                </div>
-                            })
-                        }
-
-
-                    </div>
-                </div>
-
-                <div className="truck-reviews-section">
-                    <div className="truck-reviews-heading"><h3 className="schedule-heading">Customer Reviews</h3></div>
-                    <div className="truck__reviews card">
-                        <div className="review-list reviews">
+                        <div className="truck__currentLocation">
                             {
-                                truck?.userTruckReviews?.length > 0
-                                    ? truck?.userTruckReviews?.map(review => {
-                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
-                                    })
-                                    : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
+                                currentNeighborhood
+                                    ? <><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard neighborhoodId={currentNeighborhood.id} /></div></>
+                                    : <><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div></div></>
+
                             }
+
+                            <div className="suggestion-label">Know A Good Spot For Us To Visit?</div>
+                            <div className="suggestion-form"><Button onClick={suggestionToggle}>Submit A Suggestion</Button></div>
+
+
+                            <Modal animation="false"
+                                isOpen={suggestion}
+                                centered
+                                fullscreen="md"
+                                size="md"
+                                toggle={suggestionToggle}
+                            >
+                                <ModalHeader toggle={suggestionToggle}>
+                                    Suggestion For {truck.name}
+                                </ModalHeader>
+
+                                <ModalBody>
+                                    <SuggestionForm suggestionToggle={suggestionToggle} truckId={truck.id} />
+                                </ModalBody>
+                            </Modal>
+
+
                         </div>
-
-                        {
-                            getCurrentUser().owner
-                                ? ""
-                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} alertNewRating={alertNewRating} /></div>
-                        }
-
-
                     </div>
+
                 </div>
             </div>
+
+
+            <div className="truck__schedule-card">
+                <h3 className="schedule-heading">Current Schedule</h3>
+                <div className="truck-schedule-card">
+
+                    {
+                        days.map(day => {
+                            return <div key={day.id} className="card schedule-card">
+                                <div key={`day--${day.id}`} className="day__name">{day.day}</div>
+                                <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
+                                    dayId={day.id}
+                                    truckId={truck.id}
+                                    truckPage={truckId}
+                                    createNewLocation={createNewLocation}
+                                    truckLocations={truckLocations}
+                                    setTruckLocations={setTruckLocations}
+                                    neighborhoods={neighborhoods}
+                                />
+                            </div>
+                        })
+                    }
+
+
+                </div>
+            </div>
+
+            <div className="truck-reviews-section">
+                <div className="truck-reviews-heading"><h3 className="schedule-heading">Customer Reviews</h3></div>
+                <div className="truck__reviews card">
+                    <div className="review-list reviews">
+                        {
+                            truck?.userTruckReviews?.length > 0
+                                ? truck?.userTruckReviews?.map(review => {
+                                    return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
+                                })
+                                : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
+                        }
+                    </div>
+
+                    {
+                        getCurrentUser().owner
+                            ? ""
+                            : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} alertNewRating={alertNewRating} /></div>
+                    }
+
+
+                </div>
+            </div>
+        
         </>
     )
 
