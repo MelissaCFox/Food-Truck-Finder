@@ -4,7 +4,7 @@ import { Button, Collapse, Modal, ModalBody, ModalFooter, ModalHeader } from "re
 import UserRepository from "../../repositories/UserRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import { Truck } from "../trucks/Truck"
-import { TruckForm } from "./TruckForm"
+import { TruckForm } from "../forms/TruckForm"
 import { Favorites } from "./Favorites"
 import { Suggestions } from "./Suggestions"
 import SuggestionRepository from "../../repositories/SuggestionsRepository"

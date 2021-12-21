@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
-import { ReviewForm } from "../reviews/ReviewForm"
+import { ReviewForm } from "../forms/ReviewForm"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
@@ -25,7 +25,7 @@ import './Truck.css';
 import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import UserRepository from "../../repositories/UserRepository"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
-import { SuggestionForm } from "./SuggestionForm"
+import { SuggestionForm } from "../forms/SuggestionForm"
 
 
 

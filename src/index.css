@@ -7,6 +7,10 @@ body {
   background-color: #191919;
 }
 
+.cancel-btn {
+  margin-left: 1rem;
+}
+
 .fixed-bottom {
   background-color:#191919;
   color: #4e4e4e;

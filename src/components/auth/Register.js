@@ -33,9 +33,8 @@ export const Register = () => {
         syncAuth(copy)
     }
 
-
     return (
-        <main style={{ textAlign: "center" }}>
+        <main style={{ textAlign: "center" }} className="container--login">
             <form className="form--login" onSubmit={handleRegister}>
                 <h1 className="h3 mb-3 font-weight-normal">Please Register for Food Truck Finder</h1>
                 <fieldset>
@@ -84,6 +83,10 @@ export const Register = () => {
                 <fieldset>
                     <button type="submit">
                         Sign in
+                    </button>
+
+                    <button className="cancel-btn" type="cancel" onClick={()=> {history.push("/login")}}>
+                        Cancel
                     </button>
                 </fieldset>
             </form>
