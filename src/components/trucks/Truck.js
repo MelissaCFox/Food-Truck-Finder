@@ -399,26 +399,26 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                             }
 
-                            <div className="suggestion-label">Know A Good Spot For Us To Visit?</div>
-                            <div className="suggestion-form"><Button onClick={suggestionToggle}>Submit A Suggestion</Button></div>
-
-
-                            <Modal animation="false"
-                                isOpen={suggestion}
-                                centered
-                                fullscreen="md"
-                                size="md"
-                                toggle={suggestionToggle}
-                            >
-                                <ModalHeader toggle={suggestionToggle}>
-                                    Suggestion For {truck.name}
-                                </ModalHeader>
-
-                                <ModalBody>
-                                    <SuggestionForm suggestionToggle={suggestionToggle} truckId={truck.id} />
-                                </ModalBody>
-                            </Modal>
-
+                            {
+                                truckId
+                                    ? <><div className="suggestion-label">Know A Good Spot For Us To Visit?</div>
+                                        <div className="suggestion-form"><Button onClick={suggestionToggle}>Submit A Suggestion</Button></div>
+                                        <Modal animation="false"
+                                            isOpen={suggestion}
+                                            centered
+                                            fullscreen="md"
+                                            size="md"
+                                            toggle={suggestionToggle}
+                                        >
+                                            <ModalHeader toggle={suggestionToggle}>
+                                                Suggestion For {truck.name}
+                                            </ModalHeader>
+                                            <ModalBody>
+                                                <SuggestionForm suggestionToggle={suggestionToggle} truckId={truck.id} />
+                                            </ModalBody>
+                                        </Modal></>
+                                    : ""
+                            }
 
                         </div>
                     </div>
@@ -474,7 +474,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                 </div>
             </div>
-        
+
         </>
     )
 

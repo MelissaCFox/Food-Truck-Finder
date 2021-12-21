@@ -6,6 +6,7 @@ import TruckRepository from "../../repositories/TruckRepository"
 import { Truck } from "../trucks/Truck"
 import { TruckForm } from "./TruckForm"
 import { Favorites } from "./Favorites"
+import { Messages } from "./Messages"
 
 export const Owner = ({ userId }) => {
     const [user, setUser] = useState({})
@@ -14,6 +15,8 @@ export const Owner = ({ userId }) => {
     const toggle = () => setModal(!modal)
     const [collapse, setCollapse] = useState(false)
     const toggle2 = () => setCollapse(!collapse)
+    const [suggestions, setSuggestions] = useState(false)
+    const toggleSuggestions = () => setSuggestions(!suggestions)
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -55,16 +58,43 @@ export const Owner = ({ userId }) => {
                         </ModalFooter>
                     </Modal>
 
-                    <Button color="success" outline onClick={toggle2}>Favorites</Button>
+                    <Button color="success" outline onClick={()=> {
+                        if (suggestions) {
+                            toggleSuggestions()
+                        }
+                        toggle2()
+                    }}>Favorites</Button>
+
+                    <Button
+                    color="success"
+                    outline
+                    onClick={()=>{
+                        if (collapse) {
+                            toggle2()
+                        }
+                        toggleSuggestions()
+                    }}>
+                        Suggestions
+                    </Button>
+
                 </div>
-                    <div>
-                        <Collapse animation="false" isOpen={collapse}>
-                            <ul className="favorites card">
-                                
-                                <div className="profile-container"><Favorites userId={userId} /></div>
-                            </ul>
-                        </Collapse>
-                    </div>
+                <div>
+                    <Collapse animation="false" isOpen={collapse}>
+                        <ul className="favorites card">
+
+                            <div className="profile-container"><Favorites userId={userId} /></div>
+                        </ul>
+                    </Collapse>
+
+                    <Collapse animation="false" isOpen={suggestions}>
+                        <ul className="suggestions">
+
+                            <div className="suggestion--messages"><Messages /></div>
+                        </ul>
+                    </Collapse>
+
+                </div>
+
 
             </div>
 

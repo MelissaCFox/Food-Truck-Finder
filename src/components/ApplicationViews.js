@@ -2,6 +2,7 @@ import React from "react"
 import { Route } from "react-router-dom"
 import useSimpleAuth from "../hooks/ui/useSimpleAuth"
 import { Neighborhood } from "./neighborhoods/Neighborhood"
+import { Messages } from "./profile/Messages"
 import { Profile } from "./profile/Profile"
 import { SearchResults } from "./search/SearchResults"
 import { NeighborhoodTruckList } from "./trucks/NeighborhoodTrucks"
@@ -35,6 +36,7 @@ export const ApplicationViews = () => {
 
         <Route path="/profile">
             <Profile />
+            <Messages />
         </Route>
 
         <Route path="/search">

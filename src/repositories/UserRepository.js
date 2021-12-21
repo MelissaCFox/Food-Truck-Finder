@@ -13,6 +13,10 @@ const UserRepository = {
 
     async addTruckOwner(truckOwner) {
         return await fetchIt(`${Settings.remoteURL}/truckOwners`, "POST", JSON.stringify(truckOwner))
+    },
+
+    async getAllTruckOwners() {
+        return await fetchIt(`${Settings.remoteURL}/truckOwners`)
     }
 
 
