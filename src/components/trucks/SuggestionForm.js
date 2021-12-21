@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Form, FormGroup, Input, Label } from "reactstrap"
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import SuggestionRepository from "../../repositories/SuggestionsRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
@@ -9,6 +9,8 @@ import { useEffect } from "react/cjs/react.development"
 export const SuggestionForm = ({ truckId, suggestionToggle }) => {
     const { getCurrentUser } = useSimpleAuth()
     const [neighborhoods, setNeighborhoods] = useState([])
+    const [formCheck, setFormCheck] = useState(false)
+    const toggleFormCheck = () => setFormCheck(!formCheck)
 
     useEffect(() => {
         NeighborhoodRepository.getAll().then(setNeighborhoods)
@@ -23,8 +25,13 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
         read: false
     })
 
-    const submitSuggestion = () => {
-        SuggestionRepository.add(suggestion).then(suggestionToggle)
+    const submitSuggestion = (event) => {
+        event.preventDefault()
+        if (suggestion.date && suggestion.message && suggestion.neighborhoodId !== 0) {
+            SuggestionRepository.add(suggestion).then(suggestionToggle)
+        } else {
+            toggleFormCheck()
+        }
     }
 
     return (
@@ -38,10 +45,10 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                         copy.neighborhoodId = parseInt(e.target.value)
                         setSuggestion(copy)
                     }}>
-                <option value="">Select a neighborhood...</option>
-                {
-                    neighborhoods.map(neighborhood => <option key={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>)
-                }
+                    <option value="">Select a neighborhood...</option>
+                    {
+                        neighborhoods.map(neighborhood => <option key={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>)
+                    }
                 </Input>
             </FormGroup>
 
@@ -58,6 +65,7 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
             <FormGroup>
                 <Label for="suggestion-message">What Else?</Label>
                 <Input required type="textarea" name="message" id="suggestion-message" placeholder="Address, event info, etc"
+                    className="form-control"
                     onChange={(e) => {
                         const copy = { ...suggestion }
                         copy.message = e.target.value
@@ -65,10 +73,29 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                     }} />
             </FormGroup>
 
-            <Button onClick={() => {
-                submitSuggestion()
-                suggestionToggle()
+            <Button onClick={(event) => {
+                submitSuggestion(event)
+
             }}>Submit Suggestion</Button>
+
+            < Modal
+                isOpen={formCheck}
+                centered
+                fullscreen="sm"
+                size="sm"
+                toggle={toggleFormCheck}
+            >
+
+                <ModalBody>
+                    Please Fill Out All Fields
+                    <ModalFooter>
+                        <Button onClick={toggleFormCheck}>
+                            Ok
+                        </Button>
+                    </ModalFooter>
+                </ModalBody>
+
+            </Modal >
 
         </Form>
 
