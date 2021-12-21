@@ -73,7 +73,13 @@ export const Messages = () => {
                 {
                     suggestions.map(suggestion => {
                         return <div>
-                            <div className="suggestion-message">{suggestion.message}</div>
+                            <div className="suggestion">
+                                <div className="suggestion-truck">{suggestion.truck.name}</div>
+                                <div className="suggestion-neighborhood">{suggestion.neighborhood.name}</div>
+                                <div className="suggestion-date">{suggestion.date}</div>
+                                <div className="suggestion-message">{suggestion.message}</div>
+                                <div className="suggestion-author">~{suggestion.user.name}</div>
+                            </div>
                             <Button onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
                             <Button onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
                         </div>
