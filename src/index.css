@@ -86,12 +86,59 @@ dialog {
   }
 }
 
-.messagesList {
-  background-color: #406882;
-  color: #ECDBBA;
+.userSuggestions {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #2D4263;
+  padding: 1rem;
+  margin: 2rem;
 }
 
+.messageList--options {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  flex: 1
+  
+}
 
+.messageList--option-btn {
+  width: 12rem;
+  height: 4rem;
+  margin: 0.25rem 2rem;
+  color:#ECDBBA;
+
+}
+
+.messagesList {
+  background-color: #2D4263;
+  color: #ECDBBA;
+  display: flex;
+  flex-wrap: wrap;
+ flex: 5;
+}
+
+.suggestion {
+  border: dashed 1px;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  background-color:#406882;
+  width: 30rem;
+}
+
+.suggestion-truck {
+  border-bottom: solid #2D4263;
+  font-weight: bold;
+}
+
+.suggestion-author {
+  text-align: right;
+}
+
+.suggestion-btn {
+  margin: 0.5rem;
+  color:#ECDBBA;
+}
 
 
 .trucks {

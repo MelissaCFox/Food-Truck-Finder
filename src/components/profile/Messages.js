@@ -61,27 +61,24 @@ export const Messages = () => {
     }
 
     return (
-        <div>
-            <div className="messageList--options"></div>
-            <Button onClick={() => { setMessageList("unread") }}>Unread Suggestions ({unreadSuggestions.length})</Button>
-            <Button onClick={() => {
-                triggerReadStateChange()
-                setMessageList("all")
-            }}>All Suggestions</Button>
+        <div className="userSuggestions">
+            <div className="messageList--options">
+                <Button className="messageList--option-btn" onClick={() => { setMessageList("unread") }}>Unread Suggestions ({unreadSuggestions.length})</Button>
+                <Button className="messageList--option-btn" onClick={() => { setMessageList("all") }}>All Suggestions</Button>
+            </div>
             <div className="messagesList">
-
                 {
                     suggestions.map(suggestion => {
-                        return <div>
-                            <div className="suggestion">
+                        return <div key={suggestion.id} className="suggestion">
+                            <div >
                                 <div className="suggestion-truck">{suggestion.truck.name}</div>
-                                <div className="suggestion-neighborhood">{suggestion.neighborhood.name}</div>
-                                <div className="suggestion-date">{suggestion.date}</div>
-                                <div className="suggestion-message">{suggestion.message}</div>
+                                <div className="suggestion-neighborhood">Where:  {suggestion.neighborhood.name}</div>
+                                <div className="suggestion-date">When:  {suggestion.date}</div>
+                                <div className="suggestion-message">What Else:  {suggestion.message}</div>
                                 <div className="suggestion-author">~{suggestion.user.name}</div>
                             </div>
-                            <Button onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
-                            <Button onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
+                            <Button className="suggestion-btn" onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
+                            <Button className="suggestion-btn" onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
                         </div>
                     })
                 }
