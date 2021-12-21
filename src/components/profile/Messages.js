@@ -31,7 +31,7 @@ export const Messages = () => {
 
                 } else return false
             })
-    }, [messageList])
+    }, [messageList, readStateChange])
 
     useEffect(() => {
         const foundTruck = UserRepository.getAllTruckOwners()
@@ -41,20 +41,43 @@ export const Messages = () => {
                     SuggestionRepository.getAllUnreadForTruck(foundTruck.id).then(setUnreadSuggestions)
                 } else return false
             })
-    }, [readStateChange])
+    }, [readStateChange, suggestions])
+
+    const updateMessage = (suggestion) => {
+        SuggestionRepository.get(suggestion.id)
+            .then((res) => {
+                if (res.read === false) {
+                    let updatedSuggestion = { ...res }
+                    updatedSuggestion.read = true
+                    SuggestionRepository.update(suggestion.id, updatedSuggestion)
+                        .then(triggerReadStateChange)
+                } else {
+                    let updatedSuggestion = { ...res }
+                    updatedSuggestion.read = false
+                    SuggestionRepository.update(suggestion.id, updatedSuggestion)
+                        .then(triggerReadStateChange)
+                }
+            })
+    }
 
     return (
         <div>
             <div className="messageList--options"></div>
             <Button onClick={() => { setMessageList("unread") }}>Unread Suggestions ({unreadSuggestions.length})</Button>
-            <Button onClick={() => { 
+            <Button onClick={() => {
                 triggerReadStateChange()
-                setMessageList("all") 
-                }}>All Suggestions</Button>
+                setMessageList("all")
+            }}>All Suggestions</Button>
             <div className="messagesList">
 
                 {
-                    suggestions.map(suggestion => <div className="suggestion-message">{suggestion.message}</div>)
+                    suggestions.map(suggestion => {
+                        return <div>
+                            <div className="suggestion-message">{suggestion.message}</div>
+                            <Button onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
+                            <Button onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
+                        </div>
+                    })
                 }
 
             </div>
