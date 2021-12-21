@@ -41,7 +41,6 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
     }, [review])
 
     useEffect(() => {
-
         let starRating = review.rating
         if (0 < starRating && starRating < 1.25) {
             starRating = OneStar
@@ -78,11 +77,8 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
         } else if (4.75 < starRating) {
             starRating = FiveStar
         }
-
         updateUserRating(starRating)
-
     }, [review])
-
 
 
     const updateReview = () => {
@@ -94,7 +90,6 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                 truckId
                     ? TruckRepository.get(truckId).then(setTruck)
                     : ReviewRepository.getAllForUser(userId).then(setUserReviews)
-
             })
             .then(editToggle)
     }
@@ -192,10 +187,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                                     Cancel
                                 </Button>
                             </ModalFooter>
-
                         </Modal>
-
-
                     </div>)
                     : <div className="review-options-blank"></div>
             }

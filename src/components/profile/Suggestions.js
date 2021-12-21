@@ -6,7 +6,7 @@ import SuggestionRepository from "../../repositories/SuggestionsRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Messages = ({updateReadStateChange}) => {
+export const Suggestions = ({updateReadStateChange}) => {
     const { getCurrentUser } = useSimpleAuth()
     const [unreadSuggestions, setUnreadSuggestions] = useState([])
 

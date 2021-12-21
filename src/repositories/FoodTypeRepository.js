@@ -9,7 +9,7 @@ const FoodTypeRepository = {
 
 
     async get(foodtypeId) {
-        return await fetchIt(`${Settings.remoteURL}/foodTypes/${foodtypeId}?_embed=trucks`)
+        return await fetchIt(`${Settings.remoteURL}/foodTypes/${foodtypeId}`)
     },
 
     async getForTruck(truckId) {

@@ -5,9 +5,7 @@ import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import '../trucks/TruckList.css';
 
 
-
 export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods }) => {
-
     const [truckNeighborhoods, setTruckNeighborhoods] = useState([])
     const [truckNeighborhood, setTruckNeighborhood] = useState({})
 
@@ -53,7 +51,6 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                         >
                                             <option value="">--Change Location--</option>
                                             <option value="0">OFF</option>
-
                                             {
                                                 neighborhoods.map(neighborhood => {
                                                     return <option key={`neighborhood--${dayId}--${neighborhood.id}`} id={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>

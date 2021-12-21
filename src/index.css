@@ -89,6 +89,7 @@ dialog {
 .userSuggestions {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
   background-color: #2D4263;
   padding: 1rem;
   margin: 2rem;
@@ -283,6 +284,5 @@ h2 {
 }
 
 ul {
-  
   padding: 0;
 }

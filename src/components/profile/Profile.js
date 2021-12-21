@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { useEffect } from "react/cjs/react.development"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import { Owner } from "./Owner"
@@ -10,17 +10,13 @@ export const Profile = () => {
     const [user, setUser] = useState({})
 
     useEffect(() => {
-            const user = getCurrentUser()
-            setUser(user)
-       
-    },[])
-    
+        const user = getCurrentUser()
+        setUser(user)
+    }, [])
+
     return (
-        
         user.owner
-        ? <Owner userId={user.id} />
-        : <User userId={user.id} />
-        
+            ? <Owner userId={user.id} />
+            : <User userId={user.id} />
     )
-    
 }

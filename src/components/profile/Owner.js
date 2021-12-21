@@ -6,16 +6,17 @@ import TruckRepository from "../../repositories/TruckRepository"
 import { Truck } from "../trucks/Truck"
 import { TruckForm } from "./TruckForm"
 import { Favorites } from "./Favorites"
-import { Messages } from "./Messages"
+import { Suggestions } from "./Suggestions"
 import SuggestionRepository from "../../repositories/SuggestionsRepository"
 
 export const Owner = ({ userId }) => {
     const [user, setUser] = useState({})
     const [trucks, setTrucks] = useState([])
-    const [modal, setModal] = useState(false)
-    const toggle = () => setModal(!modal)
+
+    const [register, setRegister] = useState(false)
+    const toggleRegister = () => setRegister(!register)
     const [collapse, setCollapse] = useState(false)
-    const toggle2 = () => setCollapse(!collapse)
+    const toggleCollapse = () => setCollapse(!collapse)
     const [suggestions, setSuggestions] = useState(false)
     const toggleSuggestions = () => setSuggestions(!suggestions)
 
@@ -29,25 +30,25 @@ export const Owner = ({ userId }) => {
                 const truckFetchArray = []
                 const allTruckSuggestions = []
                 const ownedTrucks = trucks.filter((truck) => {
-                  const foundOwner = truck.truckOwners.find(owner => owner.userId === userId)
-                  if (foundOwner) {
-                      return truck
-                  } else return false
+                    const foundOwner = truck.truckOwners.find(owner => owner.userId === userId)
+                    if (foundOwner) {
+                        return truck
+                    } else return false
                 })
                 for (const truckObj of ownedTrucks) {
-                    
+
                     truckFetchArray.push(SuggestionRepository.getAllUnreadForTruck(truckObj.id).then((response) => {
                         response.forEach(suggestion => {
-                            allTruckSuggestions.push(suggestion)      
+                            allTruckSuggestions.push(suggestion)
                         });
-                    })) 
+                    }))
                 }
                 Promise.all(truckFetchArray)
-                .then(() => {
-                    setUnreadSuggestions(allTruckSuggestions)
-                })      
+                    .then(() => {
+                        setUnreadSuggestions(allTruckSuggestions)
+                    })
             })
-    },[readStateChange, userId])
+    }, [readStateChange, userId])
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -63,77 +64,57 @@ export const Owner = ({ userId }) => {
             <div className="owner-header">
 
                 <div className="buttons">
-                    <Button
-                    className="owner-buttons"
-                        color="success"
-                        outline
-                        onClick={toggle}
-                    >
-                        Register Truck
-                    </Button>
-                    <Modal
-                        isOpen={modal}
-                        fullscreen="lg"
-                        size="lg"
-                        toggle={toggle}
-                    >
-                        <ModalHeader toggle={toggle}>
+                    <Button className="owner-buttons" color="success" outline onClick={toggleRegister} > Register Truck </Button>
+                    <Modal isOpen={register} fullscreen="lg" size="lg" toggle={toggleRegister}>
+                        <ModalHeader toggle={toggleRegister}>
                             Register New Truck
                         </ModalHeader>
                         <ModalBody>
-                            <TruckForm userId={userId} toggle={toggle} setTrucks={setTrucks} setUser={setUser} />
+                            <TruckForm userId={userId} toggle={toggleRegister} setTrucks={setTrucks} setUser={setUser} />
                         </ModalBody>
-                        <ModalFooter>
-                            <Button onClick={toggle}>
-                                Cancel
-                            </Button>
+                        <ModalFooter> <Button onClick={toggleRegister}> Cancel </Button>
                         </ModalFooter>
                     </Modal>
 
-                    <Button color="success" className="owner-buttons" outline onClick={()=> {
+                    <Button color="success" className="owner-buttons" outline onClick={() => {
                         if (suggestions) {
                             toggleSuggestions()
                         }
-                        toggle2()
+                        toggleCollapse()
                     }}>Favorites</Button>
 
                     <Button
-                    className="owner-buttons"
-                    color="success"
-                    outline
-                    onClick={()=>{
-                        if (collapse) {
-                            toggle2()
-                        }
-                        toggleSuggestions()
-                    }}>
+                        className="owner-buttons"
+                        color="success"
+                        outline
+                        onClick={() => {
+                            if (collapse) {
+                                toggleCollapse()
+                            }
+                            toggleSuggestions()
+                        }}>
                         Suggestions
                         {
                             newUnreadSuggestions?.length > 0
-                            ? <div>({newUnreadSuggestions.length} New)</div>
-                            : ""
+                                ? <div>({newUnreadSuggestions.length} New)</div>
+                                : ""
                         }
                     </Button>
-
                 </div>
+
                 <div>
                     <Collapse animation="false" isOpen={collapse}>
                         <ul className="favorites card">
-
                             <div className="profile-container"><Favorites userId={userId} /></div>
                         </ul>
                     </Collapse>
 
                     <Collapse animation="false" isOpen={suggestions}>
                         <ul className="suggestions">
-
-                            <div className="suggestion--messages"><Messages updateReadStateChange={updateReadStateChange} /></div>
+                            <div className="suggestion--messages"><Suggestions key={readStateChange} updateReadStateChange={updateReadStateChange} /></div>
                         </ul>
                     </Collapse>
-
                 </div>
-
-
             </div>
 
             <div className="owner-trucks">
@@ -142,12 +123,11 @@ export const Owner = ({ userId }) => {
                         user.truckOwners?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
                             return <li key={truckOwner.id}>
-                                <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} userId={userId} />
+                                <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} userId={userId} updateReadStateChange={updateReadStateChange} />
 
                             </li>
                         })
                     }
-
                 </ul>
             </div>
         </>

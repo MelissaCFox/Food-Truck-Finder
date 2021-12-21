@@ -4,7 +4,6 @@ import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { TruckCard } from "../trucks/TruckCard"
 
 
-
 export const NeighborhoodSchedule = ({ neighborhoodId, dayId }) => {
     const [neighborhoodTrucks, setNeighborhoodTrucks] = useState([])
 

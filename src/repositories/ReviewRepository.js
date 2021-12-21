@@ -77,7 +77,6 @@ const ReviewRepository = {
                             }
                             averageRating = totalRating / bigTruck.userTruckReviews.length
                         }
-
                         const updatedTruck = {
                             id: bigTruck.id,
                             name: bigTruck.name,
@@ -95,13 +94,6 @@ const ReviewRepository = {
                     })
             })
     },
-
-
-
-
-
-
-
 }
 
 export default ReviewRepository

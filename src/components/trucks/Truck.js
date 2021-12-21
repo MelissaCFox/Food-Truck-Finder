@@ -29,7 +29,7 @@ import { SuggestionForm } from "./SuggestionForm"
 
 
 
-export const Truck = ({ truckID, setUser, userId }) => {
+export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const [truck, setTruck] = useState({})
     const { truckId } = useParams()
     const [neighborhoods, setNeighborhoods] = useState([])
@@ -37,21 +37,18 @@ export const Truck = ({ truckID, setUser, userId }) => {
     const { getCurrentUser } = useSimpleAuth()
     const [favorites, setFavorites] = useState([])
     const [existingLike, setExistingLike] = useState(false)
-    const [days, setDays] = useState([])
+    const [days, setDays] = useState([])  
+    const [userRating, updateUserRating] = useState("")
+    const [basicTruck, setBasicTruck] = useState({})
+    
     const [editModal, setEditModal] = useState(false)
     const editToggle = () => setEditModal(!editModal)
-    const [basicTruck, setBasicTruck] = useState({})
-
-    const [userRating, updateUserRating] = useState("")
     const [newRating, toggleNewRating] = useState(false)
     const alertNewRating = () => toggleNewRating(!newRating)
-
     const [modal, setModal] = useState(false)
     const toggle = () => setModal(!modal)
     const [confirm, setConfirm] = useState(false)
     const toggle3 = () => setConfirm(!confirm)
-    const [truckToRetire, setTruckToRetire] = useState({})
-
     const [suggestion, setSuggestion] = useState(false)
     const suggestionToggle = () => setSuggestion(!suggestion)
 
@@ -61,13 +58,11 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
     }, [])
 
-
     useEffect(() => {
         if (truckID) {
             TruckRepository.getBasic(truckID).then(setBasicTruck)
         }
     }, [truckID, userRating, newRating])
-
 
     useEffect(() => {
         TruckLocationRepository.getAllDays().then(setDays)
@@ -101,7 +96,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
         truckId
             ? TruckRepository.get(truckId).then(setTruck)
             : TruckRepository.get(truckID).then(setTruck)
-
     }, [truckId, truckID, userRating, newRating])
 
     const createNewLocation = (truckId, neighborhoodId, dayId) => {
@@ -159,9 +153,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
         }
     }
 
-
-
-
     let truckPrice = "$"
     if (truck.dollars === 2) {
         truckPrice = "$ $"
@@ -209,17 +200,13 @@ export const Truck = ({ truckID, setUser, userId }) => {
         } else if (starRating === 0) {
             starRating = NoRating
         }
-
         updateUserRating(starRating)
-
     }, [truck, newRating])
 
 
     return (
             <div className="truck__page-card">
-
                 <div className="truck__info">
-
                     <div className="truck__heading">
                         <div className="truck__favorite">
                             {
@@ -295,20 +282,16 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                                             </ModalBody>
                                             <ModalFooter>
-
-
                                                 <Button type="retire"
                                                     color="danger"
                                                     value={truck.id}
                                                     onClick={() => {
-                                                        setTruckToRetire(truck)
+
                                                         toggle3()
                                                     }}
                                                     className="btn btn-primary">
                                                     Retire Truck
                                                 </Button>
-
-
                                                 <Button onClick={() => updateTruck()}>
                                                     Save Changes
                                                 </Button>
@@ -318,19 +301,14 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                             </ModalFooter>
                                         </Modal>
 
-                                        <Modal
-                                            isOpen={confirm}
-                                            centered
-                                            fullscreen="sm"
-                                            size="sm"
-                                            toggle={toggle}
-                                        >
+                                        <Modal isOpen={confirm} centered fullscreen="sm" size="sm" toggle={toggle} >
                                             <ModalHeader toggle={toggle3}>
-                                                Are You Sure You Want to Retire {truckToRetire.name}?
+                                                Are You Sure You Want to Retire {basicTruck.name}?
                                             </ModalHeader>
                                             <ModalBody>
                                                 <Button color="danger" onClick={() => {
-                                                    TruckRepository.delete(truckToRetire.id).then(() => {
+                                                    TruckRepository.delete(basicTruck.id).then(() => {
+                                                        updateReadStateChange()
                                                         UserRepository.get(userId).then(setUser)
                                                             .then(() => {
                                                                 toggle3()
@@ -344,9 +322,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                                     Cancel
                                                 </Button>
                                             </ModalBody>
-
                                         </Modal>
-
                                     </>
                             }
                         </div>
@@ -362,7 +338,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
                             <div className="truck__description">
                                 <div className="truck__info--description">{truck.description}</div>
-
                                 <div className="truck__info--typeTags">
                                     {
                                         truck?.truckFoodTypes?.map(
@@ -373,9 +348,7 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                                 return <div className="typeTag" key={type.id}>{foundType?.type}</div>
                                             })
                                     }
-
                                 </div>
-
                                 <div className="truck__info--dollars">{truckPrice}</div>
                                 <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} reviews)</div>
 
@@ -387,9 +360,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
                             </div>
                         </div>
 
-
-
-
                         <div className="truck__currentLocation">
                             {
                                 currentNeighborhood
@@ -397,7 +367,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                     : <><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div></div></>
 
                             }
-
                             {
                                 truckId
                                     ? <><div className="suggestion-label">Know A Good Spot For Us To Visit?</div>
@@ -418,15 +387,12 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                         </Modal></>
                                     : ""
                             }
-
                         </div>
                     </div>
-
                 </div>
                 <div className="truck__schedule-card">
                     <h3 className="schedule-heading">Current Schedule</h3>
                     <div className="truck-schedule-card">
-
                         {
                             days.map(day => {
                                 return <div key={day.id} className="card schedule-card">
@@ -443,8 +409,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
                                 </div>
                             })
                         }
-
-
                     </div>
                 </div>
 

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter } from "reactstrap"
 import SuggestionRepository from "../../repositories/SuggestionsRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
@@ -36,7 +36,6 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
 
     return (
         <Form>
-
             <FormGroup>
                 <Label for="suggestion-message">Where</Label>
                 <Input required type="select" name="neighborhood" id="suggestion-neighborhoodId"
@@ -75,17 +74,9 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
 
             <Button onClick={(event) => {
                 submitSuggestion(event)
-
             }}>Submit Suggestion</Button>
 
-            < Modal
-                isOpen={formCheck}
-                centered
-                fullscreen="sm"
-                size="sm"
-                toggle={toggleFormCheck}
-            >
-
+            < Modal isOpen={formCheck} centered fullscreen="sm" size="sm" toggle={toggleFormCheck} >
                 <ModalBody>
                     Please Fill Out All Fields
                     <ModalFooter>
@@ -94,11 +85,8 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                         </Button>
                     </ModalFooter>
                 </ModalBody>
-
-            </Modal >
+            </Modal>
 
         </Form>
-
     )
-
 }

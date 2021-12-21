@@ -6,9 +6,7 @@ import { TruckCard } from "../trucks/TruckCard"
 export const SearchResults = () => {
     const location = useLocation()
 
-
     const displayTrucks = () => {
-
         if (location.state?.trucks.length > 0) {
             return (
                 <>
@@ -31,7 +29,6 @@ export const SearchResults = () => {
     }
 
     const displayNeighborhoods = () => {
-
         if (location.state?.neighborhoods.length > 0) {
             return (
                 <>

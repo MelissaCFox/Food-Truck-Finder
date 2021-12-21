@@ -81,14 +81,11 @@ export const TruckCard = ({ truckId }) => {
         } else if (starRating === 0) {
             starRating = NoRating
         }
-
         updateUserRating(starRating)
-
     },[truck, truckId])
 
 
     return (
-
         <div className="card ">
             <div className="truck-card-body ">
                 <button onClick={() => { history.push(`/trucks/${truck?.id}`) }} className={favorite ? "favorite card-body" : "regular card-body"}>
@@ -101,5 +98,4 @@ export const TruckCard = ({ truckId }) => {
             </div>
         </div>
     )
-
 }
