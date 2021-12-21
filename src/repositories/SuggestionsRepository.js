@@ -16,11 +16,11 @@ const SuggestionRepository = {
     },
 
     async getAllForTruck(truckId) {
-        return await fetchIt(`${Settings.remoteURL}/suggestions?truck=${truckId}&_expand=user&_expand=truck&_expand=neighborhood`)
+        return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&_expand=user&_expand=truck&_expand=neighborhood`)
     },
 
     async getAllUnreadForTruck(truckId) {
-        return await fetchIt(`${Settings.remoteURL}/suggestions?truck=${truckId}&_expand=user&_expand=truck&_expand=neighborhood&read=false`)
+        return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&_expand=user&_expand=truck&_expand=neighborhood&read=false`)
     },
 
     async delete(id) {

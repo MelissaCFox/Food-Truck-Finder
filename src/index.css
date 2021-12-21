@@ -126,6 +126,11 @@ dialog {
   width: 30rem;
 }
 
+.noMessages {
+  text-align: center;
+  padding-top: 2.5rem;
+}
+
 .suggestion-truck {
   border-bottom: solid #2D4263;
   font-weight: bold;

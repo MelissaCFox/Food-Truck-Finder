@@ -7,6 +7,7 @@ import { Truck } from "../trucks/Truck"
 import { TruckForm } from "./TruckForm"
 import { Favorites } from "./Favorites"
 import { Messages } from "./Messages"
+import SuggestionRepository from "../../repositories/SuggestionsRepository"
 
 export const Owner = ({ userId }) => {
     const [user, setUser] = useState({})
@@ -17,6 +18,36 @@ export const Owner = ({ userId }) => {
     const toggle2 = () => setCollapse(!collapse)
     const [suggestions, setSuggestions] = useState(false)
     const toggleSuggestions = () => setSuggestions(!suggestions)
+
+    const [newUnreadSuggestions, setUnreadSuggestions] = useState([])
+    const [readStateChange, setReadStateChange] = useState(false)
+    const updateReadStateChange = () => setReadStateChange(!readStateChange)
+
+    useEffect(() => {
+        TruckRepository.getAll()
+            .then((trucks) => {
+                const truckFetchArray = []
+                const allTruckSuggestions = []
+                const ownedTrucks = trucks.filter((truck) => {
+                  const foundOwner = truck.truckOwners.find(owner => owner.userId === userId)
+                  if (foundOwner) {
+                      return truck
+                  } else return false
+                })
+                for (const truckObj of ownedTrucks) {
+                    
+                    truckFetchArray.push(SuggestionRepository.getAllUnreadForTruck(truckObj.id).then((response) => {
+                        response.forEach(suggestion => {
+                            allTruckSuggestions.push(suggestion)      
+                        });
+                    })) 
+                }
+                Promise.all(truckFetchArray)
+                .then(() => {
+                    setUnreadSuggestions(allTruckSuggestions)
+                })      
+            })
+    },[readStateChange])
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
@@ -33,6 +64,7 @@ export const Owner = ({ userId }) => {
 
                 <div className="buttons">
                     <Button
+                    className="owner-buttons"
                         color="success"
                         outline
                         onClick={toggle}
@@ -58,7 +90,7 @@ export const Owner = ({ userId }) => {
                         </ModalFooter>
                     </Modal>
 
-                    <Button color="success" outline onClick={()=> {
+                    <Button color="success" className="owner-buttons" outline onClick={()=> {
                         if (suggestions) {
                             toggleSuggestions()
                         }
@@ -66,6 +98,7 @@ export const Owner = ({ userId }) => {
                     }}>Favorites</Button>
 
                     <Button
+                    className="owner-buttons"
                     color="success"
                     outline
                     onClick={()=>{
@@ -75,6 +108,11 @@ export const Owner = ({ userId }) => {
                         toggleSuggestions()
                     }}>
                         Suggestions
+                        {
+                            newUnreadSuggestions?.length > 0
+                            ? <div>({newUnreadSuggestions.length} New)</div>
+                            : ""
+                        }
                     </Button>
 
                 </div>
@@ -89,7 +127,7 @@ export const Owner = ({ userId }) => {
                     <Collapse animation="false" isOpen={suggestions}>
                         <ul className="suggestions">
 
-                            <div className="suggestion--messages"><Messages /></div>
+                            <div className="suggestion--messages"><Messages updateReadStateChange={updateReadStateChange} /></div>
                         </ul>
                     </Collapse>
 

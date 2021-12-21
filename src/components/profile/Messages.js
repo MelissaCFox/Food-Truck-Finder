@@ -6,7 +6,7 @@ import SuggestionRepository from "../../repositories/SuggestionsRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Messages = () => {
+export const Messages = ({updateReadStateChange}) => {
     const { getCurrentUser } = useSimpleAuth()
     const [unreadSuggestions, setUnreadSuggestions] = useState([])
 
@@ -19,14 +19,15 @@ export const Messages = () => {
 
 
     useEffect(() => {
-        const foundTruck = UserRepository.getAllTruckOwners()
+        UserRepository.getAllTruckOwners()
             .then((res) => {
-                res.find(truckOwner => truckOwner.userId === getCurrentUser().id)
-                if (foundTruck) {
+                const foundTruckOwner = res.find(truckOwner => truckOwner.userId === getCurrentUser().id)
+              
+                if (foundTruckOwner) {
                     if (messageList === "all") {
-                        SuggestionRepository.getAllForTruck(foundTruck.id).then(setSuggestions)
+                        SuggestionRepository.getAllForTruck(foundTruckOwner.truckId).then(setSuggestions)
                     } else {
-                        SuggestionRepository.getAllUnreadForTruck(foundTruck.id).then(setSuggestions)
+                        SuggestionRepository.getAllUnreadForTruck(foundTruckOwner.truckId).then(setSuggestions)
                     }
 
                 } else return false
@@ -34,11 +35,11 @@ export const Messages = () => {
     }, [messageList, readStateChange])
 
     useEffect(() => {
-        const foundTruck = UserRepository.getAllTruckOwners()
+        UserRepository.getAllTruckOwners()
             .then((res) => {
-                res.find(truckOwner => truckOwner.userId === getCurrentUser().id)
-                if (foundTruck) {
-                    SuggestionRepository.getAllUnreadForTruck(foundTruck.id).then(setUnreadSuggestions)
+                const foundTruckOwner = res.find(truckOwner => truckOwner.userId === getCurrentUser().id)
+                if (foundTruckOwner) {
+                    SuggestionRepository.getAllUnreadForTruck(foundTruckOwner.id).then(setUnreadSuggestions)
                 } else return false
             })
     }, [readStateChange, suggestions])
@@ -50,12 +51,19 @@ export const Messages = () => {
                     let updatedSuggestion = { ...res }
                     updatedSuggestion.read = true
                     SuggestionRepository.update(suggestion.id, updatedSuggestion)
-                        .then(triggerReadStateChange)
+                        .then(() => {
+                            updateReadStateChange()
+                            triggerReadStateChange()
+                        })
+
                 } else {
                     let updatedSuggestion = { ...res }
                     updatedSuggestion.read = false
                     SuggestionRepository.update(suggestion.id, updatedSuggestion)
-                        .then(triggerReadStateChange)
+                        .then(() => {
+                            updateReadStateChange()
+                            triggerReadStateChange()
+                        })
                 }
             })
     }
@@ -63,12 +71,14 @@ export const Messages = () => {
     return (
         <div className="userSuggestions">
             <div className="messageList--options">
-                <Button className="messageList--option-btn" onClick={() => { setMessageList("unread") }}>Unread Suggestions ({unreadSuggestions.length})</Button>
-                <Button className="messageList--option-btn" onClick={() => { setMessageList("all") }}>All Suggestions</Button>
+                <Button className="messageList--option-btn" onClick={() => { setMessageList("unread") }}>Unread Suggestions ({unreadSuggestions.length}) {messageList === "unread" ? "-->" : ""} </Button>
+                <Button className="messageList--option-btn" onClick={() => { setMessageList("all") }}>All Suggestions {messageList === "all" ? "-->" : ""}</Button>
             </div>
             <div className="messagesList">
                 {
-                    suggestions.map(suggestion => {
+                    suggestions.length > 0 
+
+                    ? suggestions.map(suggestion => {
                         return <div key={suggestion.id} className="suggestion">
                             <div >
                                 <div className="suggestion-truck">{suggestion.truck.name}</div>
@@ -81,6 +91,7 @@ export const Messages = () => {
                             <Button className="suggestion-btn" onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
                         </div>
                     })
+                    : <div className="suggestion"><div className="noMessages">No suggestions</div></div>
                 }
 
             </div>

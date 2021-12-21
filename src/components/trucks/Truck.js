@@ -216,7 +216,6 @@ export const Truck = ({ truckID, setUser, userId }) => {
 
 
     return (
-        <>
             <div className="truck__page-card">
 
                 <div className="truck__info">
@@ -424,58 +423,50 @@ export const Truck = ({ truckID, setUser, userId }) => {
                     </div>
 
                 </div>
-            </div>
+                <div className="truck__schedule-card">
+                    <h3 className="schedule-heading">Current Schedule</h3>
+                    <div className="truck-schedule-card">
 
-
-            <div className="truck__schedule-card">
-                <h3 className="schedule-heading">Current Schedule</h3>
-                <div className="truck-schedule-card">
-
-                    {
-                        days.map(day => {
-                            return <div key={day.id} className="card schedule-card">
-                                <div key={`day--${day.id}`} className="day__name">{day.day}</div>
-                                <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
-                                    dayId={day.id}
-                                    truckId={truck.id}
-                                    truckPage={truckId}
-                                    createNewLocation={createNewLocation}
-                                    truckLocations={truckLocations}
-                                    setTruckLocations={setTruckLocations}
-                                    neighborhoods={neighborhoods}
-                                />
-                            </div>
-                        })
-                    }
-
-
-                </div>
-            </div>
-
-            <div className="truck-reviews-section">
-                <div className="truck-reviews-heading"><h3 className="schedule-heading">Customer Reviews</h3></div>
-                <div className="truck__reviews card">
-                    <div className="review-list reviews">
                         {
-                            truck?.userTruckReviews?.length > 0
-                                ? truck?.userTruckReviews?.map(review => {
-                                    return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
-                                })
-                                : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
+                            days.map(day => {
+                                return <div key={day.id} className="card schedule-card">
+                                    <div key={`day--${day.id}`} className="day__name">{day.day}</div>
+                                    <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
+                                        dayId={day.id}
+                                        truckId={truck.id}
+                                        truckPage={truckId}
+                                        createNewLocation={createNewLocation}
+                                        truckLocations={truckLocations}
+                                        setTruckLocations={setTruckLocations}
+                                        neighborhoods={neighborhoods}
+                                    />
+                                </div>
+                            })
+                        }
+
+
+                    </div>
+                </div>
+
+                <div className="truck-reviews-section">
+                    <div className="truck-reviews-heading"><h3 className="schedule-heading">Customer Reviews</h3></div>
+                    <div className="truck__reviews card">
+                        <div className="review-list reviews">
+                            {
+                                truck?.userTruckReviews?.length > 0
+                                    ? truck?.userTruckReviews?.map(review => {
+                                        return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
+                                    })
+                                    : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
+                            }
+                        </div>
+                        {
+                            getCurrentUser().owner
+                                ? ""
+                                : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} alertNewRating={alertNewRating} /></div>
                         }
                     </div>
-
-                    {
-                        getCurrentUser().owner
-                            ? ""
-                            : <div className="review-form"><ReviewForm truckId={truckId} setTruck={setTruck} alertNewRating={alertNewRating} /></div>
-                    }
-
-
                 </div>
             </div>
-
-        </>
     )
-
 }

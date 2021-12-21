@@ -36,7 +36,6 @@ export const ApplicationViews = () => {
 
         <Route path="/profile">
             <Profile />
-            <Messages />
         </Route>
 
         <Route path="/search">
