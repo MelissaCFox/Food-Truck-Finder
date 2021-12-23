@@ -11,6 +11,11 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
     const [neighborhoods, setNeighborhoods] = useState([])
     const [formCheck, setFormCheck] = useState(false)
     const toggleFormCheck = () => setFormCheck(!formCheck)
+    const toggleContact = () => {
+        let copy = {...suggestion}
+        copy.includeContact = !copy.includeContact
+        setSuggestion(copy)
+    }
 
     useEffect(() => {
         NeighborhoodRepository.getAll().then(setNeighborhoods)
@@ -22,7 +27,9 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
         neighborhoodId: 0,
         date: "",
         message: "",
-        read: false
+        read: false,
+        includeContact: false
+
     })
 
     const submitSuggestion = (event) => {
@@ -70,6 +77,14 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                         copy.message = e.target.value
                         setSuggestion(copy)
                     }} />
+            </FormGroup>
+
+            <FormGroup inline-block>
+                
+                <Label check>   
+                <Input type="checkbox" className="contact-checkbox" onChange={toggleContact}/>
+                Include Contact Info? 
+                </Label>
             </FormGroup>
 
             <Button onClick={(event) => {

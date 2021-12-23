@@ -7,6 +7,14 @@ body {
   background-color: #191919;
 }
 
+.contact-checkbox {
+  margin-right: 0.5rem;
+}
+
+.contactEmail{
+  color:#ECDBBA;
+}
+
 .cancel-btn {
   margin-left: 1rem;
 }

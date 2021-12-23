@@ -6,7 +6,7 @@ import SuggestionRepository from "../../repositories/SuggestionsRepository"
 import UserRepository from "../../repositories/UserRepository"
 
 
-export const Suggestions = ({updateReadStateChange}) => {
+export const Suggestions = ({ updateReadStateChange }) => {
     const { getCurrentUser } = useSimpleAuth()
     const [unreadSuggestions, setUnreadSuggestions] = useState([])
 
@@ -22,7 +22,7 @@ export const Suggestions = ({updateReadStateChange}) => {
         UserRepository.getAllTruckOwners()
             .then((res) => {
                 const foundTruckOwner = res.find(truckOwner => truckOwner.userId === getCurrentUser().id)
-              
+
                 if (foundTruckOwner) {
                     if (messageList === "all") {
                         SuggestionRepository.getAllForTruck(foundTruckOwner.truckId).then(setSuggestions)
@@ -76,22 +76,31 @@ export const Suggestions = ({updateReadStateChange}) => {
             </div>
             <div className="messagesList">
                 {
-                    suggestions.length > 0 
+                    suggestions.length > 0
 
-                    ? suggestions.map(suggestion => {
-                        return <div key={suggestion.id} className="suggestion">
-                            <div >
-                                <div className="suggestion-truck">{suggestion.truck.name}</div>
-                                <div className="suggestion-neighborhood">Where:  {suggestion.neighborhood.name}</div>
-                                <div className="suggestion-date">When:  {suggestion.date}</div>
-                                <div className="suggestion-message">What:  {suggestion.message}</div>
-                                <div className="suggestion-author">~{suggestion.user.name}</div>
+                        ? suggestions.map(suggestion => {
+                            return <div key={suggestion.id} className="suggestion">
+                                <div >
+                                    <div className="suggestion-truck">{suggestion.truck.name}</div>
+                                    <div className="suggestion-neighborhood">Where:  {suggestion.neighborhood.name}</div>
+                                    <div className="suggestion-date">When:  {suggestion.date}</div>
+                                    <div className="suggestion-message">What:  {suggestion.message}</div>
+                                    <div className="suggestion-author">
+                                        <div>~{suggestion.user.name} </div>
+                                        <div>
+                                            {
+                                                suggestion.includeContact === true
+                                                    ? <div><a className="contactEmail" href={`mailto:${suggestion.user.email}`}>Contact User</a></div>
+                                                    : ""
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <Button className="suggestion-btn" onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
+                                <Button className="suggestion-btn" onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
                             </div>
-                            <Button className="suggestion-btn" onClick={() => updateMessage(suggestion)}>Mark Read/Unread</Button>
-                            <Button className="suggestion-btn" onClick={() => SuggestionRepository.delete(suggestion.id).then(triggerReadStateChange)}>Delete</Button>
-                        </div>
-                    })
-                    : <div className="suggestion"><div className="noMessages">No suggestions</div></div>
+                        })
+                        : <div className="suggestion"><div className="noMessages">No suggestions</div></div>
                 }
 
             </div>
