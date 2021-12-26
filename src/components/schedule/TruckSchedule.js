@@ -5,11 +5,9 @@ import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import '../trucks/TruckList.css';
 
 
-export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods }) => {
+export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods, newLocation }) => {
     const [truckNeighborhoods, setTruckNeighborhoods] = useState([])
     const [truckNeighborhood, setTruckNeighborhood] = useState({})
-    const [newLocation, setNewLocation] = useState(false)
-    const changeLocation = () => setNewLocation(!newLocation)
 
     useEffect(() => {
         if (truckId) {
@@ -47,7 +45,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             id="locationId"
                                             onChange={e => {
                                                 createNewLocation(truckId, e.target.value, dayId)
-                                                changeLocation()                                            }}
+                                            }}
                                             className="form-control"
                                         >
                                             <option value="">--Change Location--</option>

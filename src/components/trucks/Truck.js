@@ -40,6 +40,9 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const [days, setDays] = useState([])  
     const [userRating, updateUserRating] = useState("")
     const [basicTruck, setBasicTruck] = useState({})
+
+    const [newLocation, setNewLocation] = useState(false)
+    const changeLocation = () => setNewLocation(!newLocation)
     
     const [editModal, setEditModal] = useState(false)
     const editToggle = () => setEditModal(!editModal)
@@ -114,7 +117,10 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
         } else if (neighborhoodId) {
             TruckLocationRepository.add(newTruckLocation).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
         }
-        TruckRepository.get(truckID).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then(setTruckLocations) })
+        TruckRepository.get(truckID).then(() => { TruckLocationRepository.getTruckLocationsByTruck(truckID).then((res) => {
+            setTruckLocations(res)
+            changeLocation()
+        }) })
     }
 
 
@@ -405,6 +411,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                         truckLocations={truckLocations}
                                         setTruckLocations={setTruckLocations}
                                         neighborhoods={neighborhoods}
+                                        newLocation= {newLocation}
                                     />
                                 </div>
                             })
