@@ -12,10 +12,14 @@
 }
 
 .neighborhood-label {
-    text-align: center;
-    background-color: #406882;
-    color: #ECDBBA;
+  text-align: center;
+  background-color: #ECDBBA;
+  color: #2D4263;
+  padding-top: 0.5rem;
+}
 
+.schedule-card-full {
+  border: 1px solid #2D4263;
 }
 
 .trucks {

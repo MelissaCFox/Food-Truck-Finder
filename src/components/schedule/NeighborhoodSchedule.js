@@ -17,10 +17,13 @@ export const NeighborhoodSchedule = ({ neighborhoodId, dayId }) => {
         <>
             {
                 neighborhoodTrucks.length > 0
-                    ? neighborhoodTrucks.map(location => <li className="card truck" key={`${neighborhoodId}--${dayId}--${location.id}`}><TruckCard key={location.id} truckId={location.truckId} /></li>)
-                    : <li className="card truck">
-                        <div className="truck-card"><div className="truck card"><div className="card-body">No Trucks Today</div></div></div>
-                    </li>
+                    ? neighborhoodTrucks.map(location => <div className="schedule-card-body" key={`${neighborhoodId}--${dayId}--${location.id}`}>
+                            <TruckCard key={location.id} truckId={location.truckId} />
+                        </div>
+                    )
+                    : <div className="schedule-card">
+                        <div className="truck-card"><div className="truck card"><div className="card noTrucksCard">No Trucks Today</div></div></div>
+                    </div>
             }
         </>
     )

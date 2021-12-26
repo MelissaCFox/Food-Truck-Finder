@@ -29,14 +29,14 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                 truckId
                     ? truckPage
                         ? truckNeighborhood
-                            ? <NeighborhoodCard key={truckNeighborhood.id} neighborhoodId={truckNeighborhood.id} />
-                            : <div className="card-body">Off Today</div>
+                            ? <div className="schedule-card" ><NeighborhoodCard key={truckNeighborhood.id} thisNeighborhood={truckNeighborhood} /></div>
+                            : <div className="schedule-card" ><div className="neighborhood-card"><div className="neighborhood-card-body">Off Today</div></div></div>
 
                         : truckNeighborhood
                             ? (
-                                <>
+                                <div className="schedule-card" >
                                     <div className="neighborhood-label">{truckNeighborhood.name}</div>
-                                    <NeighborhoodCard key={`Profile--${truckId}--${dayId}`} neighborhoodId={truckNeighborhood.id} />
+                                    <NeighborhoodCard key={`Profile--${truckId}--${dayId}`} thisNeighborhood={truckNeighborhood} />
                                     <div className="form-group">
                                         <select
                                             key={truckNeighborhood.id}
@@ -58,10 +58,13 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             }
                                         </select>
                                     </div>
-                                </>
+                                </div>
                             )
 
-                            : <><div className="neighborhood-card"><div className="card-body">Off Today</div></div>
+                            : <div className="schedule-card">
+                                <div className="neighborhood-label">N/A</div>
+                                <div className="neighborhood-card"><div className="neighborhood-card-body">Off Today</div></div>
+
                                 <div className="form-group">
                                     <select
                                         key={dayId}
@@ -82,7 +85,8 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             })
                                         }
                                     </select>
-                                </div></>
+                                </div>
+                            </div>
 
                     : ""
             }

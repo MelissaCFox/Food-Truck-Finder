@@ -363,14 +363,14 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                         <div className="truck__currentLocation">
                             {
                                 currentNeighborhood
-                                    ? <><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard neighborhoodId={currentNeighborhood.id} /></div></>
+                                    ? <><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard thisNeighborhood={currentNeighborhood} /></div></>
                                     : <><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div></div></>
 
                             }
                             {
                                 truckId
-                                    ? <><div className="suggestion-label">Know A Good Spot For Us To Visit?</div>
-                                        <div className="suggestion-form"><Button onClick={suggestionToggle}>Submit A Suggestion</Button></div>
+                                    ? <><div className="suggestion-label truck-location-heading">Know A Good Spot For Us To Visit?</div>
+                                        <div className="suggestion-form-btn"><Button onClick={suggestionToggle}>Submit A Suggestion</Button></div>
                                         <Modal animation="false"
                                             isOpen={suggestion}
                                             centered
@@ -395,8 +395,8 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                     <div className="truck-schedule-card">
                         {
                             days.map(day => {
-                                return <div key={day.id} className="card schedule-card">
-                                    <div key={`day--${day.id}`} className="day__name">{day.day}</div>
+                                return <div key={day.id} className="schedule-card-full">
+                                    <div className="day__name">{day.day}</div>
                                     <TruckSchedule key={`truck--${truck.id}--schedule--${day.id}`}
                                         dayId={day.id}
                                         truckId={truck.id}

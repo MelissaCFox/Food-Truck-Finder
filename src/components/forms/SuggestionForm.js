@@ -63,7 +63,7 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                 <Input required type="date" name="date" id="suggestion-date"
                     onChange={(e) => {
                         const copy = { ...suggestion }
-                        copy.date = e.target.value
+                        copy.date = new Date(Date.parse(e.target.value)).toLocaleDateString()
                         setSuggestion(copy)
                     }} />
             </FormGroup>
@@ -79,7 +79,7 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                     }} />
             </FormGroup>
 
-            <FormGroup inline-block>
+            <FormGroup inline-block="true">
                 
                 <Label check>   
                 <Input type="checkbox" className="contact-checkbox" onChange={toggleContact}/>

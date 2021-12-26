@@ -47,6 +47,7 @@ export const NeighborhoodTruckList = () => {
     }, [])
 
 
+
     return (
         <>
             <div className="options">
@@ -98,7 +99,7 @@ export const NeighborhoodTruckList = () => {
                     neighborhoods.map(neighborhood => {
                         return <li className="card neighborhood" key={neighborhood.id}>
                             <button className="neighborhoodName" onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}><h3 className="neighborhood-name">{neighborhood.name}</h3></button>
-                            <TruckList key={`neighborhood--${neighborhood.id}`} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
+                            <TruckList key={neighborhood.id} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
 
                         </li>
                     })

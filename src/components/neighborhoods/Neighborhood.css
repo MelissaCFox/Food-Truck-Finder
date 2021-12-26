@@ -1,9 +1,12 @@
 .neighborhood {
     background-color: #2D4263;
     margin: 2rem;
-    padding: 1rem;
 }
 
+.neighborhood-page-card {
+    margin: 0 ;
+
+}
 
 .neighborhood__id {
     display: flex;
@@ -12,9 +15,25 @@
     background-color: #2D4263;
 }
 
+.neighborhood__info {
+    flex: 5;
+}
+
+.neighborhood__currentTrucks {
+    flex: 3;
+}
+
+.feature-heading {
+    margin: 0;
+    background-color: #406882;
+    color: #ECDBBA;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+}
+
 .neighborhood__image {
-    height: 15rem;
-    width: 15rem;
+    height: 20rem;
+    width: 20rem;
 }
 
 .neighborhood__name {
@@ -38,7 +57,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content:center;
     padding-top: 1rem;
 }
 

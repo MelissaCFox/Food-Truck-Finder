@@ -17,30 +17,40 @@ import NoRating from './images/NoRating.png';
 
 
 
-export const TruckCard = ({ truckId }) => {
+export const TruckCard = ({ thisTruck, truckId, newInfo }) => {
     const history = useHistory()
     const [truck, setTruck] = useState({})
     const [favorites, setFavorites] = useState([])
     const { getCurrentUser } = useSimpleAuth()
 
     const [userRating, updateUserRating] = useState("")
+    const [truckDollarsString, setTruckDollarsString] = useState("")
 
     useEffect(() => {
-        TruckRepository.get(truckId).then(setTruck)
-    }, [truckId])
+        if (thisTruck) {
+            setTruck(thisTruck)
+        } else if (truckId) {
+            TruckRepository.get(truckId).then(setTruck)
+        } else return false
+    }, [thisTruck, truckId, newInfo])
 
     useEffect(() => {
         UserTruckFavoriteRepository.getAll().then(setFavorites)
-    }, [truckId])
+    }, [thisTruck])
 
     const favorite = favorites.find(fav => fav.userId === getCurrentUser().id && fav.truckId === truck?.id)
 
-    let truckPrice = "$"
-    if (truck.dollars === 2) {
-        truckPrice = "$ $"
-    } else if (truck.dollars === 3) {
-        truckPrice = "$ $ $"
-    }
+    useEffect(() => {
+        let truckPrice = "$"
+        if (truck.dollars === 2) {
+            truckPrice = "$ $"
+        } else if (truck.dollars === 3) {
+            truckPrice = "$ $ $"
+        }
+        setTruckDollarsString(truckPrice)
+
+    },[truck, truckId])
+
 
     useEffect(() => {
         let starRating = truck?.userRating
@@ -82,7 +92,7 @@ export const TruckCard = ({ truckId }) => {
             starRating = NoRating
         }
         updateUserRating(starRating)
-    },[truck, truckId])
+    },[truck, thisTruck, newInfo])
 
 
     return (
@@ -92,7 +102,7 @@ export const TruckCard = ({ truckId }) => {
                     <img className="truck-logo" src={truck?.profileImgSrc} alt={`${truck?.name} logo`} />
                 </button>
                 <div className="mini-info">
-                    <div className="mini-info truck-price">{truckPrice}</div>
+                    <div className="mini-info truck-price">{truckDollarsString}</div>
                     <div className="mini-info truck-rating"><img className="mini-info userStar" alt="user rating star" src={userRating} /></div>
                 </div>
             </div>

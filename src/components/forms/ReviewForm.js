@@ -12,7 +12,7 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating }) => {
     const { getCurrentUser } = useSimpleAuth()
     const [anonymousState, setAnonymous] = useState(false)
     const toggleAnonymous = () => setAnonymous(!anonymousState)
-    const [rating, setRating] = useState(0)
+    const [rating, setRating] = useState(1)
 
 
     const submitReview = (event) => {
@@ -21,10 +21,13 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating }) => {
             userId: getCurrentUser().id,
             truckId: parseInt(truckId),
             review: review,
-            date: date,
+            date: new Date(Date.parse(date)).toLocaleDateString(),
             anonymous: anonymousState,
             rating: rating
         }
+
+        
+
         if (review && date) {
             ReviewRepository.addAndUpdate(reviewObj)
                 .then(() => {

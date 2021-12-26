@@ -35,7 +35,7 @@ export const SearchResults = () => {
                     <div className="card">
                         <ul className="trucks search-results">
                             {
-                                location.state.neighborhoods.map(neighborhood => <li className="card neighborhood" key={neighborhood.id}><NeighborhoodCard key={neighborhood.id} neighborhoodId={neighborhood.id} /></li>)
+                                location.state.neighborhoods.map(neighborhood => <li className="card neighborhood" key={neighborhood.id}><NeighborhoodCard key={neighborhood.id} thisNeighborhood={neighborhood} /></li>)
                             }
                         </ul>
                     </div>

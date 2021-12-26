@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react"
-import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 import { TruckCard } from "../trucks/TruckCard"
 
 
 export const Favorites = ({ userId, newInfo }) => {
     const [user, setUser] = useState({})
-    const [allTrucks, setAllTrucks] = useState([])
 
     useEffect(() => {
-        if (userId) {
-            TruckRepository.getAll().then(setAllTrucks)
-        }
-    }, [userId, newInfo])
-
-    useEffect(() => {
-        if (userId) {
+        if (userId && newInfo) {
+            UserRepository.get(userId).then(setUser)
+        } else if (userId && newInfo === false) {
             UserRepository.get(userId).then(setUser)
         }
     }, [userId, newInfo])
@@ -26,12 +20,9 @@ export const Favorites = ({ userId, newInfo }) => {
             {
                 user.userTruckFavorites?.length > 0
                     ? user.userTruckFavorites?.map(favorite => {
-                        const foundTruck = allTrucks?.find(truck => truck.id === favorite.truckId)
-
                         return <li className="card truck" key={favorite.id}>
-                            <TruckCard key={foundTruck?.id} truckId={foundTruck?.id} />
+                            <TruckCard key={favorite.truckId} truckId={favorite.truckId} newInfo={newInfo} />
                         </li>
-
                     })
                     : <li className="card truck"><div className="card-body">No Favorites Yet</div></li>
             }

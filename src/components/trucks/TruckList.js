@@ -46,60 +46,64 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
 
     useEffect(() => {
         const currentDayId = date.getDay() + 1
-        if (favorites === true && typePref !== 0) {
-            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
-                .then((res) => {
-                    const favoriteLocations = res.filter((location) => {
-                        const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
-                        if (foundFavorite) {
-                            return location
-                        } else return false
+        if (neighborhood) {
+
+            if (favorites === true && typePref !== 0) {
+                TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                    .then((res) => {
+                        const favoriteLocations = res.filter((location) => {
+                            const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
+                            if (foundFavorite) {
+                                return location
+                            } else return false
+                        })
+                        const favoriteTypeLocations = favoriteLocations.filter(location => {
+                            const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
+                            if (foundType) {
+                                return location
+                            } else return false
+                        })
+                        sortPref
+                            ? updateTruckLocations(sortTruckLocations(favoriteTypeLocations))
+                            : updateTruckLocations(favoriteTypeLocations)
                     })
-                    const favoriteTypeLocations = favoriteLocations.filter(location => {
-                        const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
-                        if (foundType) {
-                            return location
-                        } else return false
+            } else if (favorites === true) {
+                TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                    .then((res) => {
+                        const favoriteLocations = res.filter((location) => {
+                            const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
+                            if (foundFavorite) {
+                                return location
+                            } else return false
+                        })
+                        sortPref
+                            ? updateTruckLocations(sortTruckLocations(favoriteLocations))
+                            : updateTruckLocations(favoriteLocations)
                     })
-                    sortPref
-                        ? updateTruckLocations(sortTruckLocations(favoriteTypeLocations))
-                        : updateTruckLocations(favoriteTypeLocations)
-                })
-        } else if (favorites === true) {
-            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
-                .then((res) => {
-                    const favoriteLocations = res.filter((location) => {
-                        const foundFavorite = favoriteTrucks.find(fav => fav.truckId === location.truckId && fav.userId === getCurrentUser().id)
-                        if (foundFavorite) {
-                            return location
-                        } else return false
+            } else if (typePref !== 0) {
+                TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                    .then((res) => {
+                        const TypeLocations = res.filter(location => {
+                            const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
+                            if (foundType) {
+                                return location
+                            } else return false
+                        })
+                        sortPref
+                            ? updateTruckLocations(sortTruckLocations(TypeLocations))
+                            : updateTruckLocations(TypeLocations)
                     })
-                    sortPref
-                        ? updateTruckLocations(sortTruckLocations(favoriteLocations))
-                        : updateTruckLocations(favoriteLocations)
-                })
-        } else if (typePref !== 0) {
-            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
-                .then((res) => {
-                    const TypeLocations = res.filter(location => {
-                        const foundType = truckFoodTypes?.find(truckType => truckType.foodTypeId === typePref && truckType.truckId === location.truckId)
-                        if (foundType) {
-                            return location
-                        } else return false
+            } else if (favorites === false && typePref === 0 && neighborhood.id) {
+                TruckLocationRepository.getTruckLocationsByDay(currentDayId)
+                    .then((res) => {
+                        sortPref
+                            ? updateTruckLocations(sortTruckLocations(res))
+                            : updateTruckLocations(res)
                     })
-                    sortPref
-                        ? updateTruckLocations(sortTruckLocations(TypeLocations))
-                        : updateTruckLocations(TypeLocations)
-                })
-        } else if (favorites === false && typePref === 0) {
-            TruckLocationRepository.getTruckLocationsByDay(currentDayId)
-                .then((res) => {
-                    sortPref
-                        ? updateTruckLocations(sortTruckLocations(res))
-                        : updateTruckLocations(res)
-                })
+            }
+
         }
-    }, [date, favorites, typePref, sortPref])
+    }, [date, favorites, typePref, sortPref, neighborhood])
 
 
     const filteredLocations = truckLocations?.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
@@ -111,9 +115,11 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                     ? filteredLocations?.length > 0
                         ? filteredLocations.map(truckLocation => {
                             const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
-                            return <li className="card truck" key={truckLocation.id}>
-                                <TruckCard truckId={foundTruck?.id} />
-                            </li>
+                            if (foundTruck) {
+                                return <li className="card truck" key={truckLocation.id}>
+                                    <TruckCard thisTruck={foundTruck} />
+                                </li>
+                            } else return false
                         })
                         : <li className="card no-truck" key={neighborhood.id}>
                             {

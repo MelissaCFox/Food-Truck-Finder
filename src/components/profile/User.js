@@ -23,7 +23,6 @@ export const User = ({ userId }) => {
     useEffect(() => {
         if (userId) {
             UserRepository.get(userId).then(setUser)
-
         }
     }, [userId])
 

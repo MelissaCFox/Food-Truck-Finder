@@ -5,6 +5,22 @@
     
 }
 
+.neighborhood-card-body {
+    background-color: #ECDBBA;
+    height: 130px;
+    width: 130px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.noTrucksCard {
+    color: #ECDBBA;
+    text-align: center;
+
+}
+
 .truck-price {
     font-family: "Modak";
     font-size: 1.25rem;
@@ -76,5 +92,6 @@
 .review-rating {
     padding-left: 0.25rem;
 }
+
 
 
