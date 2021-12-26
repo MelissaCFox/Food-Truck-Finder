@@ -8,12 +8,14 @@ import '../trucks/TruckList.css';
 export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods }) => {
     const [truckNeighborhoods, setTruckNeighborhoods] = useState([])
     const [truckNeighborhood, setTruckNeighborhood] = useState({})
+    const [newLocation, setNewLocation] = useState(false)
+    const changeLocation = () => setNewLocation(!newLocation)
 
     useEffect(() => {
         if (truckId) {
             TruckLocationRepository.getTruckLocationsByTruckAndDay(truckId, dayId).then(setTruckNeighborhoods)
         }
-    }, [truckId, dayId])
+    }, [truckId, dayId, newLocation])
 
     useEffect(() => {
         if (truckNeighborhoods && neighborhoods) {
@@ -45,8 +47,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             id="locationId"
                                             onChange={e => {
                                                 createNewLocation(truckId, e.target.value, dayId)
-                                                TruckLocationRepository.getTruckLocationsByTruckAndDay(truckId, dayId).then(setTruckNeighborhoods)
-                                            }}
+                                                changeLocation()                                            }}
                                             className="form-control"
                                         >
                                             <option value="">--Change Location--</option>
