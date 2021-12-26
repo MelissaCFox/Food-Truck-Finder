@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min"
 import { Input} from "reactstrap"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
@@ -18,6 +18,8 @@ export const NeighborhoodTruckList = () => {
     const [foodTypes, setFoodTypes] = useState([])
     const [sortPref, setSortPref] = useState("")
 
+    const location = useLocation()
+
     useEffect(() => {
         FoodTypeRepository.getAll().then(setFoodTypes)
     }, [])
@@ -25,7 +27,7 @@ export const NeighborhoodTruckList = () => {
     useEffect(() => {
         let newDate = new Date()
         setDateForList(newDate)
-    }, [])
+    }, [location])
 
     useEffect(() => {
         let date = new Date(dateForList)

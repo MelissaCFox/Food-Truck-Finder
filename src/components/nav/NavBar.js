@@ -5,16 +5,14 @@ import Settings from "../../repositories/Settings";
 import TruckRepository from "../../repositories/TruckRepository";
 import UserRepository from "../../repositories/UserRepository";
 import FoodTruckFinderLogo from './FoodTruckFinderLogo.png';
-
 import './NavBar.css';
-
-
 
 
 export const NavBar = () => {
     const { isAuthenticated, logout, getCurrentUser } = useSimpleAuth()
     const [currentUser, setCurrentUser] = useState({})
     const history = useHistory()
+    const refresh = true
 
     useEffect(() => {
         UserRepository.get(getCurrentUser().id).then(setCurrentUser)
@@ -57,7 +55,10 @@ export const NavBar = () => {
                     <ul className="navbar-nav mr-auto appLogo">
                         <button onClick={() => {
                             TruckRepository.getAll()
-                                .then(() => history.push(`/trucks`))
+                                .then(() => history.push({
+                                    pathname: `/trucks`,
+                                    state: refresh
+                                }))
                         }}>
                             <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="logo" />
                         </button>
