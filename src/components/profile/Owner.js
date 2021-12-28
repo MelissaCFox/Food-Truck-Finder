@@ -105,7 +105,7 @@ export const Owner = ({ userId }) => {
                 <div>
                     <Collapse animation="false" isOpen={collapse}>
                         <ul className="favorites card">
-                            <div className="profile-container"><Favorites userId={userId} /></div>
+                            <div className="profile-container"><Favorites userId={user.id} /></div>
                         </ul>
                     </Collapse>
 
@@ -122,10 +122,12 @@ export const Owner = ({ userId }) => {
                     {
                         user.truckOwners?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
-                            return <li key={truckOwner.id}>
-                                <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} userId={userId} updateReadStateChange={updateReadStateChange} />
+                            if (foundTruck) {
+                                return <li key={truckOwner?.id}>
+                                    <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} userId={userId} updateReadStateChange={updateReadStateChange} />
 
-                            </li>
+                                </li>
+                            } else return false
                         })
                     }
                 </ul>
