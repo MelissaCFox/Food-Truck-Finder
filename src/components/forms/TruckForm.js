@@ -5,10 +5,12 @@ import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 import TruckFoodTypeRepository from "../../repositories/TruckFoodTypeRepository"
+import WebsiteIcon from "./WebsiteIcon.png"
 
 
 export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
     const [foodTypes, setFoodTypes] = useState([])
+    
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [websiteURL, setWebsiteURL] = useState("")
@@ -16,6 +18,19 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
     const [profileImgSrc, setProfileImgSrc] = useState("")
     const [hours, setHours] = useState("")
     const [dollars, setDollars] = useState(0)
+
+    const [truck, setTruck] = useState({
+        name: "",
+        description: "",
+        websiteURL: "",
+        instagramURL: "",
+        facebookURL: "",
+        twitterURL: "",
+        profileImgSrc: "",
+        hours: "",
+        dollars: 1,
+        userRating: 0
+    })
 
     const [formCheck, setFormCheck] = useState(false)
     const toggleFormCheck = () => setFormCheck(!formCheck)
@@ -127,7 +142,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                 </FormGroup>
             </div>
             <div className="form-group">
-                <label htmlFor="websiteURL">Website URL</label>
+                <label htmlFor="websiteURL"><img alt="web-logo" className="link__logo" src={WebsiteIcon} /></label>
                 <input
                     type="text"
                     required
