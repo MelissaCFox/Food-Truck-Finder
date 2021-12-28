@@ -12,6 +12,7 @@ import SuggestionRepository from "../../repositories/SuggestionsRepository"
 export const Owner = ({ userId }) => {
     const [user, setUser] = useState({})
     const [trucks, setTrucks] = useState([])
+    const [ownedTrucks, setOwnedTrucks] = useState([])
 
     const [register, setRegister] = useState(false)
     const toggleRegister = () => setRegister(!register)
@@ -23,6 +24,13 @@ export const Owner = ({ userId }) => {
     const [newUnreadSuggestions, setUnreadSuggestions] = useState([])
     const [readStateChange, setReadStateChange] = useState(false)
     const updateReadStateChange = () => setReadStateChange(!readStateChange)
+
+    useEffect(() => {
+        const recentTrucks = user.truckOwners?.sort((a,b) => {
+            return b.truckId - a.truckId
+        })
+        setOwnedTrucks(recentTrucks)
+    },[user])
 
     useEffect(() => {
         TruckRepository.getAll()
@@ -52,6 +60,7 @@ export const Owner = ({ userId }) => {
 
     useEffect(() => {
         TruckRepository.getAll().then(setTrucks)
+    
     }, [user])
 
 
@@ -121,7 +130,7 @@ export const Owner = ({ userId }) => {
             <div className="owner-trucks">
                 <ul className="truck-list">
                     {
-                        user.truckOwners?.map(truckOwner => {
+                        ownedTrucks?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
                             if (foundTruck) {
                                 return <li key={truckOwner.id}>

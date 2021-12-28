@@ -26,6 +26,7 @@ const TruckRepository = {
     async update(truckId, newTruckObj) {
         return await fetchIt(`${Settings.remoteURL}/trucks/${truckId}`, "PUT", JSON.stringify(newTruckObj))
     }
+
 }
 
 export default TruckRepository
