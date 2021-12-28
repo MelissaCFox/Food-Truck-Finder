@@ -7,7 +7,9 @@ export const Favorites = ({ userId, newInfo }) => {
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        UserRepository.get(userId).then(setUser)
+        if (userId) {
+            UserRepository.get(userId).then(setUser)
+        } else return false
 
     }, [userId, newInfo])
 

@@ -57,6 +57,7 @@ export const Owner = ({ userId }) => {
 
     useEffect(() => {
         UserRepository.get(userId).then(setUser)
+
     }, [userId])
 
     return (
@@ -103,13 +104,13 @@ export const Owner = ({ userId }) => {
                 </div>
 
                 <div>
-                    <Collapse animation="false" isOpen={collapse}>
+                    <Collapse  isOpen={collapse}>
                         <ul className="favorites card">
-                            <div className="profile-container"><Favorites userId={user.id} /></div>
+                            <div className="profile-container"><Favorites userId={userId} /></div>
                         </ul>
                     </Collapse>
 
-                    <Collapse animation="false" isOpen={suggestions}>
+                    <Collapse  isOpen={suggestions}>
                         <ul className="suggestions">
                             <div className="suggestion--messages"><Suggestions key={readStateChange} updateReadStateChange={updateReadStateChange} /></div>
                         </ul>
@@ -123,8 +124,8 @@ export const Owner = ({ userId }) => {
                         user.truckOwners?.map(truckOwner => {
                             let foundTruck = trucks?.find(truck => truck.id === truckOwner.truckId)
                             if (foundTruck) {
-                                return <li key={truckOwner?.id}>
-                                    <Truck key={foundTruck?.id} truckID={foundTruck?.id} setTrucks={setTrucks} setUser={setUser} userId={userId} updateReadStateChange={updateReadStateChange} />
+                                return <li key={truckOwner.id}>
+                                    <Truck key={foundTruck.id} truckID={foundTruck.id} setTrucks={setTrucks} setUser={setUser} userId={userId} updateReadStateChange={updateReadStateChange} />
 
                                 </li>
                             } else return false

@@ -10,15 +10,6 @@ import WebsiteIcon from "./WebsiteIcon.png"
 
 export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
     const [foodTypes, setFoodTypes] = useState([])
-    
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [websiteURL, setWebsiteURL] = useState("")
-    const [instagramURL, setInstagramURL] = useState("")
-    const [profileImgSrc, setProfileImgSrc] = useState("")
-    const [hours, setHours] = useState("")
-    const [dollars, setDollars] = useState(0)
-
     const [truck, setTruck] = useState({
         name: "",
         description: "",
@@ -43,17 +34,8 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
 
     const registerTruck = (event) => {
         event.preventDefault()
-        const truck = {
-            name: name,
-            description: description,
-            websiteURL: websiteURL,
-            instagramURL: instagramURL,
-            profileImgSrc: profileImgSrc,
-            hours: hours,
-            dollars: parseInt(dollars),
-            userRating: 0
-        }
-        if (name && description && websiteURL && instagramURL && profileImgSrc && hours && dollars && userSelectedFoodtypes.length > 0) {
+
+        if (truck.name && truck.description && truck.profileImgSrc && truck.hours && truck.dollars && userSelectedFoodtypes.length > 0) {
             TruckRepository.add(truck)
                 .then((truck) => {
                     const truckOwner = {
@@ -106,7 +88,11 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     autoFocus
                     className="form-control"
-                    onChange={e => setName(e.target.value)}
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.name = e.target.value
+                        setTruck(copy)
+                    }}
                     id="truckName"
                     autoComplete="on"
                     placeholder="Truck Name"
@@ -119,9 +105,13 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     autoFocus
                     className="form-control"
-                    onChange={e => setDescription(e.target.value)}
                     id="description"
                     placeholder="Description"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.description = e.target.value
+                        setTruck(copy)
+                    }}
                 />
             </div>
             <div className="form-group">
@@ -133,11 +123,11 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         isClerable
                         value={userSelectedFoodtypes}
                         options={foodTypes.map(type => ({ label: type.type, value: type.id }))}
+                        id="tagSelect"
+                        placeholder="Select food types..."
                         onChange={tagChoices => {
                             setUserSelectedFoodTypes(tagChoices)
                         }}
-                        id="tagSelect"
-                        placeholder="Select food types..."
                     />
                 </FormGroup>
             </div>
@@ -148,9 +138,13 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     autoFocus
                     className="form-control"
-                    onChange={e => setWebsiteURL(e.target.value)}
                     id="websiteURL"
                     placeholder="Website URL"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.websiteURL = e.target.value
+                        setTruck(copy)
+                    }}
                 />
             </div>
             <div className="form-group">
@@ -160,9 +154,13 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     autoFocus
                     className="form-control"
-                    onChange={e => setInstagramURL(e.target.value)}
                     id="instaURL"
                     placeholder="Instagram URL"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.instagramURL = e.target.value
+                        setTruck(copy)
+                    }}
                 />
             </div>
             <div className="form-group">
@@ -172,9 +170,13 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     autoFocus
                     className="form-control"
-                    onChange={e => setProfileImgSrc(e.target.value)}
                     id="profileImg"
                     placeholder="Profile Image URL"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.profileImgSrc = e.target.value
+                        setTruck(copy)
+                    }}
                 />
             </div>
             <div className="form-group">
@@ -184,9 +186,13 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     autoFocus
                     className="form-control"
-                    onChange={e => setHours(e.target.value)}
                     id="hours"
                     placeholder="10am-4pm"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.hours = e.target.value
+                        setTruck(copy)
+                    }}
                 />
             </div>
             <div className="form-group">
@@ -196,8 +202,12 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     required
                     name="cost"
                     id="cost"
-                    onChange={e => setDollars(e.target.value)}
                     className="form-control"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.dollars = parseInt(e.target.value)
+                        setTruck(copy)
+                    }}
                 >
                     <option value="">$-$$$</option>
                     <option value={1}>$</option>
@@ -210,7 +220,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                 color="blue"
                 onClick={registerTruck}
                 className="btn btn-primary"> Register Truck </Button>
-            
+
             <Modal isOpen={formCheck} centered fullscreen="sm" size="sm" toggle={toggleFormCheck}>
                 <ModalBody>
                     Please Fill Out All Fields
