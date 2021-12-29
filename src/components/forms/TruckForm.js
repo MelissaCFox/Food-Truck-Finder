@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react"
-import { Button, FormGroup, Label, Modal, ModalBody, ModalFooter } from "reactstrap"
+import { Button, FormGroup, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalFooter } from "reactstrap"
 import CreatableSelect from "react-select/creatable";
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import TruckRepository from "../../repositories/TruckRepository"
 import UserRepository from "../../repositories/UserRepository"
 import TruckFoodTypeRepository from "../../repositories/TruckFoodTypeRepository"
-import WebsiteIcon from "./WebsiteIcon.png"
+import WebsiteIcon from "../images/WebsiteIcon.png"
+import FacebookIcon from "../images/FacebookIcon.png"
+import TwitterIcon from "../images/TwitterIcon.png"
+import InstagramIcon from "../images/InstagramIcon.png"
+import './Form.css';
+
 
 
 export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
@@ -89,8 +94,8 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
 
     return (
         <form autoComplete="on" className="truckForm">
-            <div className="form-group">
-                <label htmlFor="truckName">Truck Name</label>
+            <InputGroup className="form-group">
+                <InputGroupText className="input-label" >Truck Name</InputGroupText>
                 <input
                     type="text"
                     required
@@ -103,11 +108,11 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     }}
                     id="truckName"
                     autoComplete="on"
-                    placeholder="Truck Name"
+                    placeholder="Name"
                 />
-            </div>
-            <div className="form-group">
-                <label htmlFor="description">Description</label>
+            </InputGroup>
+            <InputGroup className="form-group">
+                <InputGroupText className="input-label" >Description</InputGroupText>
                 <input
                     type="text"
                     required
@@ -121,106 +126,26 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         setTruck(copy)
                     }}
                 />
-            </div>
-            <div className="form-group">
-                <FormGroup>
-                    <Label>Food Type(s)</Label>
-                    <CreatableSelect
-                        required
-                        isMulti
-                        isClerable
-                        value={userSelectedFoodtypes}
-                        options={foodTypes.map(type => ({ label: type.type, value: type.id }))}
-                        id="tagSelect"
-                        placeholder="Select food types..."
-                        onChange={tagChoices => {
-                            setUserSelectedFoodTypes(tagChoices)
-                        }}
-                    />
-                </FormGroup>
-            </div>
-            <div className="form-group">
-                <label htmlFor="websiteURL"><img alt="web-logo" className="link__logo" src={WebsiteIcon} /></label>
-                <input
-                    type="text"
-                    required
-                    autoFocus
-                    className="form-control"
-                    id="websiteURL"
-                    placeholder="Website URL"
-                    onChange={e => {
-                        const copy = { ...truck }
-                        copy.websiteURL = e.target.value
-                        setTruck(copy)
-                    }}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="instaURL">Facebook URL</label>
-                <input
-                    type="text"
-                    required
-                    autoFocus
-                    className="form-control"
-                    id="instaURL"
-                    placeholder="Instagram URL"
-                    onChange={e => {
-                        const copy = { ...truck }
-                        copy.facebookURL = e.target.value
-                        setTruck(copy)
-                    }}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="instaURL">Instagram URL</label>
-                <input
-                    type="text"
-                    required
-                    autoFocus
-                    className="form-control"
-                    id="instaURL"
-                    placeholder="Instagram URL"
-                    onChange={e => {
-                        const copy = { ...truck }
-                        copy.instagramURL = e.target.value
-                        setTruck(copy)
-                    }}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="instaURL">Twitter URL</label>
-                <input
-                    type="text"
-                    required
-                    autoFocus
-                    className="form-control"
-                    id="instaURL"
-                    placeholder="Instagram URL"
-                    onChange={e => {
-                        const copy = { ...truck }
-                        copy.twitterURL = e.target.value
-                        setTruck(copy)
-                    }}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="profileImg">Profile Image URL</label>
+            </InputGroup>
+
+            <InputGroup className="form-group">
+                <InputGroupText className="input-label">Profile Image</InputGroupText>
                 <input
                     type="text"
                     required
                     autoFocus
                     className="form-control"
                     id="profileImg"
-                    placeholder="Profile Image URL"
+                    placeholder="URL"
                     onChange={e => {
                         const copy = { ...truck }
                         copy.profileImgSrc = e.target.value
                         setTruck(copy)
                     }}
                 />
-            </div>
-            <div className="form-group">
-                <label htmlFor="hours">Hours</label>
+            </InputGroup>
+            <InputGroup className="form-group">
+                <InputGroupText className="input-label">Typical Hours</InputGroupText>
                 <input
                     type="text"
                     required
@@ -234,9 +159,9 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                         setTruck(copy)
                     }}
                 />
-            </div>
-            <div className="form-group">
-                <label htmlFor="cost">Cost: </label>
+            </InputGroup>
+            <InputGroup className="form-group">
+                <InputGroupText className="input-label">Price Range</InputGroupText>
                 <select
                     defaultValue=""
                     required
@@ -255,7 +180,93 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     <option value={3}>$$$</option>
 
                 </select>
+            </InputGroup>
+            <div className="form-group">
+                <FormGroup className="input-group">
+                    <div className ="input-group-prepend">
+                    <label className="input-group-text" for="tagSelect">Food Type(s)</label>
+                    </div>
+                    <CreatableSelect
+                        required
+                        isMulti
+                        isClerable
+                        className="create-select"
+                        value={userSelectedFoodtypes}
+                        options={foodTypes.map(type => ({ label: type.type, value: type.id }))}
+                        id="tagSelect"
+                        placeholder="Select food types..."
+                        onChange={tagChoices => {
+                            setUserSelectedFoodTypes(tagChoices)
+                        }}
+                    />
+                </FormGroup>
             </div>
+            
+
+            <div className="social-media-links">
+                <div className="sub-heading">Social Media Links (optional)</div>
+                <InputGroup className="form-group-links">
+                    <InputGroupText className="icon-label"><img alt="web-logo" className="form-link__logo" src={WebsiteIcon} /></InputGroupText>
+                    <input
+                        type="text"
+                        autoFocus
+                        className="form-control"
+                        id="websiteURL"
+                        placeholder="Website URL"
+                        onChange={e => {
+                            const copy = { ...truck }
+                            copy.websiteURL = e.target.value
+                            setTruck(copy)
+                        }}
+                    />
+                </InputGroup>
+                <InputGroup className="form-group-links">
+                <InputGroupText className="icon-label"><img alt="web-logo" className="form-link__logo" src={FacebookIcon} /></InputGroupText>
+                    <input
+                        type="text"
+                        autoFocus
+                        className="form-control"
+                        id="facebookURL"
+                        placeholder="Facebook URL"
+                        onChange={e => {
+                            const copy = { ...truck }
+                            copy.facebookURL = e.target.value
+                            setTruck(copy)
+                        }}
+                    />
+                </InputGroup>
+                <InputGroup className="form-group-links">
+                <InputGroupText className="icon-label"><img alt="web-logo" className="form-link__logo" src={InstagramIcon} /></InputGroupText>
+                    <input
+                        type="text"
+                        autoFocus
+                        className="form-control"
+                        id="instaURL"
+                        placeholder="Instagram URL"
+                        onChange={e => {
+                            const copy = { ...truck }
+                            copy.instagramURL = e.target.value
+                            setTruck(copy)
+                        }}
+                    />
+                </InputGroup>
+                <InputGroup className="form-group-links">
+                <InputGroupText className="icon-label"><img alt="web-logo" className="form-link__logo" src={TwitterIcon} /></InputGroupText>
+                    <input
+                        type="text"
+                        autoFocus
+                        className="form-control"
+                        id="twitterURL"
+                        placeholder="Twitter URL"
+                        onChange={e => {
+                            const copy = { ...truck }
+                            copy.twitterURL = e.target.value
+                            setTruck(copy)
+                        }}
+                    />
+                </InputGroup>
+            </div>
+
             <Button type="register"
                 color="blue"
                 onClick={registerTruck}

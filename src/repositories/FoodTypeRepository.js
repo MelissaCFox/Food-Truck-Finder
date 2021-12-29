@@ -4,12 +4,12 @@ import { fetchIt } from "./Fetch";
 const FoodTypeRepository = {
 
     async getAll() {
-        return await fetchIt(`${Settings.remoteURL}/foodTypes`)
+        return await fetchIt(`${Settings.remoteURL}/foodTypes?_sort=type`)
     },
 
 
     async get(foodtypeId) {
-        return await fetchIt(`${Settings.remoteURL}/foodTypes/${foodtypeId}`)
+        return await fetchIt(`${Settings.remoteURL}/foodTypes/${foodtypeId}?_sort=type`)
     },
 
     async getForTruck(truckId) {

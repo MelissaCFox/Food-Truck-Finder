@@ -121,13 +121,8 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                                 </li>
                             } else return false
                         })
-                        : <li className="card no-truck" key={neighborhood.id}>
-                            {
-                                favorites
-                                    ? ""
-                                    : <div className="card-body">No Trucks</div>
-                            }
-                        </li>
+                        : ""
+
                     : ""
             }
         </ul>

@@ -1,0 +1,29 @@
+.social-media-links {
+    padding: 1rem 0;
+}
+
+.input-label {
+    width: 8rem;
+}
+
+.input-group-text {
+    margin: 0;
+    width: 8rem;
+}
+
+.create-select {
+    width: 83.4%;
+}
+
+.icon-label {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.form-link__logo {
+    width: 2rem;
+    height: 2rem;
+}
