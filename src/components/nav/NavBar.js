@@ -24,24 +24,72 @@ export const NavBar = () => {
 
         const terms = document.querySelector("#searchTerms").value
         const foundItems = {
-            trucks: [],
-            neighborhoods: []
+            trucksSet: new Set(),
+            neighborhoods: [],
+            trucks: []
         }
 
-        fetch(`${Settings.remoteURL}/trucks?name_like=${encodeURI(terms)}`)
+        const fetchArray = []
+        fetchArray.push(fetch(`${Settings.remoteURL}/trucks?name_like=${encodeURI(terms)}`)
             .then(r => r.json())
             .then(trucks => {
-                foundItems.trucks = trucks
-                return fetch(`${Settings.remoteURL}/neighborhoods?name_like=${encodeURI(terms)}`)
+                trucks.forEach((truck) => {
+                    foundItems.trucksSet.add(truck.id)
+                })
             })
+        )
+        fetchArray.push(fetch(`${Settings.remoteURL}/trucks?description_like=${encodeURI(terms)}`)
+            .then(r => r.json())
+            .then(trucks => {
+                trucks.forEach((truck) => {
+                    foundItems.trucksSet.add(truck.id)
+                })
+            })
+        )
+        fetchArray.push(fetch(`${Settings.remoteURL}/neighborhoods?name_like=${encodeURI(terms)}`)
             .then(r => r.json())
             .then(neighborhoods => {
                 foundItems.neighborhoods = neighborhoods
-                history.push({
-                    pathname: "/search",
-                    state: foundItems
-                })
             })
+        )
+
+        Promise.all(fetchArray)
+            .then(() => {
+                const truckFetchArray = []
+                foundItems.trucksSet.forEach((truckId) => {
+                    truckFetchArray.push(TruckRepository.get(truckId).then(truck => foundItems.trucks.push(truck)))
+
+                })
+                Promise.all(truckFetchArray)
+                    .then(() => {
+                        history.push({
+                            pathname: "/search",
+                            state: foundItems
+                        })
+
+                    })
+            })
+        //
+        // fetch(`${Settings.remoteURL}/trucks?name_like=${encodeURI(terms)}`)
+        //     .then(r => r.json())
+        //     .then(trucks => {
+        //         foundItems.trucksSet.add(trucks)
+        //         return fetch(`${Settings.remoteURL}/neighborhoods?name_like=${encodeURI(terms)}`)
+        //     })
+        //     .then(r => r.json())
+        //     .then(neighborhoods => {
+        //         foundItems.neighborhoods = neighborhoods
+        //         return fetch(`${Settings.remoteURL}/trucks?description_like=${encodeURI(terms)}`)
+        //     })
+        //     .then(r => r.json())
+        //     .then(trucks => {
+        //         foundItems.trucksSet.add(trucks)
+        //         foundItems.trucks = Array.from(foundItems.trucksSet)
+        //         history.push({
+        //             pathname: "/search",
+        //             state: foundItems
+        //         })
+        //     })
 
     }
 

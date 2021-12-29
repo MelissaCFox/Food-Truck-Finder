@@ -350,6 +350,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
 
                         <div className="truck__description">
                             <div className="truck__info--description">{truck.description}</div>
+                            <div className="truck__info--hours">Typical Hours: {truck.hours}</div>
                             <div className="truck__info--typeTags">
                                 {
                                     truck?.truckFoodTypes?.map(

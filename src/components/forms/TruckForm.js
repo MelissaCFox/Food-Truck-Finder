@@ -69,9 +69,17 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     Promise.all(newFoodTypesArray)
                         .then(Promise.all(truckTypesPostArray))
                         .then(() => {
-                            TruckRepository.getAll().then(setTrucks)
-                            UserRepository.get(userId).then(setUser)
-                            toggle()
+                            TruckRepository.getAll()
+                                .then((trucks) => {
+                                    setTrucks(trucks)
+                                })
+                                .then(() => {
+                                    UserRepository.get(userId)
+                                        .then((user) => {
+                                            setUser(user)
+                                            toggle()
+                                        })
+                                })
                         })
                 })
         } else {
@@ -148,6 +156,22 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                 />
             </div>
             <div className="form-group">
+                <label htmlFor="instaURL">Facebook URL</label>
+                <input
+                    type="text"
+                    required
+                    autoFocus
+                    className="form-control"
+                    id="instaURL"
+                    placeholder="Instagram URL"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.facebookURL = e.target.value
+                        setTruck(copy)
+                    }}
+                />
+            </div>
+            <div className="form-group">
                 <label htmlFor="instaURL">Instagram URL</label>
                 <input
                     type="text"
@@ -159,6 +183,22 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser }) => {
                     onChange={e => {
                         const copy = { ...truck }
                         copy.instagramURL = e.target.value
+                        setTruck(copy)
+                    }}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="instaURL">Twitter URL</label>
+                <input
+                    type="text"
+                    required
+                    autoFocus
+                    className="form-control"
+                    id="instaURL"
+                    placeholder="Instagram URL"
+                    onChange={e => {
+                        const copy = { ...truck }
+                        copy.twitterURL = e.target.value
                         setTruck(copy)
                     }}
                 />

@@ -53,8 +53,12 @@
     align-items: left;
 }
 
-.typeTag {
+.truck__info--hours {
+    padding: 1rem 0rem;
+    font-family: "Readex Pro";
+}
 
+.typeTag {
     text-align: center;
     padding: 2px;
     font-size: 0.75rem;

@@ -24,6 +24,14 @@
 
 .trucks {
     background-color: #2D4263;
+
+}
+
+.truck-list-card{
+  margin-right: 0.75rem;
+  border: none;
+  background: transparent;
+  list-style: none;
 }
 
 

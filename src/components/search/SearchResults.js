@@ -5,16 +5,17 @@ import { TruckCard } from "../trucks/TruckCard"
 
 export const SearchResults = () => {
     const location = useLocation()
+    const trucks = Array.from(location.state?.trucks)
 
     const displayTrucks = () => {
-        if (location.state?.trucks.length > 0) {
+        if (trucks.length > 0) {
             return (
                 <>
                     <div className="card">
                         <ul className="trucks search-results">
 
                             {
-                                location.state.trucks.map(truck => <li className="card truck" key={truck.id}><TruckCard key={truck.id} truckId={truck.id} /></li>)
+                                trucks.map(truck => <li className="card truck" key={truck.id}><TruckCard key={truck.id} truckId={truck.id} /></li>)
                             }
 
                         </ul>

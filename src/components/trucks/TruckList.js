@@ -116,7 +116,7 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
                         ? filteredLocations.map(truckLocation => {
                             const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
                             if (foundTruck) {
-                                return <li className="card truck" key={truckLocation.id}>
+                                return <li className="truck-list-card" key={truckLocation.id}>
                                     <TruckCard thisTruck={foundTruck} />
                                 </li>
                             } else return false
