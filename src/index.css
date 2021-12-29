@@ -35,6 +35,12 @@ body {
   width: 5rem;
 }
 
+.review-card{
+  height: 14rem;
+}
+
+
+
 label {
   margin-top: 1.25rem;
 }
@@ -261,6 +267,7 @@ h2 {
   flex-direction: row;
   flex-wrap: wrap;
 }
+
 
 .weekday {
   display: flex;

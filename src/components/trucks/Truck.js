@@ -453,7 +453,9 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                 ? truck?.userTruckReviews?.map(review => {
                                     return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
                                 })
-                                : <div className="truck-review-card"><div className="review-card">No Reviews Yet</div></div>
+                                : truckId
+                                    ? ""
+                                    : <div className="no-reviews">No Reviews Yet</div>
                         }
                     </div>
                     {

@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Modak&family=Readex+Pro:wght@200;400;700&display=swap');
 
+.no-reviews {
+    height: 3rem;
+    background-color:#ECDBBA;
+    color:#2D4263;
+    padding: 1rem;
+    margin-left: 3rem;
+}
+
 .truck__page-card {
     background-color: #2D4263;
     margin: 1rem 2rem 2rem 2rem ;

@@ -104,7 +104,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
 
             <div className="review-date">{review.date}</div>
             <div className="review-message">"{review.review}"</div>
-            <div className="review-rating"><img className="review-rating" alt="user rating star" src={userRating} /></div>
+            <div className="review-rating"><img className="truck-userStar" alt="user rating star" src={userRating} /></div>
 
             {
                 truckId

@@ -17,7 +17,8 @@ export const Register = () => {
         e.preventDefault()
 
         const newUser = {
-            name: `${credentials.firstName} ${credentials.lastName}`,
+            firstName: credentials.firstName,
+            lastName: credentials.lastName,
             email: credentials.email,
             owner: credentials.owner
         }

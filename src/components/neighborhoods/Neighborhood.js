@@ -5,6 +5,17 @@ import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
 import { NeighborhoodSchedule } from "../schedule/NeighborhoodSchedule"
 import { TruckCard } from "../trucks/TruckCard"
+import FivePoints from "../images/5Points.png"
+import TwelveSouth from "../images/12South.png"
+import BerryHill from "../images/BerryHill.png"
+import Downtown from "../images/Downtown.png"
+import Germantown from "../images/Germantown.png"
+import GreenHills from "../images/GreenHills.png"
+import Hillsboro from "../images/Hillsboro.png"
+import SylvanPark from "../images/SylvanPark.png"
+import TheGulch from "../images/TheGulch.png"
+import TheNations from "../images/TheNations.png"
+import WestEnd from "../images/WestEnd.png"
 import './Neighborhood.css';
 
 
@@ -35,16 +46,41 @@ export const Neighborhood = () => {
         }
     }, [todaysTrucks])
 
+    let src = ""
+    if (neighborhood.name === "12 South") {
+        src = TwelveSouth
+    } else if (neighborhood.name === "Berry Hill") {
+        src = BerryHill
+    } else if (neighborhood.name === "Downtown") {
+        src = Downtown
+    } else if (neighborhood.name === "Germantown") {
+        src = Germantown
+    } else if (neighborhood.name === "Green Hills") {
+        src = GreenHills
+    } else if (neighborhood.name === "The Gulch") {
+        src = TheGulch
+    } else if (neighborhood.name === "Hillsboro Village") {
+        src = Hillsboro
+    } else if (neighborhood.name === "The Nations") {
+        src = TheNations
+    } else if (neighborhood.name === "Sylvan Park") {
+        src = SylvanPark
+    } else if (neighborhood.name === "West End") {
+        src = WestEnd
+    } else if (neighborhood.name === "5 Points") {
+        src = FivePoints
+    }
+
 
     return (
         <div className="neighborhood">
             <div className="neighborhood__id">
                 <div className="neighborhood__info neighborhood-page-card ">
                     <div className="neighborhood__id">
-                        <div className="neighborhood__image"><img alt="logo" className="neighborhood__image" src={neighborhood.profileImgSrc} /></div>
-                        <div className="neighborhood__name">{neighborhood.name}</div>
+                        <div className="neighborhood__image"><img alt="logo" className="neighborhood__image" src={src} /></div>
+                        <div className="neighborhood__description">{neighborhood.description}</div>
                     </div>
-                    <div className="neighborhood__description">{neighborhood.description}</div>
+
                 </div>
 
                 <div className="neighborhood__currentTrucks neighborhood-page-card">
