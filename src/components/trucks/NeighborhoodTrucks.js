@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react"
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min"
-import { Input} from "reactstrap"
+import { Input } from "reactstrap"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import { TruckList } from "./TruckList"
+import FivePoints from "../images/5Points.png"
+import TwelveSouth from "../images/12South.png"
+import BerryHill from "../images/BerryHill.png"
+import Downtown from "../images/Downtown.png"
+import Germantown from "../images/Germantown.png"
+import GreenHills from "../images/GreenHills.png"
+import Hillsboro from "../images/Hillsboro.png"
+import SylvanPark from "../images/SylvanPark.png"
+import TheGulch from "../images/TheGulch.png"
+import TheNations from "../images/TheNations.png"
+import WestEnd from "../images/WestEnd.png"
 import './TruckList.css';
 
 
@@ -17,6 +28,7 @@ export const NeighborhoodTruckList = () => {
     const [typePref, setTypePref] = useState(0)
     const [foodTypes, setFoodTypes] = useState([])
     const [sortPref, setSortPref] = useState("")
+    const [dayId, setDayId] = useState(1)
 
     const location = useLocation()
 
@@ -40,6 +52,7 @@ export const NeighborhoodTruckList = () => {
         const year = date?.getFullYear()
 
         setDateString(`${days[day]} ${months[month]} ${number}, ${year}`)
+        setDayId(day)
 
     }, [dateForList])
 
@@ -48,7 +61,34 @@ export const NeighborhoodTruckList = () => {
         NeighborhoodRepository.getAll().then(setNeighborhoods)
     }, [])
 
+    const imgSrc = (neighborhood) => {
+        let src = ""
+        if (neighborhood.name === "12 South") {
+            src = TwelveSouth
+        } else if (neighborhood.name === "Berry Hill") {
+            src = BerryHill
+        } else if (neighborhood.name === "Downtown") {
+            src = Downtown
+        } else if (neighborhood.name === "Germantown") {
+            src = Germantown
+        } else if (neighborhood.name === "Green Hills") {
+            src = GreenHills
+        } else if (neighborhood.name === "The Gulch") {
+            src = TheGulch
+        } else if (neighborhood.name === "Hillsboro Village") {
+            src = Hillsboro
+        } else if (neighborhood.name === "The Nations") {
+            src = TheNations
+        } else if (neighborhood.name === "Sylvan Park") {
+            src = SylvanPark
+        } else if (neighborhood.name === "West End") {
+            src = WestEnd
+        } else if (neighborhood.name === "5 Points") {
+            src = FivePoints
+        }
+        return src
 
+    }
 
     return (
         <>
@@ -99,11 +139,18 @@ export const NeighborhoodTruckList = () => {
             <ul className="neighborhoods">
                 {
                     neighborhoods.map(neighborhood => {
-                        return <li className="card neighborhood" key={neighborhood.id}>
-                            <button className="neighborhoodName" onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}><h3 className="neighborhood-name">{neighborhood.name}</h3></button>
-                            <TruckList key={neighborhood.id} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
+                        const todaysTrucks = neighborhood.truckLocations?.filter(truckLocation => truckLocation.dayId === dayId + 1)
+                        if (todaysTrucks?.length > 0) {
 
-                        </li>
+                            const src = imgSrc(neighborhood)
+                            return <div className="neighborhood-truck-list" key={neighborhood.id}>
+                                <button className="neighborhood-list-label" onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>
+                                    <img alt="logo" className="neighborhood__image-label" src={src} />
+                                </button>
+                                <TruckList className="multi-truck-list " key={neighborhood.id} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
+                            </div>
+
+                        } else return false
                     })
                 }
             </ul>

@@ -7,6 +7,27 @@
  margin-top: 0.4rem;
 }
 
+.neighborhood-truck-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 2rem;
+}
+
+.neighborhood-truck-list > button {
+  background-color: #2D4263;
+}
+
+.neighborhood__image-label {
+  height: 15rem;
+}
+
+.neighborhood-list-label {
+  padding: 0;
+  width: 15rem;
+}
+
+
 .neighborhoodName {
   background-color: #406882;
 }
@@ -24,8 +45,30 @@
 
 .trucks {
     background-color: #2D4263;
+    width: 91rem;
+    max-height: 15rem;
 
 }
+
+.scrollbar {
+overflow-y: scroll;
+
+}
+.scrollbar-juicy-peach::-webkit-scrollbar-track {
+-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+background-color: #2D4263;
+border-radius: 10px; }
+
+.scrollbar-juicy-peach::-webkit-scrollbar {
+width: 12px;
+background-color: #2D4263; }
+
+.scrollbar-juicy-peach::-webkit-scrollbar-thumb {
+border-radius: 10px;
+-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+background-image: -webkit-gradient(linear, left top, right top, from(#2D4263), to(#406882));
+background-image: -webkit-linear-gradient(left, #2D4263 0%, #406882 100%);
+background-image: linear-gradient(to right, #2D4263 0%, #406882 100%); }
 
 .truck-list-card{
   margin-right: 0.75rem;

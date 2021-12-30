@@ -8,7 +8,7 @@ import { TruckCard } from "./TruckCard"
 import './TruckList.css';
 
 
-export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref }) => {
+export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref}) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
     const [favoriteTrucks, setFavoriteTrucks] = useState([])
@@ -109,22 +109,22 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref })
     const filteredLocations = truckLocations?.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
 
     return (
-        <ul className="trucks">
+        <div className="trucks scrollbar scrollbar-juicy-peach">
             {
                 neighborhood
                     ? filteredLocations?.length > 0
                         ? filteredLocations.map(truckLocation => {
                             const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
                             if (foundTruck) {
-                                return <li className="truck-list-card" key={truckLocation.id}>
+                                return <div className="truck-list-card" key={truckLocation.id}>
                                     <TruckCard thisTruck={foundTruck} />
-                                </li>
+                                </div>
                             } else return false
                         })
                         : ""
 
                     : ""
             }
-        </ul>
+        </div>
     )
 }
