@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import TruckFoodTypeRepository from "../../repositories/TruckFoodTypeRepository"
 import TruckLocationRepository from "../../repositories/TruckLocationRepository"
@@ -8,12 +9,13 @@ import { TruckCard } from "./TruckCard"
 import './TruckList.css';
 
 
-export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref}) => {
+export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref, src }) => {
     const [truckLocations, updateTruckLocations] = useState([])
     const [trucks, setTrucks] = useState([])
     const [favoriteTrucks, setFavoriteTrucks] = useState([])
     const { getCurrentUser } = useSimpleAuth()
     const [truckFoodTypes, setTruckFoodTypes] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         TruckFoodTypeRepository.getAll().then(setTruckFoodTypes)
@@ -108,23 +110,35 @@ export const TruckList = ({ neighborhood, date, favorites, typePref, sortPref}) 
 
     const filteredLocations = truckLocations?.filter(truckLocation => truckLocation.neighborhoodId === neighborhood.id)
 
-    return (
-        <div className="trucks scrollbar scrollbar-juicy-peach">
-            {
-                neighborhood
-                    ? filteredLocations?.length > 0
-                        ? filteredLocations.map(truckLocation => {
-                            const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
-                            if (foundTruck) {
-                                return <div className="truck-list-card" key={truckLocation.id}>
-                                    <TruckCard thisTruck={foundTruck} />
-                                </div>
-                            } else return false
-                        })
-                        : ""
 
-                    : ""
-            }
-        </div>
-    )
+    if (filteredLocations?.length > 0) {
+        return (
+            <div className="neighborhood-truck-list">
+                <button className="neighborhood-list-label" onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>
+                    <img alt="logo" className="neighborhood__image-label" src={src} />
+                </button>
+                <div className="trucks scrollbar scrollbar-juicy-peach">
+                    {
+                        neighborhood
+                            ? filteredLocations?.length > 0
+                                ? filteredLocations.map(truckLocation => {
+                                    const foundTruck = trucks.find(truck => truck.id === truckLocation.truckId)
+                                    if (foundTruck) {
+                                        return <div className="truck-list-card" key={truckLocation.id}>
+
+
+
+                                            <TruckCard thisTruck={foundTruck} />
+                                        </div>
+                                    } else return false
+                                })
+                                : ""
+
+                            : ""
+                    }
+                </div>
+            </div>
+        )
+
+    } else return ""
 }

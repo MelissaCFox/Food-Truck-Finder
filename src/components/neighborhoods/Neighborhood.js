@@ -17,6 +17,17 @@ import TheGulch from "../images/TheGulch.png"
 import TheNations from "../images/TheNations.png"
 import WestEnd from "../images/WestEnd.png"
 import './Neighborhood.css';
+import Map12South from "../images/Map-12South.png";
+import Map5Points from "../images/Map5Points.png";
+import MapDowntown from "../images/MapDowntown.png";
+import MapGermantown from "../images/MapGermantown.png";
+import MapGreenHills from "../images/MapGreenHills.png";
+import MapHillsboro from "../images/MapHillsboro.png";
+import MapSylvanPark from "../images/MapSylvanPark.png";
+import MapWestEnd from "../images/MapWestEnd.png";
+import MapTheNations from "../images/MapTheNations.png";
+import MapTheGulch from "../images/MapTheGulch.png";
+import MapBerryHill from "../images/MapBerryHill.png";
 
 
 export const Neighborhood = () => {
@@ -47,45 +58,60 @@ export const Neighborhood = () => {
     }, [todaysTrucks])
 
     let src = ""
+    let map = ""
     if (neighborhood.name === "12 South") {
         src = TwelveSouth
+        map = Map12South
     } else if (neighborhood.name === "Berry Hill") {
         src = BerryHill
+        map = MapBerryHill
     } else if (neighborhood.name === "Downtown") {
         src = Downtown
+        map = MapDowntown
     } else if (neighborhood.name === "Germantown") {
         src = Germantown
+        map = MapGermantown
     } else if (neighborhood.name === "Green Hills") {
         src = GreenHills
+        map = MapGreenHills
     } else if (neighborhood.name === "The Gulch") {
         src = TheGulch
+        map = MapTheGulch
     } else if (neighborhood.name === "Hillsboro Village") {
         src = Hillsboro
+        map = MapHillsboro
     } else if (neighborhood.name === "The Nations") {
         src = TheNations
+        map = MapTheNations
     } else if (neighborhood.name === "Sylvan Park") {
         src = SylvanPark
+        map = MapSylvanPark
     } else if (neighborhood.name === "West End") {
         src = WestEnd
+        map = MapWestEnd
     } else if (neighborhood.name === "5 Points") {
         src = FivePoints
+        map = Map5Points
     }
 
 
     return (
         <div className="neighborhood">
-            <div className="neighborhood__id">
+            <div className="neighborhood__details">
                 <div className="neighborhood__info neighborhood-page-card ">
                     <div className="neighborhood__id">
                         <div className="neighborhood__image"><img alt="logo" className="neighborhood__image" src={src} /></div>
-                        <div className="neighborhood__description">{neighborhood.description}</div>
+                        <div className="neighborhood__description">
+                            <div>{neighborhood.description}</div>
+                            <div>Learn More at <a className="NG-link" target="_blank" href={neighborhood.linkNG}>Nashville Guru</a></div>
+                        </div>
                     </div>
 
                 </div>
 
                 <div className="neighborhood__currentTrucks neighborhood-page-card">
                     <h3 className="feature-heading">Featured Truck </h3>
-                    <div className="neighborhood__schedule">
+                    <div className="featured-truck">
                         {
                             randomTruckLocation.id
                                 ? <div className="card truck today" key={randomTruckLocation.id}>
@@ -97,6 +123,11 @@ export const Neighborhood = () => {
                         }
                     </div>
                 </div>
+
+                <div className="neighborhood__map">
+                    <img className="map" src={map} />
+                </div>
+
             </div>
             <div className="neighborhood-page-card ">
                 <h3 className="schedule-heading">Trucks in the Area This Week</h3>

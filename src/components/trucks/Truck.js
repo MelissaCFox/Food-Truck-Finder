@@ -375,7 +375,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                 }
                             </div>
                             <div className="truck__info--dollars">{truckPrice}</div>
-                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} />({truck.userTruckReviews?.length} ratings)</div>
+                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} ratings)</div>
 
                             <div className="truck__info--links">
                                 {

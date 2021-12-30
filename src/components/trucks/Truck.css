@@ -132,6 +132,11 @@
     height: 1.5rem;
 }
 
+.truck__info--rating {
+    font-family: "Readex Pro";
+    font-size: 0.8rem;
+}
+
 .truck__currentLocation {
     display: flex;
     flex-wrap: wrap;

@@ -143,12 +143,7 @@ export const NeighborhoodTruckList = () => {
                         if (todaysTrucks?.length > 0) {
 
                             const src = imgSrc(neighborhood)
-                            return <div className="neighborhood-truck-list" key={neighborhood.id}>
-                                <button className="neighborhood-list-label" onClick={() => { history.push(`/neighborhoods/${neighborhood?.id}`) }}>
-                                    <img alt="logo" className="neighborhood__image-label" src={src} />
-                                </button>
-                                <TruckList className="multi-truck-list " key={neighborhood.id} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
-                            </div>
+                            return <TruckList className="multi-truck-list " key={neighborhood.id} src={src} neighborhood={neighborhood} date={dateForList} favorites={favorites} typePref={typePref} sortPref={sortPref} />
 
                         } else return false
                     })
