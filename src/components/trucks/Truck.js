@@ -31,6 +31,7 @@ import TwitterIcon from "./images/TwitterIcon.png"
 import InstagramIcon from "./images/InstagramIcon.png"
 import WebsiteIcon from "./images/WebsiteIcon.png"
 import ReviewRepository from "../../repositories/ReviewRepository"
+import { useLocation } from "react-router-dom"
 
 
 
@@ -61,6 +62,11 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const toggle3 = () => setConfirm(!confirm)
     const [suggestion, setSuggestion] = useState(false)
     const suggestionToggle = () => setSuggestion(!suggestion)
+
+    const location = useLocation()
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [location])
 
     const [foodTypes, setFoodTypes] = useState([])
     useEffect(() => {
