@@ -32,6 +32,7 @@ import InstagramIcon from "./images/InstagramIcon.png"
 import WebsiteIcon from "./images/WebsiteIcon.png"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import { useLocation } from "react-router-dom"
+import { TruckForm } from "../forms/TruckForm"
 
 
 
@@ -65,7 +66,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
 
     const location = useLocation()
     useEffect(() => {
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
     }, [location])
 
     const [foodTypes, setFoodTypes] = useState([])
@@ -76,12 +77,12 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
 
     useEffect(() => {
         ReviewRepository.getAllForTruck(truckId).then((reviews) => {
-            const recentReviews = reviews.sort((a,b) => {
+            const recentReviews = reviews.sort((a, b) => {
                 return b.parsedDate - a.parsedDate
             })
             setReviews(recentReviews)
         })
-    },[truckId, truck])
+    }, [truckId, truck])
 
     useEffect(() => {
         if (truckID) {
@@ -153,8 +154,8 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
     const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
 
-    const updateTruck = () => {
-        TruckRepository.update(basicTruck.id, basicTruck)
+    const updateTruck = (truck) => {
+        TruckRepository.update(basicTruck.id, truck)
             .then(() => {
                 TruckRepository.get(basicTruck.id).then(setTruck)
             })
@@ -259,76 +260,26 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                     <Modal animation="false"
                                         isOpen={editModal}
                                         centered
-                                        fullscreen="md"
-                                        size="md"
+                                        fullscreen="lg"
+                                        size="lg"
                                         toggle={editToggle}
                                     >
                                         <ModalHeader toggle={editToggle}>
                                             Edit Truck Details
                                         </ModalHeader>
-                                        <ModalBody>
-                                            <label >Name</label>
-                                            <input type="text" className="form-control" defaultValue={truck.name}
-                                                onChange={(e) => {
-                                                    const copy = { ...basicTruck }
-                                                    copy.name = e.target.value
-                                                    setBasicTruck(copy)
-                                                }} ></input>
-                                            <label >Description</label>
-                                            <input type="text" className="form-control" defaultValue={truck.description}
-                                                onChange={(e) => {
-                                                    const copy = { ...basicTruck }
-                                                    copy.description = e.target.value
-                                                    setBasicTruck(copy)
-                                                }} ></input>
-                                            <label >Hours</label>
-                                            <input type="text" className="form-control" defaultValue={truck.hours}
-                                                onChange={(e) => {
-                                                    const copy = { ...basicTruck }
-                                                    copy.hours = e.target.value
-                                                    setBasicTruck(copy)
-                                                }} ></input>
-                                            <label >Website</label>
-                                            <input type="text" className="form-control" defaultValue={truck.websiteURL}
-                                                onChange={(e) => {
-                                                    const copy = { ...basicTruck }
-                                                    copy.websiteURL = e.target.value
-                                                    setBasicTruck(copy)
-                                                }} ></input>
-                                            <label >Instagram</label>
-                                            <input type="text" className="form-control" defaultValue={truck.instagramURL}
-                                                onChange={(e) => {
-                                                    const copy = { ...basicTruck }
-                                                    copy.instagramURL = e.target.value
-                                                    setBasicTruck(copy)
-                                                }} ></input>
-                                            <label >Profile Image</label>
-                                            <input type="text" className="form-control" defaultValue={truck.profileImgSrc}
-                                                onChange={(e) => {
-                                                    const copy = { ...basicTruck }
-                                                    copy.profileImgSrc = e.target.value
-                                                    setBasicTruck(copy)
-                                                }} ></input>
 
-                                        </ModalBody>
-                                        <ModalFooter>
-                                            <Button type="retire"
-                                                color="danger"
-                                                value={truck.id}
-                                                onClick={() => {
+                                        <TruckForm existingTruck={truck} register={false} toggle3={toggle3} updateTruck={updateTruck} editToggle={editToggle} basicTruck={basicTruck} />
 
-                                                    toggle3()
-                                                }}
-                                                className="btn btn-primary">
-                                                Retire Truck
-                                            </Button>
-                                            <Button onClick={() => updateTruck()}>
-                                                Save Changes
-                                            </Button>
-                                            <Button onClick={editToggle}>
-                                                Cancel
-                                            </Button>
-                                        </ModalFooter>
+                                        <Button type="retire"
+                                            color="danger"
+                                            value={truck.id}
+                                            onClick={() => {
+
+                                                toggle3()
+                                            }}
+                                            className="btn btn-primary">
+                                            Retire Truck
+                                        </Button>
                                     </Modal>
 
                                     <Modal isOpen={confirm} centered fullscreen="sm" size="sm" toggle={toggle} >
@@ -386,8 +337,8 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                             <div className="truck__info--links">
                                 {
                                     truck.websiteURL
-                                    ? <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="web-logo" className="link__logo" src={WebsiteIcon} /></a>
-                                    : ""
+                                        ? <a className="link" target="_blank" rel="noreferrer" href={truck.websiteURL} ><img alt="web-logo" className="link__logo" src={WebsiteIcon} /></a>
+                                        : ""
                                 }
                                 {
                                     truck.facebookURL
@@ -466,12 +417,12 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                 <div className="truck-reviews-heading">
                     <h3 className="schedule-heading">Recent Reviews</h3>
                     <Link to={`/reviews/${truck.id}`} className="all-reviews">{`View All (${truck.userTruckReviews?.length} reviews)`}</Link>
-                    </div>
+                </div>
                 <div className="truck__reviews card">
                     <div className="review-list reviews">
                         {
                             reviews?.length > 0
-                                ? reviews?.slice(0,3).map(review => {
+                                ? reviews?.slice(0, 3).map(review => {
                                     return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
                                 })
                                 : truckId

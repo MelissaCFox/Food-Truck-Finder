@@ -12,7 +12,7 @@
 }
 
 .create-select {
-    width: 83.4%;
+    flex: 1
 }
 
 .icon-label {
@@ -26,4 +26,8 @@
 .form-link__logo {
     width: 2rem;
     height: 2rem;
+}
+
+.suggestion--whatElse {
+    height: 5rem;
 }

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter } from "reactstrap"
+import { Button, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalFooter } from "reactstrap"
 import SuggestionRepository from "../../repositories/SuggestionsRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
@@ -43,8 +43,8 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
 
     return (
         <Form>
-            <FormGroup>
-                <Label for="suggestion-message">Where</Label>
+            <InputGroup>
+                <InputGroupText for="suggestion-message">Where</InputGroupText>
                 <Input required type="select" name="neighborhood" id="suggestion-neighborhoodId"
                     onChange={(e) => {
                         const copy = { ...suggestion }
@@ -56,20 +56,20 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                         neighborhoods.map(neighborhood => <option key={neighborhood.id} value={neighborhood.id}>{neighborhood.name}</option>)
                     }
                 </Input>
-            </FormGroup>
+            </InputGroup>
 
-            <FormGroup>
-                <Label for="suggestion-message">When</Label>
+            <InputGroup>
+                <InputGroupText for="suggestion-message">When</InputGroupText>
                 <Input required type="date" name="date" id="suggestion-date"
                     onChange={(e) => {
                         const copy = { ...suggestion }
                         copy.date = new Date(Date.parse(e.target.value)).toLocaleDateString()
                         setSuggestion(copy)
                     }} />
-            </FormGroup>
+            </InputGroup>
 
-            <FormGroup>
-                <Label for="suggestion-message">What Else?</Label>
+            <InputGroup className="suggestion--whatElse">
+                <InputGroupText for="suggestion-message">What Else?</InputGroupText>
                 <Input required type="textarea" name="message" id="suggestion-message" placeholder="Address, event info, etc"
                     className="form-control"
                     onChange={(e) => {
@@ -77,7 +77,7 @@ export const SuggestionForm = ({ truckId, suggestionToggle }) => {
                         copy.message = e.target.value
                         setSuggestion(copy)
                     }} />
-            </FormGroup>
+            </InputGroup>
 
             <FormGroup inline-block="true">
                 
