@@ -19,7 +19,12 @@ export const TruckReviewList = () => {
     }, [truckId, newInfo])
 
     useEffect(() => {
-        ReviewRepository.getAllForTruck(truckId).then(setReviews)
+        ReviewRepository.getAllForTruck(truckId).then((reviews) => {
+            const recentReviews = reviews.sort((a,b) => {
+                return b.parsedDate - a.parsedDate
+            })
+            setReviews(recentReviews)
+        })
     }, [newInfo])
 
     return (

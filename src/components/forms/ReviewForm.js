@@ -22,6 +22,7 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating }) => {
             truckId: parseInt(truckId),
             review: review,
             date: new Date(Date.parse(date)).toLocaleDateString(),
+            parsedDate: Date.parse(date),
             anonymous: anonymousState,
             rating: rating
         }

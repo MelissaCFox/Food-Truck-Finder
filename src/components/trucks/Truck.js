@@ -70,15 +70,12 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
 
     useEffect(() => {
         ReviewRepository.getAllForTruck(truckId).then((reviews) => {
-
             const recentReviews = reviews.sort((a,b) => {
-                a.date = a.date.split("/").reverse().join("")
-                b.date = b.date.split("/").reverse().join("")
-                return a.date - b.date
+                return b.parsedDate - a.parsedDate
             })
             setReviews(recentReviews)
         })
-    },[truckId])
+    },[truckId, truck])
 
     useEffect(() => {
         if (truckID) {
@@ -378,7 +375,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                 }
                             </div>
                             <div className="truck__info--dollars">{truckPrice}</div>
-                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /></div>
+                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} />({truck.userTruckReviews?.length} ratings)</div>
 
                             <div className="truck__info--links">
                                 {
@@ -468,7 +465,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                     <div className="review-list reviews">
                         {
                             reviews?.length > 0
-                                ? truck?.userTruckReviews?.slice(0,3).map(review => {
+                                ? reviews?.slice(0,3).map(review => {
                                     return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
                                 })
                                 : truckId

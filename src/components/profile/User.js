@@ -15,8 +15,12 @@ export const User = ({ userId }) => {
 
     useEffect(() => {
         if (userId) {
-
-            ReviewRepository.getAllForUser(userId).then(setUserReviews)
+            ReviewRepository.getAllForUser(userId).then((reviews) => {
+                const recentReviews = reviews.sort((a,b) => {
+                    return b.parsedDate - a.parsedDate
+                })
+                setUserReviews(recentReviews)
+            })
         }
     }, [userId])
 
