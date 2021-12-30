@@ -11,21 +11,21 @@ export const SearchResults = () => {
         if (trucks.length > 0) {
             return (
                 <>
-                    <div className="card">
-                        <ul className="trucks search-results">
+                    <div className="section">
+                        <div className="truck-results">
 
                             {
-                                trucks.map(truck => <li className="card truck" key={truck.id}><TruckCard key={truck.id} truckId={truck.id} /></li>)
+                                trucks.map(truck => <div className="card truck" key={truck.id}><TruckCard key={truck.id} truckId={truck.id} /></div>)
                             }
 
-                        </ul>
+                        </div>
                     </div>
                 </>
             )
         } else {
-            return <div className="card"><ul className="trucks search-results">
+            return <div className="truck-results">
             <div className="card noMatch">No Matching Trucks</div>
-        </ul></div>
+        </div>
         }
     }
 
@@ -33,24 +33,24 @@ export const SearchResults = () => {
         if (location.state?.neighborhoods.length > 0) {
             return (
                 <>
-                    <div className="card">
-                        <ul className="trucks search-results">
+                    <div className="section">
+                        <div className="truck-results">
                             {
                                 location.state.neighborhoods.map(neighborhood => <li className="card neighborhood" key={neighborhood.id}><NeighborhoodCard key={neighborhood.id} thisNeighborhood={neighborhood} /></li>)
                             }
-                        </ul>
+                        </div>
                     </div>
                 </>
             )
         } else {
-            return <div className="card"><ul className="trucks search-results">
+            return <div className="truck-results">
                 <div className="card noMatch">No Matching Neighborhoods</div>
-            </ul></div>
+            </div>
         }
     }
 
     return (
-        <div className="searchResults">
+        <div className="search-results">
 
             <div>
                 <h2 className="search-heading">Matching Trucks</h2>

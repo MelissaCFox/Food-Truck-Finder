@@ -171,7 +171,30 @@ dialog {
   flex-direction: row;
   flex-wrap: wrap;
   padding: 1rem;
+  flex: 8
 }
+
+.section{
+  margin-bottom: 1rem;
+}
+
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 2rem 9.5rem;
+}
+
+.truck-results {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background-color: #2D4263;
+
+} 
+
 
 .truck-logo {
   width: 100px;

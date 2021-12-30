@@ -103,7 +103,7 @@ export const Neighborhood = () => {
                         <div className="neighborhood__image"><img alt="logo" className="neighborhood__image" src={src} /></div>
                         <div className="neighborhood__description">
                             <div>{neighborhood.description}</div>
-                            <div>Learn More at <a className="NG-link" target="_blank" href={neighborhood.linkNG}>Nashville Guru</a></div>
+                            <div>Learn More at <a className="NG-link" target="blank" href={neighborhood.linkNG}>Nashville Guru</a></div>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@ export const Neighborhood = () => {
                 </div>
 
                 <div className="neighborhood__map">
-                    <img className="map" src={map} />
+                    <img className="map" alt="neigborhood location on map" src={map} />
                 </div>
 
             </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min"
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min"
 import { Input } from "reactstrap"
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
@@ -21,7 +21,6 @@ import './TruckList.css';
 export const NeighborhoodTruckList = () => {
     const [neighborhoods, setNeighborhoods] = useState([])
     const [dateString, setDateString] = useState("")
-    const history = useHistory()
     const [dateForList, setDateForList] = useState("")
     const [favorites, setFavorites] = useState(false)
     const toggleFavorites = () => setFavorites(!favorites)

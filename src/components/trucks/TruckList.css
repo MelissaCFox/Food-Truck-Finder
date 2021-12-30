@@ -176,15 +176,10 @@ background-image: linear-gradient(to right, #2D4263 0%, #406882 100%); }
   flex-direction: column;
 }
 
-.search-results {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  margin: 0;
-}
+
 
 .noMatch {
   padding: 1rem;
-  color: #2D4263;
+  color: #ECDBBA;
 }
   

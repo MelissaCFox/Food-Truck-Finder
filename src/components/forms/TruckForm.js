@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Button, FormGroup, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalFooter } from "reactstrap"
+import { Button, FormGroup, InputGroup, InputGroupText, Modal, ModalBody, ModalFooter } from "reactstrap"
 import CreatableSelect from "react-select/creatable";
 import FoodTypeRepository from "../../repositories/FoodTypeRepository"
 import TruckRepository from "../../repositories/TruckRepository"
