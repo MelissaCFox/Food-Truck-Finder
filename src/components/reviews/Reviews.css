@@ -1,0 +1,22 @@
+
+.truck-reviews {
+    margin: 4rem 10rem;
+    padding: 2rem 2rem;
+    color:#ECDBBA;
+    background-color: #406882;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.heading {
+    padding-bottom: 1rem;
+    color:#ECDBBA;
+
+}
+
+.truck-reviews-all {
+    display: flex;
+    flex-wrap: wrap;
+
+}

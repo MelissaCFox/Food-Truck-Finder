@@ -191,6 +191,17 @@
     margin-bottom: 0;
     color: #ECDBBA;
     padding: 0.25rem 0.5rem;
+    display: flex;
+}
+
+.all-reviews {
+    margin-top: 0.6rem;
+    margin-left: 1rem;
+    color:#ECDBBA;
+}
+
+a.all-reviews:hover{
+    color: #2D4263;
 }
 
 .review-list {

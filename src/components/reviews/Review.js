@@ -18,7 +18,7 @@ import FourAndStar from '../trucks/images/4-5Stars.png';
 import FiveStar from '../trucks/images/5Stars.png';
 
 
-export const Review = ({ review, userId, setUserReviews, setTruck, setUser, alertNewRating, alertNewInfo }) => {
+export const Review = ({ review, userId, setUserReviews, setTruck, setUser, alertNewRating, alertNewInfo, allReviewsList, editedReview }) => {
     const { getCurrentUser } = useSimpleAuth()
     const history = useHistory()
     const { truckId } = useParams()
@@ -87,9 +87,11 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
 
         ReviewRepository.update(review.id, reviewCopy)
             .then(() => {
-                truckId
-                    ? TruckRepository.get(truckId).then(setTruck)
-                    : ReviewRepository.getAllForUser(userId).then(setUserReviews)
+                allReviewsList
+                    ? editedReview()
+                    : truckId
+                        ? TruckRepository.get(truckId).then(setTruck)
+                        : ReviewRepository.getAllForUser(userId).then(setUserReviews)
             })
             .then(editToggle)
     }
@@ -190,6 +192,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                         </Modal>
                     </div>)
                     : <div className="review-options-blank"></div>
+
             }
         </div>
     )

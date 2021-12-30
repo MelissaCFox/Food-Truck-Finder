@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom/cjs/react-router-dom.min"
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
@@ -30,6 +30,7 @@ import FacebookIcon from "./images/FacebookIcon.png"
 import TwitterIcon from "./images/TwitterIcon.png"
 import InstagramIcon from "./images/InstagramIcon.png"
 import WebsiteIcon from "./images/WebsiteIcon.png"
+import ReviewRepository from "../../repositories/ReviewRepository"
 
 
 
@@ -44,6 +45,8 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const [days, setDays] = useState([])
     const [userRating, updateUserRating] = useState("")
     const [basicTruck, setBasicTruck] = useState({})
+
+    const [reviews, setReviews] = useState([])
 
     const [newLocation, setNewLocation] = useState(false)
     const changeLocation = () => setNewLocation(!newLocation)
@@ -64,6 +67,18 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
         FoodTypeRepository.getAll().then(setFoodTypes)
 
     }, [])
+
+    useEffect(() => {
+        ReviewRepository.getAllForTruck(truckId).then((reviews) => {
+
+            const recentReviews = reviews.sort((a,b) => {
+                a.date = a.date.split("/").reverse().join("")
+                b.date = b.date.split("/").reverse().join("")
+                return a.date - b.date
+            })
+            setReviews(recentReviews)
+        })
+    },[truckId])
 
     useEffect(() => {
         if (truckID) {
@@ -363,7 +378,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                 }
                             </div>
                             <div className="truck__info--dollars">{truckPrice}</div>
-                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} reviews)</div>
+                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /></div>
 
                             <div className="truck__info--links">
                                 {
@@ -445,12 +460,15 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
             </div>
 
             <div className="truck-reviews-section">
-                <div className="truck-reviews-heading"><h3 className="schedule-heading">Customer Reviews</h3></div>
+                <div className="truck-reviews-heading">
+                    <h3 className="schedule-heading">Recent Reviews</h3>
+                    <Link to={`/reviews/${truck.id}`} className="all-reviews">{`View All (${truck.userTruckReviews?.length} reviews)`}</Link>
+                    </div>
                 <div className="truck__reviews card">
                     <div className="review-list reviews">
                         {
-                            truck?.userTruckReviews?.length > 0
-                                ? truck?.userTruckReviews?.map(review => {
+                            reviews?.length > 0
+                                ? truck?.userTruckReviews?.slice(0,3).map(review => {
                                     return <div key={review.id} className="truck-review-card"><Review key={review.id} review={review} setTruck={setTruck} thisTruckId={truckId} alertNewRating={alertNewRating} /></div>
                                 })
                                 : truckId
