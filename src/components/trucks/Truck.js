@@ -260,7 +260,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                         toggle={editToggle}
                                     >
                                         <ModalHeader toggle={editToggle}>
-                                            Edit Truck Details
+                                            Edit Details for {<em>{truck.name}</em>}
                                         </ModalHeader>
 
                                         <TruckForm existingTruck={truck} register={false} toggle3={toggle3} editToggle={editToggle} basicTruck={basicTruck} alertNewInfo={alertNewInfo} />
@@ -358,8 +358,8 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                     <div className="truck__currentLocation">
                         {
                             currentNeighborhood
-                                ? <><div className="truck-location-heading">Find Us Today in </div><div className="truck-location-card"><NeighborhoodCard thisNeighborhood={currentNeighborhood} /></div></>
-                                : <><div className="truck-location-heading">Find Us Today in </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div></div></>
+                                ? <><div className="truck-location-heading">Find Us Today </div><div className="truck-location-card"><NeighborhoodCard thisNeighborhood={currentNeighborhood} /></div></>
+                                : <><div className="truck-location-heading">Find Us Today </div><div className="neighborhood-card"><div className="card-body">We Are Off Today!</div></div></>
 
                         }
                         {
