@@ -13,7 +13,7 @@ import './Form.css';
 
 
 
-export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, toggle3, updateTruck, editToggle}) => {
+export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, editToggle, alertNewInfo }) => {
     const [foodTypes, setFoodTypes] = useState([])
     const [truck, setTruck] = useState({
         name: existingTruck ? existingTruck.name : "",
@@ -27,6 +27,23 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, t
         dollars: existingTruck ? existingTruck.dollars : 1,
         userRating: existingTruck ? existingTruck.userRating : 0
     })
+    const [changedFoodTypes, setChangedFoodTypes] = useState(false)
+    const alertChangedFoodTypes = () => setChangedFoodTypes(true)
+    const [existingTruckFoodTypes, setExistingTruckFoodTypes] = useState([])
+
+    useEffect(() => {
+        if (existingTruck && foodTypes) {
+            FoodTypeRepository.getForTruck(existingTruck.id)
+                .then((res) => {
+                    setExistingTruckFoodTypes(res)
+                    const mappedTypes = res.map(type => {
+                        const foundType = foodTypes.find(foodType => foodType.id === type.foodTypeId)
+                        return { label: foundType?.type, value: type.foodTypeId }
+                    })
+                    setUserSelectedFoodTypes(mappedTypes)
+                })
+        } else return false
+    }, [existingTruck, foodTypes])
 
     const [formCheck, setFormCheck] = useState(false)
     const toggleFormCheck = () => setFormCheck(!formCheck)
@@ -36,6 +53,48 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, t
     useEffect(() => {
         FoodTypeRepository.getAll().then(setFoodTypes)
     }, [])
+
+    const updateTruck = (truck) => {
+        TruckRepository.update(existingTruck.id, truck)
+            .then(() => {
+                if (changedFoodTypes) {
+                    existingTruckFoodTypes.forEach(truckType => TruckFoodTypeRepository.delete(truckType.id))
+                    const newFoodTypesArray = []
+                    const truckTypesPostArray = []
+                    for (const selection of userSelectedFoodtypes) {
+                        if (typeof selection.value === "string") {
+                            const newFoodTypeObj = {
+                                type: selection.value
+                            }
+                            newFoodTypesArray.push(FoodTypeRepository.add(newFoodTypeObj).then(foodType => {
+                                const truckFoodTypeObj = {
+                                    truckId: existingTruck.id,
+                                    foodTypeId: foodType.id
+                                }
+                                truckTypesPostArray.push(TruckFoodTypeRepository.add(truckFoodTypeObj))
+                            }))
+                        } else {
+                            const truckFoodTypeObj = {
+                                truckId: existingTruck.id,
+                                foodTypeId: selection.value
+                            }
+                            truckTypesPostArray.push(TruckFoodTypeRepository.add(truckFoodTypeObj))
+                        }
+                    }
+                    Promise.all(newFoodTypesArray).then(() => {
+                        Promise.all(truckTypesPostArray).then(() => {
+                            debugger
+                            TruckRepository.get(existingTruck.id).then(alertNewInfo)
+                        })
+                    })
+                }
+                else {
+                    TruckRepository.get(existingTruck.id).then(alertNewInfo)
+                }
+            })
+            .then(editToggle)
+    }
+
 
     const registerTruck = (event) => {
         event.preventDefault()
@@ -187,31 +246,28 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, t
                     </select>
                 </InputGroup>
 
-                {
-                    existingTruck
-                        ? ""
-                        : <div className="form-group">
-                            <FormGroup className="input-group">
-                                <div className="input-group-prepend">
-                                    <label className="input-group-text" >Food Type(s)</label>
-                                </div>
-                                <CreatableSelect
-                                    required
-                                    isMulti
-                                    isClerable
-                                    className="create-select"
-                                    defaultValue={existingTruck ? existingTruck?.dollars : userSelectedFoodtypes}
-                                    value={userSelectedFoodtypes}
-                                    options={foodTypes.map(type => ({ label: type.type, value: type.id }))}
-                                    id="tagSelect"
-                                    placeholder="Select food types..."
-                                    onChange={tagChoices => {
-                                        setUserSelectedFoodTypes(tagChoices)
-                                    }}
-                                />
-                            </FormGroup>
+                <div className="form-group">
+                    <FormGroup className="input-group">
+                        <div className="input-group-prepend">
+                            <label className="input-group-text" >Food Type(s)</label>
                         </div>
-                }
+                        <CreatableSelect
+                            required
+                            isMulti
+                            isClerable
+                            className="create-select"
+                            value={userSelectedFoodtypes}
+                            options={foodTypes.map(type => ({ label: type.type, value: type.id }))}
+                            id="tagSelect"
+                            placeholder="Select food types..."
+                            onChange={tagChoices => {
+                                setUserSelectedFoodTypes(tagChoices)
+                                alertChangedFoodTypes()
+                            }}
+                        />
+                    </FormGroup>
+                </div>
+
 
                 <div className="social-media-links">
                     <div className="sub-heading">Social Media Links (optional)</div>
@@ -286,7 +342,7 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, t
             {
                 existingTruck
                     ? <ModalFooter>
-                        
+
                         <Button onClick={() => updateTruck(truck)}>
                             Save Changes
                         </Button>

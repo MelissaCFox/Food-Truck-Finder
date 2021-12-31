@@ -133,8 +133,9 @@
 }
 
 .truck__info--rating {
+
     font-family: "Readex Pro";
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 .truck__currentLocation {

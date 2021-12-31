@@ -8,7 +8,7 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRepository"
 import { Review } from "../reviews/Review"
 import { TruckSchedule } from "../schedule/TruckSchedule"
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Modal, ModalBody, ModalHeader } from "reactstrap"
 import OneStar from './images/1Star.png';
 import OneAndStar from './images/1-5Stars.png';
 import TwoStar from './images/2Stars.png';
@@ -47,6 +47,9 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const [days, setDays] = useState([])
     const [userRating, updateUserRating] = useState("")
     const [basicTruck, setBasicTruck] = useState({})
+
+    const [newInfo, setNewInfo] = useState(false)
+    const alertNewInfo = () => setNewInfo(!newInfo)
 
     const [reviews, setReviews] = useState([])
 
@@ -122,7 +125,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
         truckId
             ? TruckRepository.get(truckId).then(setTruck)
             : TruckRepository.get(truckID).then(setTruck)
-    }, [truckId, truckID, userRating, newRating])
+    }, [truckId, truckID, userRating, newRating, newInfo])
 
     const createNewLocation = (truckId, neighborhoodId, dayId) => {
         const newTruckLocation = {
@@ -153,14 +156,6 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const currentTruckLocation = truck?.truckLocations?.find(location => location.dayId === currentDayId)
     const currentNeighborhood = neighborhoods?.find(neighborhood => neighborhood.id === currentTruckLocation?.neighborhoodId)
     const foundLike = favorites?.find(favorite => favorite.userId === getCurrentUser().id && favorite.truckId === truck.id)
-
-    const updateTruck = (truck) => {
-        TruckRepository.update(basicTruck.id, truck)
-            .then(() => {
-                TruckRepository.get(basicTruck.id).then(setTruck)
-            })
-            .then(editToggle)
-    }
 
     const toggleFavorite = (favoriteTruckId) => {
         const newLike = {
@@ -268,7 +263,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                             Edit Truck Details
                                         </ModalHeader>
 
-                                        <TruckForm existingTruck={truck} register={false} toggle3={toggle3} updateTruck={updateTruck} editToggle={editToggle} basicTruck={basicTruck} />
+                                        <TruckForm existingTruck={truck} register={false} toggle3={toggle3} editToggle={editToggle} basicTruck={basicTruck} alertNewInfo={alertNewInfo} />
 
                                         <Button type="retire"
                                             color="danger"
@@ -332,7 +327,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                 }
                             </div>
                             <div className="truck__info--dollars">{truckPrice}</div>
-                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> ({truck.userTruckReviews?.length} ratings)</div>
+                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> {truck.userTruckReviews?.length > 0 ? `(${truck.userTruckReviews?.length} ratings)` : ""}</div>
 
                             <div className="truck__info--links">
                                 {

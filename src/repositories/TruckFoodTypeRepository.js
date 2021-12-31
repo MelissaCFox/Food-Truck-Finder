@@ -9,6 +9,10 @@ const TruckFoodTypeRepository = {
     
     async add(truckFoodTypeObj) {
         return await fetchIt(`${Settings.remoteURL}/truckFoodTypes`, "POST", JSON.stringify(truckFoodTypeObj))
+    },
+
+    async delete(truckFoodTypeId) {
+        return await fetchIt(`${Settings.remoteURL}/truckFoodTypes/${truckFoodTypeId}`, "DELETE")
     }
 
 }

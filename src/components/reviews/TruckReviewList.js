@@ -25,7 +25,7 @@ export const TruckReviewList = () => {
             })
             setReviews(recentReviews)
         })
-    }, [newInfo])
+    }, [newInfo, truckId])
 
     return (
         <div className="truck-reviews">
