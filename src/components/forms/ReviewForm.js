@@ -1,3 +1,4 @@
+import Rating from '@mui/material/Rating';
 import { useState } from "react"
 import { Input, Label } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
@@ -51,9 +52,13 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating }) => {
                 <Input type="textarea" height="4rem" required autoFocus className="form-control" onChange={e => setReview(e.target.value)} id="review" placeholder="Review"></Input>
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
                 <Label for="rating">Rating</Label>
                 <input type="range" defaultValue="1" min="1" max="5" step="1" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></input>
+            </div> */}
+
+            <div>
+            <Rating name="half-rating" defaultValue={3} precision={1} onChange={e => setRating(parseInt(e.target.value))}/>
             </div>
 
             <div className="form-group anonymous-check">

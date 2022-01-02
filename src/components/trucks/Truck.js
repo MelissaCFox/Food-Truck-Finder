@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min"
+import Rating from '@mui/material/Rating';
 import { useState, useEffect } from "react/cjs/react.development"
 import TruckRepository from "../../repositories/TruckRepository"
 import NeighborhoodRepository from "../../repositories/NeighborhoodRepository"
@@ -9,16 +10,6 @@ import UserTruckFavoriteRepository from "../../repositories/UserTruckFavoriteRep
 import { Review } from "../reviews/Review"
 import { TruckSchedule } from "../schedule/TruckSchedule"
 import { Button, Modal, ModalBody, ModalHeader } from "reactstrap"
-import OneStar from './images/1Star.png';
-import OneAndStar from './images/1-5Stars.png';
-import TwoStar from './images/2Stars.png';
-import TwoAndStar from './images/2-5Stars.png';
-import ThreeStar from './images/3Stars.png';
-import ThreeAndStar from './images/3-5Stars.png';
-import FourStar from './images/4Stars.png';
-import FourAndStar from './images/4-5Stars.png';
-import FiveStar from './images/5Stars.png';
-import NoRating from './images/NoRating.png';
 import Fav from './images/Fav.png';
 import NoFav from './images/NoFav.png';
 import './Truck.css';
@@ -45,17 +36,13 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     const [favorites, setFavorites] = useState([])
     const [existingLike, setExistingLike] = useState(false)
     const [days, setDays] = useState([])
-    const [userRating, updateUserRating] = useState("")
     const [basicTruck, setBasicTruck] = useState({})
-
+    const [roundedUserRating, setRoundedUserRating] = useState(0)
     const [newInfo, setNewInfo] = useState(false)
     const alertNewInfo = () => setNewInfo(!newInfo)
-
     const [reviews, setReviews] = useState([])
-
     const [newLocation, setNewLocation] = useState(false)
     const changeLocation = () => setNewLocation(!newLocation)
-
     const [editModal, setEditModal] = useState(false)
     const editToggle = () => setEditModal(!editModal)
     const [newRating, toggleNewRating] = useState(false)
@@ -79,6 +66,12 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     }, [])
 
     useEffect(() => {
+        const number = truck.userRating
+        const rounded = Math.round(number * 2) / 2
+        setRoundedUserRating(rounded)
+    }, [truck, newRating])
+
+    useEffect(() => {
         ReviewRepository.getAllForTruck(truckId).then((reviews) => {
             const recentReviews = reviews.sort((a, b) => {
                 return b.parsedDate - a.parsedDate
@@ -91,7 +84,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
         if (truckID) {
             TruckRepository.getBasic(truckID).then(setBasicTruck)
         }
-    }, [truckID, userRating, newRating])
+    }, [truckID, roundedUserRating, newRating])
 
     useEffect(() => {
         TruckLocationRepository.getAllDays().then(setDays)
@@ -125,7 +118,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
         truckId
             ? TruckRepository.get(truckId).then(setTruck)
             : TruckRepository.get(truckID).then(setTruck)
-    }, [truckId, truckID, userRating, newRating, newInfo])
+    }, [truckId, truckID, roundedUserRating, newRating, newInfo])
 
     const createNewLocation = (truckId, neighborhoodId, dayId) => {
         const newTruckLocation = {
@@ -186,49 +179,6 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     } else if (truck.dollars === 3) {
         truckPrice = "$ $ $"
     }
-
-    useEffect(() => {
-
-        let starRating = truck?.userRating
-        if (0 < starRating && starRating < 1.25) {
-            starRating = OneStar
-        } else if (starRating === 1.25) {
-            starRating = OneStar
-        } else if (1.25 < starRating && starRating < 1.75) {
-            starRating = OneAndStar
-        } else if (starRating === 1.75) {
-            starRating = OneAndStar
-        } else if (1.75 < starRating && starRating < 2.25) {
-            starRating = TwoStar
-        } else if (starRating === 2.25) {
-            starRating = TwoStar
-        } else if (2.25 < starRating && starRating < 2.75) {
-            starRating = TwoAndStar
-        } else if (starRating === 2.75) {
-            starRating = TwoAndStar
-        } else if (2.75 < starRating && starRating < 3.25) {
-            starRating = ThreeStar
-        } else if (starRating === 3.25) {
-            starRating = ThreeStar
-        } else if (3.25 < starRating && starRating < 3.75) {
-            starRating = ThreeAndStar
-        } else if (starRating === 3.75) {
-            starRating = ThreeAndStar
-        } else if (3.75 < starRating && starRating < 4.25) {
-            starRating = FourStar
-        } else if (starRating === 4.25) {
-            starRating = FourStar
-        } else if (4.25 < starRating && starRating < 4.75) {
-            starRating = FourAndStar
-        } else if (starRating === 4.75) {
-            starRating = FourAndStar
-        } else if (4.75 < starRating) {
-            starRating = FiveStar
-        } else if (starRating === 0) {
-            starRating = NoRating
-        }
-        updateUserRating(starRating)
-    }, [truck, newRating])
 
 
     return (
@@ -328,7 +278,23 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                 }
                             </div>
                             <div className="truck__info--dollars">{truckPrice}</div>
-                            <div className="truck__info--rating "><img className="truck-userStar" alt="user rating star" src={userRating} /> {truck.userTruckReviews?.length > 0 ? `(${truck.userTruckReviews?.length} ratings)` : ""}</div>
+                            <div className="truck__info--rating ">
+                                {
+                                    truck.userRating === 0
+                                        ? <div>No Ratings Yet</div>
+                                        : <><Rating name="size-small" precision={0.5} value={roundedUserRating} size="small" readOnly />
+                                            <div className="truck-userStar">
+                                                {
+                                                    truck.userTruckReviews?.length > 0
+                                                        ? truck.userTruckReviews?.length > 1
+                                                            ? `(${truck.userTruckReviews?.length} ratings)`
+                                                            : `(${truck.userTruckReviews?.length} rating)`
+                                                        : ""
+                                                }
+                                            </div></>
+                                }
+                            </div>
+
 
                             <div className="truck__info--links">
                                 {

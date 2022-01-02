@@ -16,6 +16,10 @@
 
 }
 
+.truck-userStar {
+    padding-left: 0.5rem;
+}
+
 .truck-reviews-all {
     display: flex;
     flex-wrap: wrap;

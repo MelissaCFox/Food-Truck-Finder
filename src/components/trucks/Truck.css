@@ -133,7 +133,7 @@
 }
 
 .truck__info--rating {
-
+    display: flex;
     font-family: "Readex Pro";
     font-size: 0.9rem;
 }

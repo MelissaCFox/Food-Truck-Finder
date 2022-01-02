@@ -83,7 +83,6 @@ background-image: linear-gradient(to right, #2D4263 0%, #406882 100%); }
   list-style: none;
 }
 
-
 .options {
     display: flex;
     flex-wrap: wrap;
