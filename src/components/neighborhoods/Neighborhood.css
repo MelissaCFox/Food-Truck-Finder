@@ -8,6 +8,14 @@
 
 }
 
+.random-truck-heading {
+    color: #ECDBBA;
+    font-family: "Readex Pro";
+    padding-top: 1.5rem;
+    text-align: center;
+
+}
+
 .neighborhood__details {
     display: flex;
     flex-wrap: wrap;
@@ -38,6 +46,7 @@
     flex-direction: row;
     justify-content:center;
     
+    
 }
 
 .NG-link {
@@ -61,8 +70,9 @@
     margin: 0;
     background-color: #406882;
     color: #ECDBBA;
-    padding: 2rem 0.5rem;
+    padding: 1rem 0.5rem 1rem;
     text-align: center;
+    border-bottom: 1px solid #ECDBBA;
 }
 
 .neighborhood__image {

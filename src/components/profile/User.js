@@ -22,13 +22,13 @@ export const User = ({ userId }) => {
                 setUserReviews(recentReviews)
             })
         }
-    }, [userId])
+    }, [userId, user])
 
     useEffect(() => {
         if (userId) {
             UserRepository.get(userId).then(setUser)
         }
-    }, [userId])
+    }, [userId, newInfo])
 
     
   
@@ -36,7 +36,7 @@ export const User = ({ userId }) => {
         <div className="profile-view">
             <ul className="favorites card">
                 <div className="profile-header"><h3>My Favorite Food Trucks</h3></div>
-                <div className="profile-container"><Favorites key={user.id} userId={user.id} newInfo={newInfo} /></div>
+                <div className="profile-container"><Favorites key={`${user.id}--${newInfo}`} userId={user.id} newInfo={newInfo} /></div>
             </ul>
 
             <ul className="reviews-container card">

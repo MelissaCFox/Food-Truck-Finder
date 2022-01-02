@@ -49,6 +49,10 @@ margin-top: -1rem;
 
 .container nav {
     padding: 0;
+    border-bottom: 0.25rem #406882 solid;
+}
+
+.navbar-collapse {
 }
 
 .appLogo button {

@@ -83,7 +83,6 @@ export const TruckForm = ({ userId, toggle, setTrucks, setUser, existingTruck, e
                     }
                     Promise.all(newFoodTypesArray).then(() => {
                         Promise.all(truckTypesPostArray).then(() => {
-                            debugger
                             TruckRepository.get(existingTruck.id).then(alertNewInfo)
                         })
                     })

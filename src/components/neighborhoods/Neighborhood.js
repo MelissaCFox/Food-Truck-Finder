@@ -111,6 +111,7 @@ export const Neighborhood = () => {
 
                 <div className="neighborhood__currentTrucks neighborhood-page-card">
                     <h3 className="feature-heading">Featured Truck </h3>
+                        <div className="random-truck-heading">{randomTruckLocation.truck?.name}</div>
                     <div className="featured-truck">
                         {
                             randomTruckLocation.id

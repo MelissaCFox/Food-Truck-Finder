@@ -105,15 +105,8 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                                                             })
                                                         : ReviewRepository.deleteAndUpdate(review)
                                                             .then(() => {
-                                                                ReviewRepository.getAllForUser(userId)
-                                                                    .then((reviews) => {
-                                                                        setUserReviews(reviews)
-                                                                    })
-                                                                    .then(() => {
-                                                                        UserRepository.get(userId).then(setUser)
-                                                                        alertNewInfo()
-                                                                        reviewToggle()
-                                                                    })
+                                                                alertNewInfo()
+                                                                reviewToggle()
                                                             })
                                                 }}>
                                                 Yes, Delete

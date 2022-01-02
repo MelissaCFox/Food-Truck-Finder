@@ -13,7 +13,7 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating }) => {
     const { getCurrentUser } = useSimpleAuth()
     const [anonymousState, setAnonymous] = useState(false)
     const toggleAnonymous = () => setAnonymous(!anonymousState)
-    const [rating, setRating] = useState(1)
+    const [rating, setRating] = useState(3)
 
 
     const submitReview = (event) => {
@@ -51,11 +51,6 @@ export const ReviewForm = ({ truckId, setTruck, alertNewRating }) => {
             <div className="form-group">
                 <Input type="textarea" height="4rem" required autoFocus className="form-control" onChange={e => setReview(e.target.value)} id="review" placeholder="Review"></Input>
             </div>
-
-            {/* <div className="form-group">
-                <Label for="rating">Rating</Label>
-                <input type="range" defaultValue="1" min="1" max="5" step="1" required autoFocus className="form-control" onChange={e => setRating(parseInt(e.target.value))} id="rating"></input>
-            </div> */}
 
             <div>
             <Rating name="half-rating" defaultValue={3} precision={1} onChange={e => setRating(parseInt(e.target.value))}/>

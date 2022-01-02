@@ -18,7 +18,7 @@ export const TruckCard = ({ thisTruck, truckId, newInfo }) => {
         const number = truck.userRating
         const rounded = Math.round(number * 2) / 2
         setRoundedUserRating(rounded)
-    }, [truck, thisTruck, newInfo])
+    }, [truck, thisTruck, truckId, newInfo])
 
     useEffect(() => {
         if (thisTruck) {
@@ -56,7 +56,7 @@ export const TruckCard = ({ thisTruck, truckId, newInfo }) => {
                     {
                         truck.userRating === 0
                             ? <div className="truck-card-rating-text">No Ratings Yet</div>
-                            : <><Rating name="size-small" precision={0.5} value={roundedUserRating} size="small" readOnly /> <div className="truck-card-rating-text">{`(${truck.userTruckReviews?.length})`}</div></>
+                            : <><Rating name={`truck-${truck.id}-rating`} precision={0.5} key={truck.id} value={roundedUserRating} size="small" readOnly /> <div className="truck-card-rating-text">{`(${truck.userTruckReviews?.length})`}</div></>
                     }
                 </div>
                 <div className="mini-info">
