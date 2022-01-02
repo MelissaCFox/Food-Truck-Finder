@@ -81,7 +81,7 @@ export const NavBar = () => {
                 </button>
                 <div id="navbarNavDropdown" className="navbar-collapse collapse header">
                     <ul className="navbar-nav mr-auto appLogo">
-                        <button  onClick={() => {
+                        <button onClick={() => {
                             TruckRepository.getAll()
                                 .then(() => history.push({
                                     pathname: `/trucks`,
@@ -91,38 +91,51 @@ export const NavBar = () => {
                             <img src={FTFLogo} alt="Food Truck Finder Logo" className="appLogo-btn" />
                         </button>
                     </ul>
-                    <ul className="navbar-nav search">
-                        <li className="nav-item search">
-                            <input id="searchTerms"
-                                onKeyUp={search}
-                                className="form-control w-100"
-                                type="search"
-                                placeholder="Search"
-                                aria-label="Search" />
-                        </li>
-                    </ul>
-                    <ul className="navbar-nav profile">
-                        <li className="nav-item dropdown">
-                            {
-                                isAuthenticated()
-                                    ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
-                                    : <Link className="nav-link" to="/login">Login</Link>
-                            }
-                        </li>
-                    </ul>
+                    <div className="navbar-nav-links">
+                        <ul className="navbar-nav search">
+                            <li className="nav-item search">
+                                <input id="searchTerms"
+                                    onKeyUp={search}
+                                    className="form-control w-100"
+                                    type="search"
+                                    placeholder="Search"
+                                    aria-label="Search" />
+                            </li>
+                        </ul>
+                        <ul className="navbar-nav profile">
+                            <li className="nav-item dropdown">
+                                {
+                                    isAuthenticated()
+                                        ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
+                                        : <Link className="nav-link" to="/login">Login</Link>
+                                }
+                            </li>
+                        </ul>
 
-                    <ul className="navbar-nav logout">
-                        <li className="nav-item dropdown">
-                            {
-                                isAuthenticated()
-                                    ? <div className="logout-btn"><button className="nav-link logout-btn" onClick={() => {
-                                        logout()
-                                        history.push("/login")
-                                    }}><div className="logout-btn">Logout</div></button></div>
-                                    : <Link className="nav-link" to="/login">Login</Link>
-                            }
-                        </li>
+                        <ul className="navbar-nav logout">
+                            <li className="nav-item dropdown">
+                                {
+                                    isAuthenticated()
+                                        ? <div className="logout-btn"><button className="nav-link logout-btn" onClick={() => {
+                                            logout()
+                                            history.push("/login")
+                                        }}><div className="logout-btn">Logout</div></button></div>
+                                        : <Link className="nav-link" to="/login">Login</Link>
+                                }
+                            </li>
 
+                        </ul>
+                    </div>
+                    <ul className="navbar-nav mr-auto appLogo">
+                        <button onClick={() => {
+                            TruckRepository.getAll()
+                                .then(() => history.push({
+                                    pathname: `/trucks`,
+                                    state: refresh
+                                }))
+                        }}>
+                            <img src={FTFLogo} alt="Food Truck Finder Logo" className="appLogo-btn" />
+                        </button>
                     </ul>
                 </div>
             </nav>

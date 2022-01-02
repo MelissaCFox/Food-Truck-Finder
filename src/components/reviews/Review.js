@@ -55,7 +55,89 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                     : <div className="review-truckName"><button onClick={() => history.push(`/trucks/${review.truck?.id}`)}>{review.truck?.name}</button></div>
             }
 
-            <div className="review-date">{review.date}</div>
+            <div className="review-card-heading">
+                <div className="review-date">{review.date}</div>
+                {
+                    review.userId === getCurrentUser().id
+                        ? (<div className="review-options">
+                            <Button color="secondary" onClick={editToggle}>Edit</Button>
+
+                            <Modal animation="false"
+                                isOpen={editModal}
+                                centered
+                                fullscreen="md"
+                                size="md"
+                                toggle={editToggle}
+                            >
+                                <ModalHeader toggle={editToggle}>
+                                    Edit Review
+                                </ModalHeader>
+                                <ModalBody>
+                                    <Input type="textarea" className="form-control" defaultValue={review.review} onChange={(e) => setNewDescription(e.target.value)}></Input
+                                    >
+                                </ModalBody>
+                                <ModalFooter>
+
+                                    <Button color="danger" onClick={reviewToggle}>Delete Review</Button>
+                                    <Modal animation="false"
+                                        isOpen={modal}
+                                        centered
+                                        fullscreen="md"
+                                        size="md"
+                                        toggle={reviewToggle}
+                                    >
+                                        <ModalHeader toggle={reviewToggle}>
+                                            Delete Review
+                                        </ModalHeader>
+                                        <ModalBody>
+                                            Are You Sure You Want to Delete This Review?
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button onClick={
+                                                () => {
+                                                    truckId
+                                                        ? ReviewRepository.deleteAndUpdate(review)
+                                                            .then(() => {
+                                                                TruckRepository.get(truckId).then(setTruck)
+                                                                    .then(alertNewRating)
+                                                                    .then(editToggle)
+                                                                    .then(reviewToggle)
+                                                            })
+                                                        : ReviewRepository.deleteAndUpdate(review)
+                                                            .then(() => {
+                                                                ReviewRepository.getAllForUser(userId)
+                                                                    .then((reviews) => {
+                                                                        setUserReviews(reviews)
+                                                                    })
+                                                                    .then(() => {
+                                                                        UserRepository.get(userId).then(setUser)
+                                                                        alertNewInfo()
+                                                                        reviewToggle()
+                                                                    })
+                                                            })
+                                                }}>
+                                                Yes, Delete
+                                            </Button>
+                                            <Button onClick={reviewToggle}>
+                                                Cancel
+                                            </Button>
+                                        </ModalFooter>
+                                    </Modal>
+
+                                    <Button onClick={updateReview}>
+                                        Save Changes
+                                    </Button>
+                                    <Button onClick={editToggle}>
+                                        Cancel
+                                    </Button>
+                                </ModalFooter>
+                            </Modal>
+                        </div>)
+                        : <div className="review-options-blank"></div>
+
+                }
+
+            </div>
             <div className="review-message scrollbar scrollbar--review">"{review.review}"</div>
             <Rating precision={0.5} name="size-medium" className="truck-userStar" defaultValue={review.rating} readOnly />
 
@@ -67,85 +149,6 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                     : ""
             }
 
-            {
-                review.userId === getCurrentUser().id
-                    ? (<div className="review-options">
-                        <Button color="secondary" onClick={editToggle}>Edit</Button>
-
-                        <Modal animation="false"
-                            isOpen={editModal}
-                            centered
-                            fullscreen="md"
-                            size="md"
-                            toggle={editToggle}
-                        >
-                            <ModalHeader toggle={editToggle}>
-                                Edit Review
-                            </ModalHeader>
-                            <ModalBody>
-                                <Input type="textarea" className="form-control" defaultValue={review.review} onChange={(e) => setNewDescription(e.target.value)}></Input
-                                >
-                            </ModalBody>
-                            <ModalFooter>
-
-                                <Button color="danger" onClick={reviewToggle}>Delete Review</Button>
-                                <Modal animation="false"
-                                    isOpen={modal}
-                                    centered
-                                    fullscreen="md"
-                                    size="md"
-                                    toggle={reviewToggle}
-                                >
-                                    <ModalHeader toggle={reviewToggle}>
-                                        Delete Review
-                                    </ModalHeader>
-                                    <ModalBody>
-                                        Are You Sure You Want to Delete This Review?
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button onClick={
-                                            () => {
-                                                truckId
-                                                    ? ReviewRepository.deleteAndUpdate(review)
-                                                        .then(() => {
-                                                            TruckRepository.get(truckId).then(setTruck)
-                                                                .then(alertNewRating)
-                                                                .then(editToggle)
-                                                                .then(reviewToggle)
-                                                        })
-                                                    : ReviewRepository.deleteAndUpdate(review)
-                                                        .then(() => {
-                                                            ReviewRepository.getAllForUser(userId)
-                                                                .then((reviews) => {
-                                                                    setUserReviews(reviews)
-                                                                })
-                                                                .then(() => {
-                                                                    UserRepository.get(userId).then(setUser)
-                                                                    alertNewInfo()
-                                                                    reviewToggle()
-                                                                })
-                                                        })
-                                            }}>
-                                            Yes, Delete
-                                        </Button>
-                                        <Button onClick={reviewToggle}>
-                                            Cancel
-                                        </Button>
-                                    </ModalFooter>
-                                </Modal>
-
-                                <Button onClick={updateReview}>
-                                    Save Changes
-                                </Button>
-                                <Button onClick={editToggle}>
-                                    Cancel
-                                </Button>
-                            </ModalFooter>
-                        </Modal>
-                    </div>)
-                    : <div className="review-options-blank"></div>
-
-            }
         </div>
     )
 }

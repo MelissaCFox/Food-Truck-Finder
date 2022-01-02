@@ -5,24 +5,46 @@
 } */
 
 img {
-    height: 5rem;
+    height: 6rem;
+}
+
+.navbar-nav-links {
+display: flex;
+flex-wrap: wrap;
+flex: 8rem;
+background-color: #191919;
+padding: 0;
+margin-top: -1rem;
+
 }
 
 .name-btn button {
-    background-color: #2D4263;
+    background-color: #191919;
+}
+
+.search {
+    padding-top: 0.4rem;
 }
 
 .name {
     font-family: "Readex Pro";
-    font-size: 2.3rem;
+    font-size: 2rem;
     color: #406882;
 }
 
 .logout-btn {
-    background-color: #2D4263;
+    background-color: #191919;
     font-family: "Readex Pro";
-    font-size: 2.3rem;
+    font-size: 2rem;
     color: #406882;
+}
+
+.nav-link {
+    padding-top: 0;
+}
+
+#navbarNavDropdown{
+    background-color: #191919;
 }
 
 .container nav {

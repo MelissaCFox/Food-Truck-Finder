@@ -44,10 +44,15 @@
       flex-direction: row;
   }
 
+  .review-card-heading {
+      display: flex;
+      flex-wrap: wrap;
+  }
+
   .review-card {
     margin: 0.5rem 1rem 1rem 1rem ;
     background-color: #ECDBBA;
-    width: 20rem;
+    width: 18rem;
     padding: 0.5rem;
     display: flex;
     flex-wrap: wrap;
@@ -78,14 +83,14 @@
     background-color: #ECDBBA;
     color:#191919;
     margin: 0.5rem 0.5rem 1rem 0.5rem;
-    flex: 3;
+    flex: 2;
 }
 
 
 .review-options {
     display:flex;
     flex-wrap: wrap;
-    justify-content: right;
+    margin-left: 7rem;
     
 }
 
