@@ -16,9 +16,10 @@
     margin: 0 0.2rem;
 }
 
-.favorites {
+.owner-favorites {
     background-color: #191919;
-    padding-left: 5rem;
+    padding-left: 5.7rem;
+    padding-top: 1rem;
 }
 
 .profile-view {

@@ -14,16 +14,15 @@ img {
 
 .name {
     font-family: "Readex Pro";
-    font-weight: 700;
     font-size: 2.3rem;
-    color: #191919;
+    color: #406882;
 }
 
 .logout-btn {
     background-color: #2D4263;
     font-family: "Readex Pro";
     font-size: 2.3rem;
-    color: #191919;
+    color: #406882;
 }
 
 .container nav {
@@ -42,23 +41,28 @@ img {
 }
 
 .appLogo {
-    flex: 0
+    flex: 0;
+}
+
+.appLogo-btn {
+    background-color: #191919;
+    padding: 0 2rem 0 2rem;
 }
 
 .search {
     flex: 1;
+    margin-left: 1rem;
     
 }
 
 .profile {
-    flex: 2;
-    margin: 0 0 0 5rem;
+    flex: 3;
+    justify-content: flex-end;
 
 }
 
 .logout {
     flex: 1;
-    margin-left: 10rem;
     justify-content: center;
 }
 

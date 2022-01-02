@@ -50,6 +50,12 @@
 
 }
 
+.truck-card-rating-text {
+  font-size: 0.75rem;
+  padding-top:0.125rem;
+  color: #2D4263;
+}
+
 .scrollbar {
 overflow-y: scroll;
 

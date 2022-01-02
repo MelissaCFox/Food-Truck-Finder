@@ -14,7 +14,7 @@ export const Favorites = ({ userId, newInfo }) => {
     }, [userId, newInfo])
 
     return (
-        <ul className="favorites list">
+        <ul className={user.owner ? "owner-favorites list" : "favorites list"}>
 
             {
                 user.userTruckFavorites?.length > 0

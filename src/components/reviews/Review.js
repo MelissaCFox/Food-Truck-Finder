@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { useParams } from "react-router-dom/cjs/react-router-dom.min"
 import { useEffect } from "react/cjs/react.development"
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
+import { Button, Input, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth"
 import ReviewRepository from "../../repositories/ReviewRepository"
 import TruckRepository from "../../repositories/TruckRepository"
@@ -105,7 +105,7 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
             }
 
             <div className="review-date">{review.date}</div>
-            <div className="review-message">"{review.review}"</div>
+            <div className="review-message scrollbar scrollbar--review">"{review.review}"</div>
             <div className="review-rating"><img className="truck-userStar" alt="user rating star" src={userRating} /></div>
 
             {
@@ -132,7 +132,8 @@ export const Review = ({ review, userId, setUserReviews, setTruck, setUser, aler
                                 Edit Review
                             </ModalHeader>
                             <ModalBody>
-                                <input type="text" className="form-control" defaultValue={review.review} onChange={(e) => setNewDescription(e.target.value)}></input>
+                                <Input type="textarea" className="form-control" defaultValue={review.review} onChange={(e) => setNewDescription(e.target.value)}></Input
+                                >
                             </ModalBody>
                             <ModalFooter>
 

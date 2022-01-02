@@ -103,7 +103,7 @@ export const TruckCard = ({ thisTruck, truckId, newInfo }) => {
                 </button>
                 <div className="mini-info">
                     <div className="mini-info truck-price">{truckDollarsString}</div>
-                    <div className="mini-info truck-rating"><img className="mini-info userStar" alt="user rating star" src={userRating} /></div>
+                    <div className="mini-info truck-rating "><img className="mini-info userStar" alt="user rating star" src={userRating} />  <div className="truck-card-rating-text">{truck.userTruckReviews?.length > 0 ? `(${truck.userTruckReviews?.length})` : ""}</div></div>
                 </div>
             </div>
         </div>

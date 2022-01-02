@@ -146,6 +146,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
         TruckRepository.get(truckID).then(() => {
             TruckLocationRepository.getTruckLocationsByTruck(truckID).then((res) => {
                 setTruckLocations(res)
+                alertNewInfo()
                 changeLocation()
             })
         })
@@ -401,6 +402,7 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
                                     setTruckLocations={setTruckLocations}
                                     neighborhoods={neighborhoods}
                                     newLocation={newLocation}
+                                    alertNewInfo={alertNewInfo}
                                 />
                             </div>
                         })

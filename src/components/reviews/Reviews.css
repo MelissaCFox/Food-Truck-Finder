@@ -21,3 +21,11 @@
     flex-wrap: wrap;
 
 }
+   
+    .scrollbar--review::-webkit-scrollbar {
+    width: 12px;
+}
+    
+    .scrollbar--review::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #ECDBBA 0%, #887d68 100%); }

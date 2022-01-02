@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import { Link, useHistory } from "react-router-dom";
-import FoodTruckFinderLogo from '../nav/FoodTruckFinderLogo.png';
+import FTFLogoLogin from '../images/FTFLogoLogin.png';
 import "./Login.css"
 
 
@@ -44,7 +44,6 @@ const Login = () => {
         <main className="container--login">
             <section className="form-container">
                 <form className="form--login" onSubmit={handleLogin}>
-                    <h1 id="appName">Food Truck Finder</h1>
                     <h2 className="h3 mb-3 font-weight-normal">Please Sign In</h2>
                     <fieldset>
                         <label htmlFor="inputEmail"> Email Address </label>
@@ -84,7 +83,7 @@ const Login = () => {
             </section>
 
             <section className="appLogo">
-            <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="login-logo" />
+            <img src={FTFLogoLogin} alt="Food Truck Finder Logo" id="login-logo" />
             </section>
 
         </main>

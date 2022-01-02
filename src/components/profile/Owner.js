@@ -114,9 +114,9 @@ export const Owner = ({ userId }) => {
 
                 <div>
                     <Collapse  isOpen={collapse}>
-                        <ul className="favorites card">
+                        <div className="owner-favorites">
                             <div className="profile-container"><Favorites userId={userId} /></div>
-                        </ul>
+                        </div>
                     </Collapse>
 
                     <Collapse  isOpen={suggestions}>

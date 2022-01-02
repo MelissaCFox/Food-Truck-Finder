@@ -4,8 +4,8 @@ import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import Settings from "../../repositories/Settings";
 import TruckRepository from "../../repositories/TruckRepository";
 import UserRepository from "../../repositories/UserRepository";
-import FoodTruckFinderLogo from './FoodTruckFinderLogo.png';
 import './NavBar.css';
+import FTFLogo from "../images/FTFLogoLogin.png"
 
 
 export const NavBar = () => {
@@ -69,27 +69,7 @@ export const NavBar = () => {
 
                     })
             })
-        //
-        // fetch(`${Settings.remoteURL}/trucks?name_like=${encodeURI(terms)}`)
-        //     .then(r => r.json())
-        //     .then(trucks => {
-        //         foundItems.trucksSet.add(trucks)
-        //         return fetch(`${Settings.remoteURL}/neighborhoods?name_like=${encodeURI(terms)}`)
-        //     })
-        //     .then(r => r.json())
-        //     .then(neighborhoods => {
-        //         foundItems.neighborhoods = neighborhoods
-        //         return fetch(`${Settings.remoteURL}/trucks?description_like=${encodeURI(terms)}`)
-        //     })
-        //     .then(r => r.json())
-        //     .then(trucks => {
-        //         foundItems.trucksSet.add(trucks)
-        //         foundItems.trucks = Array.from(foundItems.trucksSet)
-        //         history.push({
-        //             pathname: "/search",
-        //             state: foundItems
-        //         })
-        //     })
+
 
     }
 
@@ -101,24 +81,15 @@ export const NavBar = () => {
                 </button>
                 <div id="navbarNavDropdown" className="navbar-collapse collapse header">
                     <ul className="navbar-nav mr-auto appLogo">
-                        <button onClick={() => {
+                        <button  onClick={() => {
                             TruckRepository.getAll()
                                 .then(() => history.push({
                                     pathname: `/trucks`,
                                     state: refresh
                                 }))
                         }}>
-                            <img src={FoodTruckFinderLogo} alt="Food Truck Finder Logo" id="logo" />
+                            <img src={FTFLogo} alt="Food Truck Finder Logo" className="appLogo-btn" />
                         </button>
-                    </ul>
-                    <ul className="navbar-nav profile">
-                        <li className="nav-item dropdown">
-                            {
-                                isAuthenticated()
-                                    ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
-                                    : <Link className="nav-link" to="/login">Login</Link>
-                            }
-                        </li>
                     </ul>
                     <ul className="navbar-nav search">
                         <li className="nav-item search">
@@ -130,6 +101,16 @@ export const NavBar = () => {
                                 aria-label="Search" />
                         </li>
                     </ul>
+                    <ul className="navbar-nav profile">
+                        <li className="nav-item dropdown">
+                            {
+                                isAuthenticated()
+                                    ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">Welcome, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
+                                    : <Link className="nav-link" to="/login">Login</Link>
+                            }
+                        </li>
+                    </ul>
+
                     <ul className="navbar-nav logout">
                         <li className="nav-item dropdown">
                             {

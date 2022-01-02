@@ -5,7 +5,7 @@ import { NeighborhoodCard } from "../neighborhoods/NeighborhoodCard"
 import '../trucks/TruckList.css';
 
 
-export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods, newLocation }) => {
+export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, neighborhoods, newLocation, alertNewInfo }) => {
     const [truckNeighborhoods, setTruckNeighborhoods] = useState([])
     const [truckNeighborhood, setTruckNeighborhood] = useState({})
 
@@ -44,6 +44,7 @@ export const TruckSchedule = ({ dayId, truckId, truckPage, createNewLocation, ne
                                             name="location"
                                             id="locationId"
                                             onChange={e => {
+                                                
                                                 createNewLocation(truckId, e.target.value, dayId)
                                             }}
                                             className="form-control"
