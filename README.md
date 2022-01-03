@@ -1,6 +1,6 @@
 # Food Truck Finder
 
-> Track You Favorite Food Trucks in Nashville 
+> Track Your Favorite Food Trucks in Nashville 
 
 ---
 
