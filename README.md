@@ -20,15 +20,16 @@
 
 Food Truck Finder is an application for users to locate and keep track of their favorite food trucks in and around Nashville. Food trucks are an increasingly important part of a vibrant and happy community; they bring people together in a place where they can get great food, try something new, and sometimes even explore a different culture. The portability and limited menus that food trucks provide allow owners to react directly to the needs and wants of their customers. Sometimes, however, knowing where to find them can be a challenge. I wanted to build a tool that would help food truck owners and customers more easily find each other. 
 
-This initial application was developed over the course of two weeks, primarily using the React library for JavaScript. My developmental goals throughout this build were to increase my understanding and proficiency of the use of props, as well as to further develop my skills at manipulating state to create a dynamic, responsive CRUD user interface.
+This initial application was developed over the course of two weeks, primarily using the React library for JavaScript, with additional features and enhancements added over an additional 2 week period. My developmental goals throughout this build were to increase my understanding and proficiency of the use of props, as well as to further develop my skills at manipulating state to create a dynamic, responsive CRUD user interface.
 
 ## Features
 - Users can view a list of food trucks currently located in Nashville.
-- Users can filter food truck list by date, food type, and/or favorites, as well as sort the lsit by price range and average user rating.
+- Users can search and filter food truck list by date, food type, and/or favorites, as well as sort the lsit by price range and average user rating.
 - Users can view additional information and expanded weekly schedule for each truck and neighborhood by viewing their individual pages.
 - Users can add trucks to their favorites list.
-- User can rate and write reviews for individual trucks
-- Truck Owners can register (and retire) trucks and edit details and location schedules
+- Users can rate and write (and edit) personal reviews for individual trucks.
+- Users can submit suggestions to truck owners.
+- Truck Owners can register (and retire) trucks and edit details and location schedules.
 
 #### Technologies
 
@@ -36,7 +37,7 @@ This initial application was developed over the course of two weeks, primarily u
 - CSS3
 - JavaScript
 - React
-- Git
+- Reacstrap, MUI
 - Github
 - JSON Server
 - Visual Studio Code
