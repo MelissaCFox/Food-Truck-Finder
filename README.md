@@ -24,7 +24,7 @@ This initial application was developed over the course of two weeks, primarily u
 
 ## Features
 - Users can view a list of food trucks currently located in Nashville.
-- Users can search and filter food truck list by date, food type, and/or favorites, as well as sort the lsit by price range and average user rating.
+- Users can search and filter food truck list by date, food type, and/or favorites, as well as sort the list by price range and average user rating.
 - Users can view additional information and expanded weekly schedule for each truck and neighborhood by viewing their individual pages.
 - Users can add trucks to their favorites list.
 - Users can rate and write (and edit) personal reviews for individual trucks.
