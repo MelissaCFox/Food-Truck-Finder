@@ -65,7 +65,7 @@ npm start
 ---
 ### Demo
 Preliminary Demo
-<img src="./Food-Truck-Finder-Demo.gif" alt="Application Demo">
+<img src="./Demo.gif" alt="Application Demo">
 
 
 #### ERD
