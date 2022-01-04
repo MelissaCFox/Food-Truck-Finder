@@ -72,13 +72,13 @@ export const Truck = ({ truckID, setUser, userId, updateReadStateChange }) => {
     }, [truck, newRating])
 
     useEffect(() => {
-        ReviewRepository.getAllForTruck(truckId).then((reviews) => {
+        ReviewRepository.getAllForTruck(truck.id).then((reviews) => {
             const recentReviews = reviews.sort((a, b) => {
                 return b.parsedDate - a.parsedDate
             })
             setReviews(recentReviews)
         })
-    }, [truckId, truck])
+    }, [truck])
 
     useEffect(() => {
         if (truckID) {
