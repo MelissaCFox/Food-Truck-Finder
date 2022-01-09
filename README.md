@@ -33,10 +33,10 @@ This initial application was developed over the course of two weeks, primarily u
 
 #### Technologies
 
-- HTML5
-- CSS3
 - JavaScript
 - React
+- HTML5
+- CSS3
 - Reacstrap, MUI
 - Github
 - JSON Server
