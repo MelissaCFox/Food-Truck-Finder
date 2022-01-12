@@ -65,7 +65,7 @@ npm start
 
 ---
 ### Demo
-Preliminary Demo
+Demo
 <img src="./Demo.gif" alt="Application Demo">
 
 
