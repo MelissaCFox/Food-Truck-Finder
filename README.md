@@ -68,7 +68,7 @@ npm start
 <img src="./Demo.gif" alt="Application Demo">
 
 
-#### ERD
+### ERD
 <img src="./Food-Truck-Finder-ERD.png" alt="Application ERD">
 ---
 
