@@ -4,11 +4,13 @@ import { fetchIt } from "./Fetch";
 const userTruckFavorites = {
 
     async get(id) {
-        return await fetchIt(`${Settings.remoteURL}/userTruckFavorites/${id}?_expand=user&_expand=truck`)
+        return await fetchIt(`${Settings.remoteURL}/userTruckFavorites/${id}`)
+        // return await fetchIt(`${Settings.remoteURL}/userTruckFavorites/${id}?_expand=user&_expand=truck`)
     },
     
     async getAll() {
-        return await fetchIt(`${Settings.remoteURL}/userTruckFavorites?_expand=user&_expand=truck`)
+        return await fetchIt(`${Settings.remoteURL}/userTruckFavorites`)
+        // return await fetchIt(`${Settings.remoteURL}/userTruckFavorites?_expand=user&_expand=truck`)
     },
 
     async add(favorite) {

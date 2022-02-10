@@ -12,15 +12,18 @@ const SuggestionRepository = {
     },
 
     async getAll() {
-        return await fetchIt(`${Settings.remoteURL}/suggestions?_expand=user&_expand=truck&_expand=neighborhood`)
+        return await fetchIt(`${Settings.remoteURL}/suggestions`)
+        // return await fetchIt(`${Settings.remoteURL}/suggestions?_expand=user&_expand=truck&_expand=neighborhood`)
     },
 
     async getAllForTruck(truckId) {
-        return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&_expand=user&_expand=truck&_expand=neighborhood`)
+        return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}`)
+        // return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&_expand=user&_expand=truck&_expand=neighborhood`)
     },
 
     async getAllUnreadForTruck(truckId) {
-        return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&_expand=user&_expand=truck&_expand=neighborhood&read=false`)
+        return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&read=false`)
+        // return await fetchIt(`${Settings.remoteURL}/suggestions?truckId=${truckId}&_expand=user&_expand=truck&_expand=neighborhood&read=false`)
     },
 
     async delete(id) {

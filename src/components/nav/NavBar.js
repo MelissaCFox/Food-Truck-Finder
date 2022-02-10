@@ -3,14 +3,16 @@ import { Link, useHistory } from "react-router-dom"
 import useSimpleAuth from "../../hooks/ui/useSimpleAuth";
 import Settings from "../../repositories/Settings";
 import TruckRepository from "../../repositories/TruckRepository";
-import UserRepository from "../../repositories/UserRepository";
 import './NavBar.css';
 import FTFLogo from "../images/FTFLogoLogin.png"
 
 
 export const NavBar = () => {
     const { isAuthenticated, logout, getCurrentUser } = useSimpleAuth()
-    const [currentUser, setCurrentUser] = useState({})
+    const [currentUser, setCurrentUser] = useState({
+        firstName: "",
+        lastName: ""
+    })
     const history = useHistory()
     const refresh = true
     const welcomes = ["Welcome", "Hi", "Hey There", "Hello", "Howdy"]
@@ -21,7 +23,8 @@ export const NavBar = () => {
     },[])
 
     useEffect(() => {
-        UserRepository.get(getCurrentUser().id).then(setCurrentUser)
+        getCurrentUser().then(setCurrentUser)
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -112,7 +115,7 @@ export const NavBar = () => {
                             <li className="nav-item dropdown">
                                 {
                                     isAuthenticated()
-                                        ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">{welcome}, {currentUser.firstName} {currentUser.lastName}!</div></button></div>
+                                        ? <div className="name-btn"><button className="nav-link name-btn" onClick={() => { history.push("/profile") }}><div className="name">{welcome}, {currentUser?.firstName} {currentUser?.lastName}!</div></button></div>
                                         : <Link className="nav-link" to="/login">Login</Link>
                                 }
                             </li>

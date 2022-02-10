@@ -8,11 +8,13 @@ const TruckRepository = {
     },
 
     async get(id) {
-        return await fetchIt(`${Settings.remoteURL}/trucks/${id}?_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews&_embed=truckFoodTypes`)
+        return await fetchIt(`${Settings.remoteURL}/trucks/${id}`)
+        // return await fetchIt(`${Settings.remoteURL}/trucks/${id}?_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews&_embed=truckFoodTypes`)
     },
     
     async getAll() {
-        return await fetchIt(`${Settings.remoteURL}/trucks?_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews`)
+        return await fetchIt(`${Settings.remoteURL}/trucks`)
+        // return await fetchIt(`${Settings.remoteURL}/trucks?_embed=truckLocations&_embed=truckOwners&_embed=userTruckReviews`)
     },
 
     async add(truck) {
